@@ -7,7 +7,7 @@
     <meta name="description" content="ECHO_OFF - Comunicación P2P cifrada estilo MS-DOS/Windows 95">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>C:\ECHO_OFF.EXE v1.1.2</title>
+    <title>C:\ECHO_OFF.EXE v1.2.0</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon-app.png">
@@ -18,17 +18,16 @@
     <div id="install-prompt" class="install-prompt hidden">
         <div class="dos-window">
             <div class="dos-title-bar">
-                <span>INSTALAR APLICACIÓN</span>
-                <button class="dos-close" id="btn-cancel-install">✕</button>
+                <span>INSTALAR APLICACION</span>
+                <button class="dos-close" id="btn-cancel-install">X</button>
             </div>
             <div class="dos-content">
-                <p>╔═══════════════════════════════════════════╗</p>
-                <p>║  ¿Instalar ECHO_OFF en este equipo?     ║</p>
-                <p>║                                           ║</p>
-                <p>║  La aplicación funcionará sin conexión   ║</p>
-                <p>╚═══════════════════════════════════════════╝</p>
+                <p>Instalar ECHO_OFF en este equipo?</p>
+                <p></p>
+                <p>La aplicacion funcionara sin conexion</p>
+                <p></p>
                 <div class="dos-buttons">
-                    <button id="btn-install" class="dos-button">[ SÍ ]</button>
+                    <button id="btn-install" class="dos-button">[ SI ]</button>
                     <button class="dos-button">[ NO ]</button>
                 </div>
             </div>
@@ -41,7 +40,7 @@
             <pre class="boot-text">
 Starting MS-DOS...
 
-ECHO_OFF Secure Communications System v1.1.0
+ECHO_OFF Secure Communications System v1.2.0
 Copyright (C) 2026 CyberSec Division
 
 Initializing P2P Protocol...      [OK]
@@ -82,22 +81,19 @@ C:\></pre>
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="screen active">
             <div class="welcome-header">
-                <p class="title-line">═══════════════════════════════════════════════════════════════</p>
                 <p class="title-main">ECHO_OFF</p>
-                <p class="title-subtitle">SISTEMA DE COMUNICACIÓN SEGURA</p>
-                <p class="title-line">═══════════════════════════════════════════════════════════════</p>
+                <p class="title-subtitle">Sistema de Comunicación Segura</p>
             </div>
             
             <div class="welcome-info">
-                <p>Versión 1.1.2 - MS-DOS Compatible</p>
-                <p></p>
+                <p>Version: 1.2.0</p>
                 <p>Protocolo: Peer-to-Peer (P2P)</p>
-                <p>Encriptación: End-to-End</p>
+                <p>Encriptacion: End-to-End</p>
                 <p>Almacenamiento: NINGUNO</p>
-                <p>Privacidad: MÁXIMA</p>
+                <p>Privacidad: MAXIMA</p>
             </div>
 
-            <p class="prompt-text">C:\> Seleccione una opción:</p>
+            <p class="prompt-text">C:\> Seleccione una opcion:</p>
             
             <div class="dos-button-container">
                 <button id="btn-create-room" class="dos-button primary">
@@ -112,12 +108,10 @@ C:\></pre>
         <!-- Room Creation Screen -->
         <div id="create-room-screen" class="screen">
             <div class="screen-header">
-                <p class="screen-line">═══════════════════════════════════════════════════════════════</p>
                 <p class="screen-title">CREAR NUEVA SALA</p>
-                <p class="screen-line">═══════════════════════════════════════════════════════════════</p>
             </div>
 
-            <p>C:\> Generando ID único de sala...</p>
+            <p>C:\> Generando ID unico de sala...</p>
             <p></p>
             <p>ID DE SALA GENERADO:</p>
             
@@ -127,27 +121,25 @@ C:\></pre>
             </div>
 
             <p></p>
-            <p class="warning-text">⚠ ADVERTENCIA: Comparta este ID únicamente con usuarios</p>
-            <p class="warning-text">  de confianza. Cualquier persona con este ID puede</p>
-            <p class="warning-text">  conectarse a su sala de chat.</p>
+            <p class="warning-text">ADVERTENCIA: Comparta este ID solo con usuarios</p>
+            <p class="warning-text">de confianza. Cualquier persona con este ID</p>
+            <p class="warning-text">puede conectarse a su sala.</p>
             <p></p>
-            <p>C:\> Estado: Esperando conexiones entrantes...</p>
-            <p>C:\> Presione ESC para cancelar</p>
+            <p>C:\> Estado: Esperando conexiones...</p>
+            <p></p>
             
             <button id="btn-back-from-create" class="dos-button">
-                [ ESC ] VOLVER AL MENÚ PRINCIPAL
+                [ ESC ] VOLVER AL MENU
             </button>
         </div>
 
         <!-- Room Join Screen -->
         <div id="join-room-screen" class="screen">
             <div class="screen-header">
-                <p class="screen-line">═══════════════════════════════════════════════════════════════</p>
-                <p class="screen-title">UNIRSE A SALA EXISTENTE</p>
-                <p class="screen-line">═══════════════════════════════════════════════════════════════</p>
+                <p class="screen-title">UNIRSE A SALA</p>
             </div>
 
-            <p>C:\> Ingrese el ID de la sala objetivo:</p>
+            <p>C:\> Ingrese el ID de la sala:</p>
             <p></p>
             <p>ID DEL PEER:</p>
             
@@ -171,9 +163,7 @@ C:\></pre>
         <div id="chat-screen" class="screen">
             <div class="dos-chat-header">
                 <div class="chat-header-info">
-                    <p class="chat-line">═══════════════════════════════════════════════════════════════</p>
-                    <p class="chat-title">CANAL SEGURO ESTABLECIDO | PEER: <span id="chat-peer-id" class="peer-id"></span></p>
-                    <p class="chat-line">═══════════════════════════════════════════════════════════════</p>
+                    <p class="chat-title">CANAL SEGURO | PEER: <span id="chat-peer-id" class="peer-id"></span></p>
                 </div>
                 <button id="btn-disconnect" class="dos-button-close">[ DESCONECTAR ]</button>
             </div>

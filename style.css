@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - MS-DOS / WINDOWS 95 THEME
-   Version: 1.1.2 - Clean Text Design
+   Version: 1.2.0 - Simplified Design
    ============================================= */
 
 /* Import Classic DOS Font */
@@ -157,13 +157,14 @@ body {
     background-color: var(--win95-gray);
     border: 1px solid;
     border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
-    font-size: 10px;
+    font-size: 12px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     flex-shrink: 0;
+    color: var(--dos-black);
 }
 
 /* =============================================
@@ -230,14 +231,14 @@ body {
 }
 
 /* =============================================
-   DOS ASCII ART
+   SIMPLIFIED TEXT DESIGN
    ============================================= */
 .dos-art {
-    display: none; /* Removed - too complex for mobile */
+    display: none;
 }
 
 .dos-screen-content {
-    display: none; /* Removed - simplified */
+    display: none;
 }
 
 /* =============================================
@@ -248,25 +249,24 @@ body {
 }
 
 .title-line {
-    color: var(--dos-cyan);
-    font-size: clamp(12px, 2vw, 16px);
-    margin: 5px 0;
+    display: none;
 }
 
 .title-main {
     color: var(--dos-cyan);
-    font-size: clamp(32px, 6vw, 48px);
+    font-size: clamp(28px, 5vw, 42px);
     font-weight: bold;
     text-align: center;
-    margin: 10px 0;
-    letter-spacing: 4px;
+    margin: 20px 0 10px 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .title-subtitle {
-    color: var(--dos-white);
-    font-size: clamp(14px, 2.5vw, 18px);
+    color: var(--dos-green);
+    font-size: clamp(16px, 3vw, 20px);
     text-align: center;
-    margin: 10px 0;
+    margin: 5px 0 20px 0;
 }
 
 .welcome-info {
@@ -294,17 +294,18 @@ body {
 }
 
 .screen-line {
-    color: var(--dos-cyan);
-    font-size: clamp(12px, 2vw, 14px);
-    margin: 5px 0;
+    display: none;
 }
 
 .screen-title {
     color: var(--dos-cyan);
     font-size: clamp(20px, 4vw, 28px);
     font-weight: bold;
-    text-align: center;
-    margin: 10px 0;
+    text-align: left;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--dos-cyan);
+    padding-bottom: 10px;
 }
 
 .warning-text {
@@ -321,15 +322,15 @@ body {
 }
 
 .chat-line {
-    color: var(--dos-cyan);
-    font-size: clamp(10px, 1.5vw, 12px);
-    margin: 2px 0;
+    display: none;
 }
 
 .chat-title {
     color: var(--dos-cyan);
-    font-size: clamp(14px, 2.5vw, 16px);
-    margin: 5px 0;
+    font-size: clamp(16px, 3vw, 18px);
+    margin: 0;
+    padding: 10px 0;
+    border-bottom: 2px solid var(--dos-cyan);
 }
 
 /* =============================================

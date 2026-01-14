@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.1.2 - Clean Text Design
+   Version: 1.2.0 - Simplified Design
    ============================================= */
 
 // Global Variables

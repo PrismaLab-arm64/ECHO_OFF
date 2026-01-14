@@ -1,53 +1,56 @@
 # 🔐 ECHO_OFF PWA - MS-DOS Edition
 
-![Version](https://img.shields.io/badge/version-1.1.0-00AA00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.2.0-00AA00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00AA00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00AA00?style=for-the-badge)
 ![Theme](https://img.shields.io/badge/theme-MS--DOS%20%2F%20Win95-000084?style=for-the-badge)
 
-**Sala de Chat P2P Segura con Estética Retro MS-DOS / Windows 95**
+**Sala de Chat P2P Segura con Estetica Retro MS-DOS / Windows 95**
 
 ```
-╔═══════════════════════════════════════════════════════════════╗
-║                                                               ║
-║   ███████╗ ██████╗██╗  ██╗ ██████╗     ╔═══════════════╗    ║
-║   ██╔════╝██╔════╝██║  ██║██╔═══██╗    ║  ███████╗     ║    ║
-║   █████╗  ██║     ███████║██║   ██║    ║  ██╔═══██╗    ║    ║
-║   ██╔══╝  ██║     ██╔══██║██║   ██║    ║  ██║   ██║    ║    ║
-║   ███████╗╚██████╗██║  ██║╚██████╔╝    ║  ╚██████╔╝    ║    ║
-║   ╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝     ║   ╚═════╝     ║    ║
-║                                         ╚═══════════════╝    ║
-╚═══════════════════════════════════════════════════════════════╝
+╔═══════════════════════════════════════════════╗
+║                                               ║
+║   ECHO_OFF                                    ║
+║   Sistema de Comunicacion Segura             ║
+║                                               ║
+║   Version: 1.2.0                              ║
+║   Protocolo: P2P                              ║
+║   Encriptacion: E2E                           ║
+║   Privacidad: MAXIMA                          ║
+║                                               ║
+╚═══════════════════════════════════════════════╝
 
-C:\> ECHO_OFF v1.1.0 - MS-DOS Compatible System
+C:\> ECHO_OFF v1.2.0 - MS-DOS Compatible System
 C:\> Type HELP for available commands
 ```
 
 ## 🎯 Características
 
-- **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento en servidor
-- **🌐 Comunicación P2P**: Conexión directa navegador-a-navegador usando PeerJS
-- **💾 Sin Persistencia**: Todos los mensajes se destruyen al recargar/cerrar página
-- **📱 Progressive Web App**: Instalable en móvil y escritorio con prompt nativo
-- **🎨 UI Retro MS-DOS/Win95**: Interfaz estilo MS-DOS con ventanas Windows 95
-- **🔐 Cifrado End-to-End**: Transmisión de datos P2P cifrada automática
-- **👁️ Autorización Manual**: El Host aprueba manualmente las solicitudes de conexión
-- **🔊 Sonidos Retro**: Efectos de audio 8-bit para enviar, recibir y desencriptar mensajes
-- **⏱️ Mensajes Temporales**: Los mensajes se muestran 3 segundos y luego desaparecen
-- **🎭 Efecto de Encriptación**: Animación tipo Matrix al recibir y desaparecer mensajes
-- **💻 Estética Retro Completa**: Colores MS-DOS, fuente VT323, ventanas Windows 95
+- **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento
+- **🌐 Comunicacion P2P**: Conexion directa navegador-a-navegador usando PeerJS
+- **💾 Sin Persistencia**: Mensajes destruidos al recargar/cerrar pagina
+- **📱 Progressive Web App**: Instalable en movil y escritorio
+- **🎨 UI Retro MS-DOS**: Interfaz estilo MS-DOS/Windows 95
+- **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
+- **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
+- **🔊 Sonidos Retro**: Efectos de audio 8-bit en eventos clave
+- **⏱️ Mensajes Temporales**: Mensajes visibles 5 segundos y desaparecen
+- **🎭 Efecto Matrix**: Animacion de desencriptacion al recibir mensajes
+- **💻 Diseño Limpio**: Colores MS-DOS básicos, fuente VT323
 
-## 🆕 Novedades v1.1.0 - MS-DOS Edition
+## 🆕 Novedades v1.2.0 - Simplified Design
 
-### 🎨 Diseño Retro Completo
-- **Paleta MS-DOS**: Colores clásicos (negro, azul, verde, cyan, rojo, magenta, amarillo, blanco)
-- **Ventanas Windows 95**: Bordes 3D, barras de título, botones minimize/maximize/close
-- **Fuente VT323**: Tipografía monoespaciada estilo terminal MS-DOS
-- **ASCII Art**: Arte ASCII para la pantalla de bienvenida
-- **Boot Screen**: Pantalla de arranque estilo MS-DOS con efecto de carga
+### 🎨 Diseño Simplificado
+- **Sin ASCII Art Complejo**: Texto simple y limpio para mejor legibilidad
+- **Colores MS-DOS Básicos**: Negro, azul, verde, cyan, amarillo, blanco, gris
+- **Interfaz Limpia**: Sin caracteres especiales complejos (═, ║, ╔, ╗, etc.)
+- **Mejor Legibilidad**: Fuente VT323 con tamaños optimizados
+- **Mobile-First**: 100% responsive para dispositivos móviles
 
-### 🖥️ Interfaz Estilo Windows 95
-- **Barra de Título**: Gradiente azul característico de Windows 95
+### 🔊 Sonidos Optimizados
+- **Reducción de Ruido**: Solo sonidos en eventos clave
+- **Eventos con Sonido**: Inicio de app, crear sala, unirse, desconectar
+- **Eventos Silenciosos**: Enviar y recibir mensajes (sin sonido invasivo)
 - **Barra de Menú**: Menú con File, Connection, Options, Help
 - **Bordes 3D**: Efectos raised/sunken para dar profundidad
 - **Botones Clásicos**: Botones con borde 3D y efecto hover
