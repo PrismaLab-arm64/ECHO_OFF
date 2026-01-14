@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.1.0 - MS-DOS/Windows 95 Edition
+   Version: 1.1.1 - Mobile Optimized
    ============================================= */
 
 // Global Variables
@@ -70,62 +70,48 @@ function play8BitSound(frequency, duration, type = 'square') {
 }
 
 function playSendSound() {
-    // Sonido de envío: beep ascendente
+    // Sound removed - less intrusive
+}
+
+function playReceiveSound() {
+    // Sound removed - less intrusive
+}
+
+function playDecryptSound() {
+    // Sound removed - less intrusive
+}
+
+function playDisappearSound() {
+    // Sound removed - less intrusive
+}
+
+function playStartupSound() {
+    // Startup sound: simple beep
+    play8BitSound(440, 0.15);
+}
+
+function playCreateRoomSound() {
+    // Create room: ascending beep
     play8BitSound(440, 0.1);
     setTimeout(() => play8BitSound(554, 0.1), 100);
 }
 
-function playReceiveSound() {
-    // Sonido de recepción: beep descendente
+function playJoinRoomSound() {
+    // Join room: descending beep
     play8BitSound(554, 0.1);
     setTimeout(() => play8BitSound(440, 0.1), 100);
 }
 
-function playDecryptSound() {
-    // Sonido de desencriptación: sweep rápido
-    initAudio();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.type = 'sawtooth';
-    oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
-    
-    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.3);
-}
-
-function playDisappearSound() {
-    // Sonido de desaparición: fade out
-    initAudio();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.type = 'triangle';
-    oscillator.frequency.setValueAtTime(660, audioContext.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(110, audioContext.currentTime + 0.5);
-    
-    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5);
+function playDisconnectSound() {
+    // Disconnect: low tone
+    play8BitSound(220, 0.2);
 }
 
 /* =============================================
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.1.0] MS-DOS Edition - Sistema inicializado');
+    console.log('[ECHO_OFF v1.1.1] MS-DOS Edition - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -133,6 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize audio on first user interaction
     document.addEventListener('click', initAudio, { once: true });
+    
+    // Play startup sound
+    setTimeout(() => {
+        playStartupSound();
+    }, 500);
 });
 
 /* =============================================
@@ -245,6 +236,7 @@ function showScreen(screen) {
    ============================================= */
 function createRoom() {
     showScreen(createRoomScreen);
+    playCreateRoomSound();
     
     // Generate unique Peer ID
     myPeerId = 'ECHO_' + Math.random().toString(36).substring(2, 12).toUpperCase();
@@ -305,6 +297,8 @@ function connectToPeer() {
         return;
     }
     
+    playJoinRoomSound();
+    
     // Generate unique Peer ID
     myPeerId = 'ECHO_' + Math.random().toString(36).substring(2, 12).toUpperCase();
     
@@ -342,7 +336,7 @@ function setupConnectionHandlers(conn) {
     
     conn.on('data', (data) => {
         console.log('[MESSAGE RECEIVED]:', data);
-        playReceiveSound();
+        // Sound removed - less intrusive
         addMessage(data, 'received');
     });
     
@@ -374,7 +368,7 @@ function sendMessage() {
     
     currentConnection.send(message);
     console.log('[MESSAGE SENT]:', message);
-    playSendSound();
+    // Sound removed - less intrusive
     addMessage(message, 'sent');
     
     messageInput.value = '';
@@ -410,10 +404,10 @@ function addMessage(content, type) {
         body.textContent = `> ${content}`;
     }
     
-    // Auto-disappear after 3 seconds
+    // Auto-disappear after 5 seconds
     setTimeout(() => {
         disappearMessage(messageDiv, body, content);
-    }, 3000);
+    }, 5000);
 }
 
 function decryptMessage(element, finalText) {
@@ -423,7 +417,7 @@ function decryptMessage(element, finalText) {
     const maxIterations = 20;
     
     element.classList.add('message-encrypted');
-    playDecryptSound();
+    // Sound removed - less intrusive
     
     const interval = setInterval(() => {
         element.textContent = '> ' + finalText
@@ -451,7 +445,7 @@ function disappearMessage(messageDiv, bodyElement, originalText) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
     let text = originalText;
     
-    playDisappearSound();
+    // Sound removed - less intrusive
     bodyElement.classList.add('message-disappearing');
     
     const interval = setInterval(() => {
@@ -502,6 +496,7 @@ function updateStatus(text, type) {
 }
 
 function disconnect() {
+    playDisconnectSound();
     if (currentConnection) {
         currentConnection.close();
         currentConnection = null;

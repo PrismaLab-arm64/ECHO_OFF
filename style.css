@@ -1,53 +1,39 @@
 /* =============================================
    ECHO_OFF PWA - MS-DOS / WINDOWS 95 THEME
-   Version: 1.1.0
+   Version: 1.1.1 - Mobile Optimized
    ============================================= */
 
 /* Import Classic DOS Font */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* =============================================
-   ROOT VARIABLES
+   ROOT VARIABLES - Simplified DOS Colors
    ============================================= */
 :root {
-    /* MS-DOS Colors */
+    /* Basic MS-DOS Colors */
     --dos-black: #000000;
     --dos-blue: #0000AA;
     --dos-green: #00AA00;
     --dos-cyan: #00AAAA;
-    --dos-red: #AA0000;
-    --dos-magenta: #AA00AA;
     --dos-yellow: #AAAA00;
     --dos-white: #AAAAAA;
-    --dos-gray: #555555;
-    --dos-bright-blue: #5555FF;
-    --dos-bright-green: #55FF55;
-    --dos-bright-cyan: #55FFFF;
-    --dos-bright-red: #FF5555;
-    --dos-bright-magenta: #FF55FF;
-    --dos-bright-yellow: #FFFF55;
-    --dos-bright-white: #FFFFFF;
+    --dos-gray: #808080;
     
     /* Windows 95 Colors */
     --win95-gray: #C0C0C0;
-    --win95-dark-gray: #808080;
-    --win95-light-gray: #DFDFDF;
-    --win95-blue: #000084;
-    --win95-title-bar: #000080;
-    --win95-desktop: #008080;
+    --win95-blue: #000080;
     
     /* Borders */
-    --border-raised-outer: #FFFFFF;
-    --border-raised-inner: #DFDFDF;
-    --border-sunken-outer: #808080;
-    --border-sunken-inner: #000000;
+    --border-light: #FFFFFF;
+    --border-dark: #808080;
+    --border-black: #000000;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* =============================================
@@ -56,15 +42,16 @@
 body {
     font-family: 'VT323', 'Courier New', monospace;
     background-color: var(--dos-black);
-    color: var(--dos-bright-white);
-    overflow: hidden;
+    color: var(--dos-white);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    font-size: 20px;
+    font-size: clamp(16px, 3vw, 20px);
     line-height: 1.2;
+    overflow-x: hidden;
+    padding: 10px;
 }
 
 /* =============================================
@@ -77,12 +64,13 @@ body {
     width: 100%;
     height: 100%;
     background-color: var(--dos-black);
-    color: var(--dos-bright-white);
+    color: var(--dos-white);
     display: none;
     align-items: flex-start;
     justify-content: flex-start;
     z-index: 9999;
     padding: 20px;
+    overflow-y: auto;
 }
 
 .boot-screen.active {
@@ -91,15 +79,16 @@ body {
 
 .boot-content {
     width: 100%;
-    max-width: 800px;
+    max-width: 100%;
 }
 
 .boot-text {
     font-family: 'VT323', monospace;
-    font-size: 24px;
+    font-size: clamp(14px, 2.5vw, 20px);
     line-height: 1.4;
-    color: var(--dos-bright-white);
-    white-space: pre;
+    color: var(--dos-white);
+    white-space: pre-wrap;
+    word-wrap: break-word;
     animation: typewriter 3s steps(50);
 }
 
@@ -109,7 +98,7 @@ body {
 }
 
 .cursor-blink {
-    font-size: 24px;
+    font-size: clamp(14px, 2.5vw, 20px);
     animation: blink 0.7s infinite;
 }
 
@@ -122,15 +111,16 @@ body {
    DOS TERMINAL WINDOW
    ============================================= */
 .dos-terminal {
-    width: 95%;
-    max-width: 1000px;
+    width: 100%;
+    max-width: min(900px, 95vw);
     background-color: var(--win95-gray);
     border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     max-height: 90vh;
+    margin: 10px;
 }
 
 .dos-terminal.hidden {
@@ -141,16 +131,17 @@ body {
    TITLE BAR (Windows 95 Style)
    ============================================= */
 .dos-title-bar {
-    background: linear-gradient(to right, var(--win95-title-bar), var(--win95-blue));
+    background: var(--win95-blue);
     color: white;
-    padding: 4px 6px;
+    padding: 6px 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
     font-weight: bold;
     border-bottom: 2px solid var(--dos-black);
+    min-height: 28px;
 }
 
 .dos-controls {
@@ -161,22 +152,18 @@ body {
 .dos-minimize,
 .dos-maximize,
 .dos-close {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background-color: var(--win95-gray);
-    border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
-    font-size: 12px;
+    border: 1px solid;
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+    font-size: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-}
-
-.dos-close:hover {
-    background-color: var(--dos-bright-red);
-    color: white;
+    flex-shrink: 0;
 }
 
 /* =============================================
@@ -186,20 +173,23 @@ body {
     background-color: var(--win95-gray);
     padding: 4px 8px;
     display: flex;
-    gap: 15px;
+    gap: 10px;
     border-bottom: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer);
-    font-size: 18px;
+    border-color: var(--border-light) var(--border-dark);
+    font-size: clamp(14px, 2.5vw, 16px);
+    flex-wrap: wrap;
+    min-height: 30px;
 }
 
 .menu-item {
     cursor: pointer;
-    padding: 2px 8px;
+    padding: 2px 6px;
     color: var(--dos-black);
+    white-space: nowrap;
 }
 
 .menu-item:hover {
-    background-color: var(--win95-title-bar);
+    background-color: var(--win95-blue);
     color: white;
 }
 
@@ -208,13 +198,14 @@ body {
     display: flex;
     align-items: center;
     padding: 2px 8px;
-    border: 2px solid;
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
+    border: 1px solid;
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
 }
 
 .status-text {
-    font-size: 16px;
+    font-size: clamp(12px, 2vw, 16px);
     color: var(--dos-black);
+    white-space: nowrap;
 }
 
 /* =============================================
@@ -222,13 +213,15 @@ body {
    ============================================= */
 .screen {
     display: none;
-    padding: 20px;
+    padding: 15px;
     background-color: var(--dos-black);
-    color: var(--dos-bright-white);
+    color: var(--dos-white);
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     font-family: 'VT323', monospace;
-    font-size: 20px;
+    font-size: clamp(14px, 2.5vw, 18px);
+    -webkit-overflow-scrolling: touch;
 }
 
 .screen.active {
@@ -241,20 +234,22 @@ body {
    ============================================= */
 .dos-art {
     font-family: 'VT323', monospace;
-    font-size: 18px;
-    line-height: 1.2;
-    color: var(--dos-bright-cyan);
+    font-size: clamp(8px, 1.5vw, 14px);
+    line-height: 1.1;
+    color: var(--dos-cyan);
     white-space: pre;
-    margin-bottom: 20px;
-    text-shadow: 0 0 5px rgba(85, 255, 255, 0.5);
+    margin-bottom: 15px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .dos-screen-content {
     font-family: 'VT323', monospace;
-    font-size: 20px;
+    font-size: clamp(14px, 2.5vw, 18px);
     line-height: 1.3;
-    color: var(--dos-bright-white);
-    white-space: pre;
+    color: var(--dos-white);
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 /* =============================================
@@ -263,101 +258,108 @@ body {
 .dos-button-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    align-items: stretch;
+    width: 100%;
 }
 
 .dos-button-group {
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 8px;
+    margin-top: 15px;
     flex-wrap: wrap;
 }
 
 .dos-button {
-    min-width: 200px;
-    padding: 12px 20px;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 15px;
     background-color: var(--win95-gray);
-    border: 3px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border: 2px solid;
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     color: var(--dos-black);
     font-family: 'VT323', monospace;
-    font-size: 20px;
+    font-size: clamp(16px, 3vw, 20px);
     cursor: pointer;
     text-align: center;
     transition: all 0.1s;
     font-weight: bold;
-}
-
-.dos-button:hover {
-    background-color: var(--win95-light-gray);
+    touch-action: manipulation;
 }
 
 .dos-button:active {
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
-    padding: 13px 19px 11px 21px;
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+    transform: translate(1px, 1px);
 }
 
 .dos-button.primary {
-    background-color: var(--dos-bright-cyan);
+    background-color: var(--dos-cyan);
     color: var(--dos-black);
-    font-weight: bold;
 }
 
 .dos-button-small {
-    padding: 6px 12px;
+    padding: 8px 12px;
     background-color: var(--win95-gray);
     border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     color: var(--dos-black);
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 16px);
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 8px;
+    min-height: 36px;
+    touch-action: manipulation;
 }
 
 .dos-button-close {
-    background-color: var(--dos-bright-red);
-    color: white;
-    padding: 8px 16px;
+    background-color: var(--dos-yellow);
+    color: var(--dos-black);
+    padding: 8px 12px;
     border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 16px);
     cursor: pointer;
     font-weight: bold;
+    min-height: 36px;
+    touch-action: manipulation;
 }
 
 /* =============================================
    DOS INPUTS
    ============================================= */
 .dos-input-group {
-    margin: 10px 0 20px 0;
+    margin: 10px 0 15px 0;
+    width: 100%;
 }
 
 .dos-input {
     width: 100%;
-    max-width: 600px;
-    padding: 8px;
+    max-width: 100%;
+    padding: 10px;
     background-color: white;
     border: 2px solid;
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
     color: var(--dos-black);
     font-family: 'VT323', monospace;
-    font-size: 20px;
+    font-size: clamp(16px, 3vw, 20px);
     outline: none;
+    min-height: 44px;
 }
 
 .dos-id-display {
     display: flex;
     align-items: center;
     margin: 10px 0;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .dos-id-display .dos-input {
     flex: 1;
-    background-color: var(--dos-bright-yellow);
+    min-width: 200px;
+    background-color: var(--dos-yellow);
     color: var(--dos-black);
     font-weight: bold;
     text-align: center;
@@ -372,80 +374,73 @@ body {
 }
 
 .dos-chat-header pre {
-    color: var(--dos-bright-cyan);
+    color: var(--dos-cyan);
     margin: 0;
+    font-size: clamp(12px, 2vw, 16px);
+    overflow-x: auto;
 }
 
 .peer-id {
-    color: var(--dos-bright-yellow);
+    color: var(--dos-yellow);
     font-weight: bold;
 }
 
 .dos-button-close {
     position: absolute;
     top: 5px;
-    right: 10px;
+    right: 5px;
 }
 
 .dos-messages {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: var(--dos-black);
     border: 2px solid;
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
     padding: 10px;
-    min-height: 300px;
-    max-height: 400px;
+    min-height: 200px;
+    max-height: 50vh;
     margin-bottom: 10px;
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
+    -webkit-overflow-scrolling: touch;
 }
 
 .message {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     padding: 8px;
     border-left: 3px solid;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .message.sent {
-    border-left-color: var(--dos-bright-green);
-    background-color: rgba(0, 170, 0, 0.1);
+    border-left-color: var(--dos-green);
 }
 
 .message.received {
-    border-left-color: var(--dos-bright-cyan);
-    background-color: rgba(0, 170, 170, 0.1);
+    border-left-color: var(--dos-cyan);
 }
 
 .message.system {
-    border-left-color: var(--dos-bright-yellow);
-    background-color: rgba(170, 170, 0, 0.1);
-    color: var(--dos-bright-yellow);
+    border-left-color: var(--dos-yellow);
+    color: var(--dos-yellow);
 }
 
 .message-header {
     color: var(--dos-gray);
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: clamp(12px, 2vw, 14px);
+    margin-bottom: 4px;
 }
 
 .message-body {
-    color: var(--dos-bright-white);
+    color: var(--dos-white);
     word-wrap: break-word;
 }
 
 .message-encrypted {
-    color: var(--dos-bright-magenta);
     animation: decrypt-glitch 0.1s infinite;
-}
-
-.message-decrypted {
-    color: var(--dos-bright-white);
-}
-
-.message-disappearing {
-    color: var(--dos-red);
-    opacity: 0.7;
 }
 
 @keyframes decrypt-glitch {
@@ -460,44 +455,46 @@ body {
 .dos-input-bar {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     background-color: var(--dos-black);
     padding: 10px;
     border: 2px solid;
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
+    flex-wrap: wrap;
 }
 
 .prompt {
-    color: var(--dos-bright-green);
+    color: var(--dos-green);
     font-weight: bold;
-    font-size: 22px;
+    font-size: clamp(16px, 3vw, 20px);
+    flex-shrink: 0;
 }
 
 .dos-message-input {
     flex: 1;
-    padding: 8px;
+    min-width: 150px;
+    padding: 10px;
     background-color: var(--dos-black);
     border: 1px solid var(--dos-green);
-    color: var(--dos-bright-white);
+    color: var(--dos-white);
     font-family: 'VT323', monospace;
-    font-size: 20px;
+    font-size: clamp(16px, 3vw, 20px);
     outline: none;
+    min-height: 44px;
 }
 
 .dos-send-button {
-    padding: 8px 16px;
-    background-color: var(--dos-bright-green);
+    padding: 10px 14px;
+    background-color: var(--dos-green);
     border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     color: var(--dos-black);
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
     cursor: pointer;
     font-weight: bold;
-}
-
-.dos-send-button:active {
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
+    min-height: 44px;
+    touch-action: manipulation;
 }
 
 /* =============================================
@@ -509,11 +506,12 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
+    padding: 20px;
 }
 
 .install-prompt.hidden {
@@ -523,19 +521,20 @@ body {
 .dos-window {
     background-color: var(--win95-gray);
     border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
-    min-width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .dos-window .dos-title-bar {
-    background: linear-gradient(to right, var(--win95-title-bar), var(--win95-blue));
+    background: var(--win95-blue);
     color: white;
-    padding: 4px 8px;
+    padding: 6px 8px;
     display: flex;
     justify-content: space-between;
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
 }
 
 .dos-content {
@@ -543,12 +542,13 @@ body {
     background-color: var(--win95-gray);
     color: var(--dos-black);
     font-family: 'VT323', monospace;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
 }
 
 .dos-content p {
     margin: 5px 0;
     color: var(--dos-black);
+    word-wrap: break-word;
 }
 
 .dos-buttons {
@@ -556,61 +556,121 @@ body {
     gap: 10px;
     justify-content: center;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 /* =============================================
-   RESPONSIVE DESIGN
+   MOBILE OPTIMIZATIONS
    ============================================= */
 @media (max-width: 768px) {
     body {
         font-size: 16px;
+        padding: 5px;
     }
     
     .dos-terminal {
-        width: 98%;
+        width: 100%;
+        max-width: 100%;
         max-height: 95vh;
+        margin: 0;
+        border-width: 1px;
     }
     
     .dos-art {
-        font-size: 12px;
+        font-size: 10px;
+        margin-bottom: 10px;
     }
     
-    .dos-screen-content {
-        font-size: 16px;
+    .dos-menu-bar {
+        padding: 3px 5px;
+        gap: 5px;
     }
     
-    .dos-button {
-        min-width: 150px;
-        font-size: 18px;
-        padding: 10px 15px;
+    .menu-item {
+        font-size: 14px;
+        padding: 2px 4px;
+    }
+    
+    .screen {
+        padding: 10px;
     }
     
     .dos-messages {
-        max-height: 300px;
-        font-size: 16px;
+        max-height: 40vh;
+        min-height: 150px;
     }
     
-    .boot-text {
+    .dos-button {
         font-size: 18px;
+        min-height: 48px;
+    }
+    
+    .dos-input-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .dos-message-input {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    .dos-send-button {
+        width: 100%;
+    }
+    
+    .dos-id-display {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .dos-id-display .dos-input {
+        min-width: 100%;
+    }
+    
+    .dos-button-small {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 8px;
     }
 }
 
 @media (max-width: 480px) {
     .dos-art {
-        font-size: 10px;
+        font-size: 8px;
     }
     
     .dos-button-container {
-        width: 100%;
+        gap: 10px;
     }
     
-    .dos-button {
+    .dos-chat-header pre {
+        font-size: 12px;
+    }
+    
+    .dos-button-close {
+        position: relative;
+        top: auto;
+        right: auto;
         width: 100%;
-        min-width: auto;
+        margin-top: 10px;
+    }
+}
+
+/* =============================================
+   LANDSCAPE MOBILE
+   ============================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+    .dos-terminal {
+        max-height: 95vh;
     }
     
     .dos-messages {
-        max-height: 250px;
+        max-height: 35vh;
+    }
+    
+    .boot-text {
         font-size: 14px;
     }
 }
@@ -625,24 +685,18 @@ body {
 
 ::-webkit-scrollbar-track {
     background-color: var(--win95-gray);
-    border: 2px solid;
-    border-color: var(--border-sunken-outer) var(--border-raised-outer) var(--border-raised-outer) var(--border-sunken-outer);
+    border: 1px solid;
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--win95-gray);
     border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+    border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--win95-light-gray);
-}
-
-::-webkit-scrollbar-button {
-    background-color: var(--win95-gray);
-    border: 2px solid;
-    border-color: var(--border-raised-outer) var(--border-sunken-outer) var(--border-sunken-outer) var(--border-raised-outer);
+::-webkit-scrollbar-thumb:active {
+    border-color: var(--border-dark) var(--border-light) var(--border-light) var(--border-dark);
 }
 
 /* =============================================

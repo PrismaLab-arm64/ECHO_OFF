@@ -2,16 +2,16 @@
   "name": "ECHO_OFF - MS-DOS Edition",
   "short_name": "ECHO_OFF",
   "description": "Chat P2P seguro con estética retro MS-DOS/Windows 95. Zero-trace, sin base de datos, privacidad completa.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "lang": "es",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#000084",
-  "orientation": "portrait-primary",
+  "theme_color": "#000080",
+  "orientation": "any",
   "icons": [
     {
-      "src": "icon-retro.png",
+      "src": "icon-app.png",
       "sizes": "1024x1024",
       "type": "image/png",
       "purpose": "any maskable"
@@ -27,12 +27,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
     }
   ],
   "categories": ["communication", "social", "utilities", "security"],
