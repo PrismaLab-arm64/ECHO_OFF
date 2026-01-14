@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="Shadow-Chat - Comunicación P2P cifrada con estética cyberpunk">
+    <title>Shadow-Chat v1.0.0 | Terminal</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJASURBVFiF7ZbPaxNBFMe/b2Y3m2ySbZqkNkqrBUGKCIIX8eJF8ODBk/+Af4AXDx48ePTo0YN/gAcPHrx4EEQQxIMgCK0UsW1Sq03TTZrs7s7M+JImJtlNtmlQ6AcGZt68+X7fzLyZeQv8Z/kDANLpdLTRaDwEcBtABMAVAJcBhAAAhmFYhmGYlmU5lmXZtm07juM4juM4juO4rusqpZRSSimlFABN13VN0zRN0zRN0zRN0zRN0zRN0/Rut/sFwEcAHwB8APAewDsAbwC8BvAKwEsALwC8APAcwDMATwE8AfAYwCMADwE8APAAwH0A9wDcBXAHwG0AtwDcBHADwHUA1wBcBXAFwCUAFwFcAHAewDkAZwGcAXAawCkAJwGcAHAcwDEARwEcAXAYwCEABwEcAHAAwH4A+wDsBbAHwG4AuwDsBLADwHYA2wBsBbAFwGYAmwBsBLABwHoA6wCsBbAGwGoAqwCsBLACwHIAywAsBbAEwGIAiwAsBLAAwHwA8wDMBTAHwGwAswDMBDATwAwA0wFMAzAVwBQAkwFMAjARwAQA4wGMAzAWwBgAowGMAjASwAgAwwEMAzAUwBAAKQBJAAkAcQAxAFEAEQBhACEAQQABAH4APgBeAB4AbgAuAE4ADgB2ADYAVgAWAGYAJgBDABqALoAOgDaAFoAmgAaAOoAagCqACoAygBKAIoACgDyAHIAsgAyANIA0gBSAJIAEgDiAGIAogAiAMIAQgCCAAAA/AB8ALwAPADcAFwAnAAcAOwAbACsACwAzABOAIQAN9A8s/wX9BGW7Zth2zN+rAAAAAElFTkSuQmCC">
+</head>
+<body>
+    <!-- Scanlines Effect -->
+    <div class="scanlines"></div>
+    
+    <!-- Main Terminal Container -->
+    <div id="terminal">
+        <!-- Header -->
+        <div class="terminal-header">
+            <div class="header-title">
+                <span class="glitch" data-text="SHADOW-CHAT">SHADOW-CHAT</span>
+                <span class="version">v1.0.0</span>
+            </div>
+            <div class="status-indicator">
+                <span id="status">● OFFLINE</span>
+            </div>
+        </div>
+
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <pre class="ascii-art">
+   _____ __  _____    ____  ____ _       __
+  / ___// / / /   |  / __ \/ __ \ |     / /
+  \__ \/ /_/ / /| | / / / / / / / | /| / / 
+ ___/ / __  / ___ |/ /_/ / /_/ /| |/ |/ /  
+/____/_/ /_/_/  |_/_____/\____/ |__/|__/   
+                                            
+  ██████╗██╗  ██╗ █████╗ ████████╗
+ ██╔════╝██║  ██║██╔══██╗╚══██╔══╝
+ ██║     ███████║███████║   ██║   
+ ██║     ██╔══██║██╔══██║   ██║   
+ ╚██████╗██║  ██║██║  ██║   ██║   
+  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+            </pre>
+            <div class="welcome-text">
+                <p class="typing-text">&gt; Initiating secure peer-to-peer connection...</p>
+                <p class="typing-text delay-1">&gt; Zero-trace protocol activated</p>
+                <p class="typing-text delay-2">&gt; Encryption: End-to-end</p>
+                <p class="typing-text delay-3">&gt; Storage: NONE (Volatile Memory Only)</p>
+            </div>
+            
+            <div class="button-container">
+                <button id="btn-create-room" class="terminal-button">
+                    <span class="button-icon">▶</span> CREATE NEW ROOM
+                </button>
+                <button id="btn-join-room" class="terminal-button">
+                    <span class="button-icon">◆</span> JOIN EXISTING ROOM
+                </button>
+            </div>
+        </div>
+
+        <!-- Room Creation Screen -->
+        <div id="create-room-screen" class="screen">
+            <div class="screen-title">&gt; ROOM CREATION PROTOCOL</div>
+            <div class="info-box">
+                <p>&gt; Your unique Room ID has been generated:</p>
+                <div class="room-id-display">
+                    <input type="text" id="room-id" readonly />
+                    <button id="btn-copy-id" class="icon-button" title="Copy ID">📋</button>
+                </div>
+                <p class="warning-text">⚠ Share this ID only with trusted peers</p>
+                <p>&gt; Waiting for incoming connections...</p>
+            </div>
+            <button id="btn-back-from-create" class="terminal-button secondary">
+                <span class="button-icon">◀</span> ABORT MISSION
+            </button>
+        </div>
+
+        <!-- Room Join Screen -->
+        <div id="join-room-screen" class="screen">
+            <div class="screen-title">&gt; ROOM INFILTRATION PROTOCOL</div>
+            <div class="input-container">
+                <label for="peer-id-input">&gt; Enter target Room ID:</label>
+                <input type="text" id="peer-id-input" placeholder="Enter peer ID..." class="terminal-input" />
+                <button id="btn-connect" class="terminal-button">
+                    <span class="button-icon">⚡</span> ESTABLISH CONNECTION
+                </button>
+            </div>
+            <button id="btn-back-from-join" class="terminal-button secondary">
+                <span class="button-icon">◀</span> ABORT MISSION
+            </button>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chat-screen" class="screen">
+            <div class="chat-header">
+                <div>
+                    <span>&gt; SECURE CHANNEL ESTABLISHED</span>
+                    <span id="chat-peer-id" class="peer-id-small"></span>
+                </div>
+                <button id="btn-disconnect" class="icon-button danger">✖ DISCONNECT</button>
+            </div>
+            
+            <div id="messages-container" class="messages-container"></div>
+            
+            <div class="input-area">
+                <input 
+                    type="text" 
+                    id="message-input" 
+                    placeholder="Type encrypted message..." 
+                    class="message-input"
+                    autocomplete="off"
+                />
+                <button id="btn-send" class="send-button">SEND ►</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PeerJS CDN -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
