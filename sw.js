@@ -1,10 +1,10 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 1.0.2
+   Version: 1.1.0 - MS-DOS Edition
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v1.0.2';
+const CACHE_NAME = 'echo-off-v1.1.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -13,7 +13,8 @@ const ASSETS_TO_CACHE = [
     '/manifest.json',
     '/icon.svg',
     '/icon-192.png',
-    '/icon-512.png'
+    '/icon-512.png',
+    '/icon-retro.png'
 ];
 
 /* =============================================

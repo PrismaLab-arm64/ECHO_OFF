@@ -1,15 +1,21 @@
 {
-  "name": "ECHO_OFF - Chat Hacker Encriptado P2P",
+  "name": "ECHO_OFF - MS-DOS Edition",
   "short_name": "ECHO_OFF",
-  "description": "Chat P2P seguro con estética cyberpunk terminal. Zero-trace, sin base de datos, privacidad completa.",
-  "version": "1.0.2",
+  "description": "Chat P2P seguro con estética retro MS-DOS/Windows 95. Zero-trace, sin base de datos, privacidad completa.",
+  "version": "1.1.0",
   "lang": "es",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#000000",
+  "theme_color": "#000084",
   "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "icon-retro.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "icon-192.png",
       "sizes": "192x192",

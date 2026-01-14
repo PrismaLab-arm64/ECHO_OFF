@@ -3,142 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="ECHO_OFF - Comunicación P2P cifrada con estética cyberpunk">
+    <meta name="theme-color" content="#000084">
+    <meta name="description" content="ECHO_OFF - Comunicación P2P cifrada estilo MS-DOS/Windows 95">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ECHO_OFF v1.0.2 | Terminal Hacker</title>
+    <title>C:\ECHO_OFF.EXE v1.1.0</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-512.png">
+    <link rel="icon" type="image/png" href="icon-retro.png">
+    <link rel="apple-touch-icon" href="icon-retro.png">
 </head>
 <body>
     <!-- PWA Install Prompt -->
     <div id="install-prompt" class="install-prompt hidden">
-        <div class="install-content">
-            <p class="install-title">⚡ INSTALAR ECHO_OFF</p>
-            <p class="install-text">Instala esta aplicación para acceso rápido y modo offline</p>
-            <div class="install-buttons">
-                <button id="btn-install" class="terminal-button">INSTALAR</button>
-                <button id="btn-cancel-install" class="terminal-button secondary">CANCELAR</button>
+        <div class="dos-window">
+            <div class="dos-title-bar">
+                <span>INSTALAR APLICACIÓN</span>
+                <button class="dos-close" id="btn-cancel-install">✕</button>
+            </div>
+            <div class="dos-content">
+                <p>╔═══════════════════════════════════════════╗</p>
+                <p>║  ¿Instalar ECHO_OFF en este equipo?     ║</p>
+                <p>║                                           ║</p>
+                <p>║  La aplicación funcionará sin conexión   ║</p>
+                <p>╚═══════════════════════════════════════════╝</p>
+                <div class="dos-buttons">
+                    <button id="btn-install" class="dos-button">[ SÍ ]</button>
+                    <button class="dos-button">[ NO ]</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Loading Splash Screen -->
-    <div id="splash-screen" class="splash-screen active">
-        <div class="splash-content">
-            <div class="skull-icon">
-                <img src="icon.svg" alt="ECHO_OFF" width="150" height="150">
-            </div>
-            <div class="loading-text">
-                <p class="glitch-splash" data-text="ECHO_OFF">ECHO_OFF</p>
-                <p class="subtitle-splash">SISTEMA DE COMUNICACIÓN ENCRIPTADA</p>
-            </div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
-            </div>
-            <div class="loading-status">INICIALIZANDO PROTOCOLO DE SEGURIDAD...</div>
+    <!-- Boot Screen -->
+    <div id="splash-screen" class="boot-screen active">
+        <div class="boot-content">
+            <pre class="boot-text">
+Starting MS-DOS...
+
+ECHO_OFF Secure Communications System v1.1.0
+Copyright (C) 2026 CyberSec Division
+
+Initializing P2P Protocol...      [OK]
+Loading Encryption Module...      [OK]
+Checking Memory...                [640K OK]
+Starting PeerJS Service...        [OK]
+
+Type HELP for available commands.
+
+C:\></pre>
+            <span class="cursor-blink">_</span>
         </div>
     </div>
-
-    <!-- Scanlines Effect -->
-    <div class="scanlines"></div>
     
-    <!-- Main Terminal Container -->
-    <div id="terminal" class="hidden">
-        <!-- Header -->
-        <div class="terminal-header">
-            <div class="header-title">
-                <span class="glitch" data-text="ECHO_OFF">ECHO_OFF</span>
-                <span class="version">v1.0.2</span>
+    <!-- Main DOS Window -->
+    <div id="terminal" class="dos-terminal hidden">
+        <!-- Title Bar -->
+        <div class="dos-title-bar">
+            <span>C:\ECHO_OFF.EXE</span>
+            <div class="dos-controls">
+                <button class="dos-minimize">_</button>
+                <button class="dos-maximize">□</button>
+                <button class="dos-close">✕</button>
             </div>
-            <div class="status-indicator">
-                <span id="status">● DESCONECTADO</span>
+        </div>
+
+        <!-- Menu Bar -->
+        <div class="dos-menu-bar">
+            <span class="menu-item">Archivo</span>
+            <span class="menu-item">Conexión</span>
+            <span class="menu-item">Opciones</span>
+            <span class="menu-item">Ayuda</span>
+            <div class="status-bar-right">
+                <span id="status" class="status-text">● DESCONECTADO</span>
             </div>
         </div>
 
         <!-- Welcome Screen -->
         <div id="welcome-screen" class="screen active">
-            <pre class="ascii-art">
- ███████╗ ██████╗██╗  ██╗ ██████╗      ██████╗ ███████╗███████╗
- ██╔════╝██╔════╝██║  ██║██╔═══██╗    ██╔═══██╗██╔════╝██╔════╝
- █████╗  ██║     ███████║██║   ██║    ██║   ██║█████╗  █████╗  
- ██╔══╝  ██║     ██╔══██║██║   ██║    ██║   ██║██╔══╝  ██╔══╝  
- ███████╗╚██████╗██║  ██║╚██████╔╝    ╚██████╔╝██║     ██║     
- ╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝      ╚═════╝ ╚═╝     ╚═╝     
+            <pre class="dos-art">
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║   ███████╗ ██████╗██╗  ██╗ ██████╗     ╔═══════════════╗    ║
+║   ██╔════╝██╔════╝██║  ██║██╔═══██╗    ║  ███████╗     ║    ║
+║   █████╗  ██║     ███████║██║   ██║    ║  ██╔═══██╗    ║    ║
+║   ██╔══╝  ██║     ██╔══██║██║   ██║    ║  ██║   ██║    ║    ║
+║   ███████╗╚██████╗██║  ██║╚██████╔╝    ║  ╚██████╔╝    ║    ║
+║   ╚══════╝ ╚═════╝╚═╝  ╚═╝ ╚═════╝     ║   ╚═════╝     ║    ║
+║                                         ║               ║    ║
+║   SISTEMA DE COMUNICACIÓN SEGURA       ║  ███████╗██╗  ║    ║
+║   Versión 1.1.0 - MS-DOS Compatible    ║  ██╔════╝██║  ║    ║
+║                                         ║  █████╗  ██║  ║    ║
+║   Protocolo: Peer-to-Peer (P2P)        ║  ██╔══╝  ██║  ║    ║
+║   Encriptación: End-to-End             ║  ██║     ██║  ║    ║
+║   Almacenamiento: NINGUNO              ║  ╚═╝     ╚═╝  ║    ║
+║   Privacidad: MÁXIMA                   ╚═══════════════╝    ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+C:\> Seleccione una opción:
             </pre>
-            <div class="welcome-text">
-                <p class="typing-text">&gt; Iniciando conexión peer-to-peer segura...</p>
-                <p class="typing-text delay-1">&gt; Protocolo zero-trace activado</p>
-                <p class="typing-text delay-2">&gt; Encriptación: Extremo-a-extremo</p>
-                <p class="typing-text delay-3">&gt; Almacenamiento: NINGUNO (Memoria volátil)</p>
-            </div>
             
-            <div class="button-container">
-                <button id="btn-create-room" class="terminal-button">
-                    <span class="button-icon">▶</span> CREAR NUEVA SALA
+            <div class="dos-button-container">
+                <button id="btn-create-room" class="dos-button primary">
+                    [ 1 ] CREAR NUEVA SALA
                 </button>
-                <button id="btn-join-room" class="terminal-button">
-                    <span class="button-icon">◆</span> UNIRSE A SALA
+                <button id="btn-join-room" class="dos-button primary">
+                    [ 2 ] UNIRSE A SALA EXISTENTE
                 </button>
             </div>
         </div>
 
         <!-- Room Creation Screen -->
         <div id="create-room-screen" class="screen">
-            <div class="screen-title">&gt; PROTOCOLO DE CREACIÓN DE SALA</div>
-            <div class="info-box">
-                <p>&gt; Tu ID de sala único ha sido generado:</p>
-                <div class="room-id-display">
-                    <input type="text" id="room-id" readonly />
-                    <button id="btn-copy-id" class="icon-button" title="Copiar ID">📋</button>
-                </div>
-                <p class="warning-text">⚠ Comparte este ID solo con usuarios de confianza</p>
-                <p>&gt; Esperando conexiones entrantes...</p>
+            <pre class="dos-screen-content">
+╔═══════════════════════════════════════════════════════════════╗
+║                     CREAR NUEVA SALA                          ║
+╚═══════════════════════════════════════════════════════════════╝
+
+C:\> Generando ID único de sala...
+
+┌───────────────────────────────────────────────────────────────┐
+│ ID DE SALA GENERADO:                                          │
+            </pre>
+            <div class="dos-id-display">
+                <input type="text" id="room-id" readonly class="dos-input" />
+                <button id="btn-copy-id" class="dos-button-small">COPIAR</button>
             </div>
-            <button id="btn-back-from-create" class="terminal-button secondary">
-                <span class="button-icon">◀</span> ABORTAR MISIÓN
+            <pre class="dos-screen-content">
+│                                                               │
+│ ⚠ ADVERTENCIA: Comparta este ID únicamente con usuarios      │
+│   de confianza. Cualquier persona con este ID puede          │
+│   conectarse a su sala de chat.                              │
+└───────────────────────────────────────────────────────────────┘
+
+C:\> Estado: Esperando conexiones entrantes...
+C:\> Presione ESC para cancelar
+            </pre>
+            <button id="btn-back-from-create" class="dos-button">
+                [ ESC ] VOLVER AL MENÚ PRINCIPAL
             </button>
         </div>
 
         <!-- Room Join Screen -->
         <div id="join-room-screen" class="screen">
-            <div class="screen-title">&gt; PROTOCOLO DE INFILTRACIÓN</div>
-            <div class="input-container">
-                <label for="peer-id-input">&gt; Ingresa el ID de la sala objetivo:</label>
-                <input type="text" id="peer-id-input" placeholder="Ingresa el ID del peer..." class="terminal-input" />
-                <button id="btn-connect" class="terminal-button">
-                    <span class="button-icon">⚡</span> ESTABLECER CONEXIÓN
+            <pre class="dos-screen-content">
+╔═══════════════════════════════════════════════════════════════╗
+║                   UNIRSE A SALA EXISTENTE                     ║
+╚═══════════════════════════════════════════════════════════════╝
+
+C:\> Ingrese el ID de la sala objetivo:
+
+┌───────────────────────────────────────────────────────────────┐
+│ ID DEL PEER:                                                  │
+            </pre>
+            <div class="dos-input-group">
+                <input type="text" id="peer-id-input" placeholder="ECHO_XXXXXXXXXX" class="dos-input" />
+            </div>
+            <pre class="dos-screen-content">
+└───────────────────────────────────────────────────────────────┘
+
+C:\> Presione ENTER para conectar
+            </pre>
+            <div class="dos-button-group">
+                <button id="btn-connect" class="dos-button primary">
+                    [ ENTER ] CONECTAR
+                </button>
+                <button id="btn-back-from-join" class="dos-button">
+                    [ ESC ] CANCELAR
                 </button>
             </div>
-            <button id="btn-back-from-join" class="terminal-button secondary">
-                <span class="button-icon">◀</span> ABORTAR MISIÓN
-            </button>
         </div>
 
         <!-- Chat Screen -->
         <div id="chat-screen" class="screen">
-            <div class="chat-header">
-                <div>
-                    <span>&gt; CANAL SEGURO ESTABLECIDO</span>
-                    <span id="chat-peer-id" class="peer-id-small"></span>
-                </div>
-                <button id="btn-disconnect" class="icon-button danger">✖ DESCONECTAR</button>
+            <div class="dos-chat-header">
+                <pre>╔═══════════════════════════════════════════════════════════════╗
+║ CANAL SEGURO ESTABLECIDO │ PEER: <span id="chat-peer-id" class="peer-id"></span>                  ║
+╚═══════════════════════════════════════════════════════════════╝</pre>
+                <button id="btn-disconnect" class="dos-button-close">[ DESCONECTAR ]</button>
             </div>
             
-            <div id="messages-container" class="messages-container"></div>
+            <div id="messages-container" class="dos-messages"></div>
             
-            <div class="input-area">
+            <div class="dos-input-bar">
+                <span class="prompt">C:\></span>
                 <input 
                     type="text" 
                     id="message-input" 
-                    placeholder="Escribe mensaje encriptado..." 
-                    class="message-input"
+                    class="dos-message-input"
+                    placeholder="Escriba su mensaje..."
                     autocomplete="off"
                 />
-                <button id="btn-send" class="send-button">ENVIAR ►</button>
+                <button id="btn-send" class="dos-send-button">ENVIAR</button>
             </div>
         </div>
     </div>
