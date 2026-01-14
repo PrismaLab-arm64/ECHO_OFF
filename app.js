@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.1.1 - Mobile Optimized
+   Version: 1.1.2 - Clean Text Design
    ============================================= */
 
 // Global Variables
@@ -111,7 +111,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.1.1] MS-DOS Edition - Sistema inicializado');
+    console.log('[ECHO_OFF v1.1.2] Clean Design - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
