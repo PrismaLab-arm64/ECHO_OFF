@@ -1,11 +1,11 @@
-# 🔐 ECHO_OFF PWA - MS-DOS Edition
+# 🔐 ECHO_OFF PWA - Command Line Edition
 
-![Version](https://img.shields.io/badge/version-1.2.0-00AA00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.3.0-00AA00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00AA00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00AA00?style=for-the-badge)
-![Theme](https://img.shields.io/badge/theme-MS--DOS%20%2F%20Win95-000084?style=for-the-badge)
+![Theme](https://img.shields.io/badge/theme-Command%20Line-00AA00?style=for-the-badge)
 
-**Sala de Chat P2P Segura con Estetica Retro MS-DOS / Windows 95**
+**Sala de Chat P2P Segura con Estetica Command Line / Terminal**
 
 ```
 ╔═══════════════════════════════════════════════╗
@@ -13,297 +13,214 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura             ║
 ║                                               ║
-║   Version: 1.2.0                              ║
+║   Version: 1.3.0                              ║
 ║   Protocolo: P2P                              ║
 ║   Encriptacion: E2E                           ║
 ║   Privacidad: MAXIMA                          ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-C:\> ECHO_OFF v1.2.0 - MS-DOS Compatible System
+C:\> ECHO_OFF v1.3.0 - Command Line Style
 C:\> Type HELP for available commands
 ```
 
-## 🎯 Características
+## 🎯 Caracteristicas
 
 - **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento
 - **🌐 Comunicacion P2P**: Conexion directa navegador-a-navegador usando PeerJS
 - **💾 Sin Persistencia**: Mensajes destruidos al recargar/cerrar pagina
 - **📱 Progressive Web App**: Instalable en movil y escritorio
-- **🎨 UI Retro MS-DOS**: Interfaz estilo MS-DOS/Windows 95
+- **🎨 UI Command Line**: Interfaz estilo terminal limpia
 - **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
 - **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
 - **🔊 Sonidos Retro**: Efectos de audio 8-bit en eventos clave
 - **⏱️ Mensajes Temporales**: Mensajes visibles 5 segundos y desaparecen
 - **🎭 Efecto Matrix**: Animacion de desencriptacion al recibir mensajes
-- **💻 Diseño Limpio**: Colores MS-DOS básicos, fuente VT323
+- **💻 Diseño Limpio**: Color verde terminal, fuente VT323
 
-## 🆕 Novedades v1.2.0 - Simplified Design
+## 🆕 Novedades v1.3.0 - Command Line Style
 
-### 🎨 Diseño Simplificado
-- **Sin ASCII Art Complejo**: Texto simple y limpio para mejor legibilidad
-- **Colores MS-DOS Básicos**: Negro, azul, verde, cyan, amarillo, blanco, gris
-- **Interfaz Limpia**: Sin caracteres especiales complejos (═, ║, ╔, ╗, etc.)
-- **Mejor Legibilidad**: Fuente VT323 con tamaños optimizados
-- **Mobile-First**: 100% responsive para dispositivos móviles
+### 🎨 Diseño Estilo Terminal
+- **Sin Fondos Invasivos**: Eliminado fondo amarillo del ID
+- **Color Verde Terminal**: Todos los mensajes en color verde (#00AA00)
+- **Estilo Java/Command Line**: Diseño limpio y legible
+- **ID con Timestamp**: IDs unicos con marca de tiempo
 
-### 🔊 Sonidos Optimizados
-- **Reducción de Ruido**: Solo sonidos en eventos clave
-- **Eventos con Sonido**: Inicio de app, crear sala, unirse, desconectar
-- **Eventos Silenciosos**: Enviar y recibir mensajes (sin sonido invasivo)
-- **Barra de Menú**: Menú con File, Connection, Options, Help
-- **Bordes 3D**: Efectos raised/sunken para dar profundidad
-- **Botones Clásicos**: Botones con borde 3D y efecto hover
-- **Scrollbar Retro**: Barra de desplazamiento estilo Windows 95
+### 🔄 Mejoras de Funcionalidad
+- **Boton Regenerar ID**: Generar nuevo ID sin recargar
+- **IDs Unicos**: Cada sala tiene ID unico con timestamp
+- **Mejor Contraste**: Texto verde sobre fondo negro
+- **Interfaz Simplificada**: Sin elementos decorativos complejos
 
-### 🎵 Efectos Visuales Retro
-- **Cursor Parpadeante**: Guion bajo parpadeante tipo terminal
-- **Animación de Carga**: Barra de progreso estilo DOS
-- **Mensajes con Bordes**: Cajas de texto con bordes ASCII
-- **Color Coding**: Mensajes enviados (verde), recibidos (cyan), sistema (amarillo)
+### 📱 Responsive Mobile-First
+- **100% Responsive**: Optimizado para moviles
+- **Botones Grandes**: Targets tactiles de 44px minimo
+- **Layout Vertical**: Input bar adaptable en moviles
+- **Fuentes Escalables**: clamp() para todos los tamaños
 
-## 🚀 Inicio Rápido
+## 🚀 Inicio Rapido
 
-### Despliegue Online
-Simplemente abre `index.html` en un navegador web o despliega en cualquier servicio de hosting estático.
-
-### Prueba Local
+### Deployment Online
 ```bash
-# Usando Python
+# Subir a GitHub Pages, Netlify, Vercel, etc.
+# Solo archivos estaticos - no requiere backend
+```
+
+### Testing Local
+```bash
+# Python
 python -m http.server 8000
 
-# Usando Node.js
+# Node.js
 npx http-server -p 8000
 ```
 
-Luego abre `http://localhost:8000` en tu navegador.
+Abre `http://localhost:8000` en tu navegador.
 
-## 📖 Cómo Usar
+## 📖 Como Usar
 
-### Crear Sala (Host)
-1. Haz clic en **"[ 1 ] CREAR NUEVA SALA"**
-2. Se generará un ID único (formato: ECHO_XXXXXXXXXX)
-3. Copia el ID usando el botón **"COPIAR"**
-4. Compártelo solo con peers de confianza
-5. Espera la solicitud de conexión
-6. Aprueba la conexión cuando aparezca la alerta
+### Crear Nueva Sala (Host)
 
-### Unirse a Sala (Peer)
-1. Haz clic en **"[ 2 ] UNIRSE A SALA EXISTENTE"**
-2. Ingresa el ID del Host
-3. Haz clic en **"[ ENTER ] CONECTAR"**
-4. Espera la aprobación del Host
+1. Click en **"CREAR NUEVA SALA"**
+2. Se genera un ID unico: `ECHO_XXXXXXXXXX`
+3. Click en **"COPIAR"** para copiar el ID
+4. Click en **"REGENERAR"** para nuevo ID (opcional)
+5. Comparte el ID con la persona con quien quieres chatear
+6. Espera la conexion entrante
+7. Acepta la alerta de "INTRUSION DETECTADA"
 
-### Chat
-- Escribe tu mensaje en el campo `C:\>`
-- Presiona **Enter** o haz clic en **"ENVIAR"**
-- Los mensajes se muestran con efecto de desencriptación
-- Después de 3 segundos, los mensajes desaparecen automáticamente
-- Sonidos retro indican envío, recepción y desencriptación
+### Unirse a Sala (Cliente)
 
-## 🔊 Efectos de Sonido
+1. Click en **"UNIRSE A SALA EXISTENTE"**
+2. Pega el ID compartido por el Host
+3. Click en **"CONECTAR"**
+4. Espera que el Host apruebe la conexion
 
-- **Enviar Mensaje**: Beep ascendente (440Hz → 554Hz)
-- **Recibir Mensaje**: Beep descendente (554Hz → 440Hz)
-- **Desencriptar**: Sweep rápido tipo sawwave (200Hz → 800Hz)
-- **Desaparecer**: Fade out triangular (660Hz → 110Hz)
+### Chat Seguro
 
-## 🎨 Paleta de Colores MS-DOS
+- Los mensajes se muestran durante 5 segundos
+- Luego desaparecen automaticamente
+- Efecto de desencriptacion estilo Matrix
+- Todos los mensajes en color verde terminal
+- Sin persistencia - privacidad maxima
 
-| Color | Hex | Uso |
-|-------|-----|-----|
-| Negro | `#000000` | Fondo principal |
-| Azul MS-DOS | `#0000AA` | Texto secundario |
-| Verde MS-DOS | `#00AA00` | Prompt y mensajes enviados |
-| Cyan MS-DOS | `#00AAAA` | ASCII art y mensajes recibidos |
-| Rojo MS-DOS | `#AA0000` | Errores |
-| Magenta MS-DOS | `#AA00AA` | Encriptación |
-| Amarillo MS-DOS | `#AAAA00` | Advertencias y sistema |
-| Blanco MS-DOS | `#AAAAAA` | Texto principal |
-| Gris Windows 95 | `#C0C0C0` | Fondo de ventanas |
-| Azul Windows 95 | `#000084` | Barra de título |
+## 🔒 Privacidad y Seguridad
 
-## 📱 Instalación PWA
+### Protocolo Zero-Trace
+- **Sin base de datos**: No hay almacenamiento server-side
+- **Sin logs**: No se registran mensajes ni metadata
+- **Sin cookies**: No se almacena informacion del usuario
+- **Sin rastreo**: No hay analytics ni tracking
 
-La aplicación puede instalarse como una app nativa:
-- **Android**: Chrome mostrará el banner de instalación
-- **iOS**: Safari > Compartir > Añadir a pantalla de inicio
-- **Desktop**: Chrome mostrará el ícono de instalación en la barra de direcciones
+### Encriptacion End-to-End
+- Conexion P2P directa navegador-a-navegador
+- WebRTC con cifrado automatico
+- STUN servers de Google para NAT traversal
+- Sin intermediarios - datos no pasan por servidor
 
-## 🔒 Seguridad y Privacidad
+### Autorizacion Manual
+- El Host debe aprobar cada conexion
+- Alerta de "INTRUSION DETECTADA"
+- Control total sobre quien se conecta
+- Sin conexiones automaticas
 
-### Zero-Trace Protocol
-- **Sin bases de datos**: Ningún dato se almacena en servidores
-- **Sin cookies**: No se usan cookies de ningún tipo
-- **Sin LocalStorage**: No se guarda nada en el navegador
-- **Sin tracking**: Cero analítica o seguimiento de usuarios
+## 💻 Tecnologias
 
-### Cifrado WebRTC
-- **DTLS-SRTP**: Cifrado de transporte automático
-- **Conexión P2P**: Directa entre navegadores
-- **Sin intermediarios**: No pasa por servidores (excepto STUN inicial)
+- **HTML5/CSS3**: Interfaz responsive
+- **Vanilla JavaScript**: Sin frameworks pesados
+- **PeerJS**: Abstraccion de WebRTC
+- **Web Audio API**: Sonidos 8-bit retro
+- **Service Worker**: PWA offline-ready
+- **Manifest.json**: Instalacion en home screen
 
-### Destrucción Automática
-- **Al cerrar pestaña**: Todas las conexiones se destruyen
-- **Al recargar**: Toda la conversación se borra
-- **3 segundos**: Los mensajes desaparecen automáticamente
+## 📱 Progressive Web App
 
-## 🛠️ Tecnologías
+### Instalacion
 
-- **HTML5**: Estructura semántica
-- **CSS3**: Animaciones y efectos visuales retro
-- **Vanilla JavaScript**: Lógica sin dependencias
-- **PeerJS**: Abstracción de WebRTC
-- **Web Audio API**: Generación de sonidos 8-bit
-- **Service Worker**: Funcionalidad offline y PWA
-- **VT323 Font**: Tipografía monoespaciada estilo terminal
+#### Android
+1. Abre la app en Chrome
+2. Aparece prompt "Instalar ECHO_OFF"
+3. Click "SI" para instalar
+4. Icono aparece en home screen
 
-## 📁 Estructura de Archivos
+#### iOS
+1. Abre la app en Safari
+2. Click icono "Compartir"
+3. "Añadir a Inicio"
+4. Icono aparece en home screen
 
-```
-/
-├── index.html          # Estructura principal MS-DOS/Win95
-├── style.css           # Estilos retro completos
-├── app.js              # Lógica P2P y sonidos
-├── sw.js               # Service Worker v1.1.0
-├── manifest.json       # Configuración PWA
-├── icon-retro.png      # Ícono retro principal (1024x1024)
-├── icon.svg            # Ícono vectorial
-├── icon-192.png        # Ícono 192x192
-├── icon-512.png        # Ícono 512x512
-└── README.md           # Esta documentación
+#### Desktop
+1. Abre la app en Chrome/Edge
+2. Click icono "Instalar" en barra de direcciones
+3. La app se instala como aplicacion de escritorio
+
+## 🎨 Personalizacion
+
+### Colores Command Line
+```css
+--dos-black: #000000;    /* Fondo */
+--dos-green: #00AA00;    /* Texto principal */
+--dos-cyan: #00AAAA;     /* Titulos */
+--dos-white: #AAAAAA;    /* Texto secundario */
+--dos-gray: #808080;     /* Bordes */
+--win95-gray: #C0C0C0;   /* Botones */
+--win95-blue: #000080;   /* Barra de titulo */
 ```
 
-## 🌐 Compatibilidad de Navegadores
+### Fuentes
+- **VT323**: Fuente monoespaciada estilo terminal
+- **Tamaños escalables**: clamp() para responsive
+- **Legibilidad optimizada**: Contraste alto
 
-| Navegador | Versión Mínima | Estado |
-|-----------|----------------|--------|
-| Chrome    | 90+            | ✅ Completo |
-| Firefox   | 88+            | ✅ Completo |
-| Safari    | 14+            | ⚠️ Limitado* |
-| Edge      | 90+            | ✅ Completo |
+## 📊 Version History
 
-*Safari tiene limitaciones en PWA y WebRTC en iOS.
+### v1.3.0 (2026-01-15) - Command Line Style
+- Eliminado fondo amarillo invasivo del ID
+- Color verde terminal para todos los mensajes
+- Boton regenerar ID agregado
+- IDs unicos con timestamp
+- Mejor contraste y legibilidad
 
-## 🎮 Comandos Disponibles
+### v1.2.0 (2026-01-14) - Simplified Design
+- Eliminado ASCII art complejo
+- Colores MS-DOS basicos
+- Mensajes de 5 segundos (antes 3s)
+- Sonidos solo en eventos clave
+- 100% responsive mobile-first
 
-```
-C:\> HELP
+### v1.1.0 (2026-01-13) - MS-DOS Edition
+- Diseño retro MS-DOS/Windows 95
+- Sonidos 8-bit retro
+- Mensajes temporales
+- PWA instalable
 
-Comandos disponibles:
+### v1.0.0 (2026-01-12) - Initial Release
+- Chat P2P basico
+- Encriptacion E2E
+- Zero-trace protocol
 
-  CREATE    - Crear nueva sala de chat
-  JOIN      - Unirse a sala existente
-  SEND      - Enviar mensaje
-  DISCONNECT - Desconectar de la sala
-  EXIT      - Salir de la aplicación
+## 📄 Licencia
 
-Para más información, visite la documentación.
-```
+MIT License - Ver LICENSE para mas detalles.
 
-## 🐛 Solución de Problemas
+## ⚠️ Disclaimer
 
-### No se puede conectar
-- Verifica que ambos peers tengan acceso a Internet
-- Asegúrate de que los firewalls no bloqueen WebRTC
-- Intenta con otro navegador
-
-### La instalación PWA no aparece
-- Usa HTTPS o localhost
-- Verifica que el Service Worker esté registrado (consola del navegador)
-- Algunos navegadores requieren interacción del usuario
-
-### No se escuchan los sonidos
-- Haz clic en cualquier parte de la página primero (política de autoplay)
-- Verifica que el volumen del navegador no esté silenciado
-
-### La interfaz no se ve retro
-- Verifica que las fuentes VT323 se hayan cargado correctamente
-- Limpia la caché del navegador
-- Recarga la página con Ctrl+F5
-
-## 📜 Licencia
-
-MIT License con aviso de privacidad. Ver [LICENSE](LICENSE).
+Este proyecto es educativo y para uso personal. No garantizamos 100% privacidad en entornos de produccion. Use bajo su propio riesgo.
 
 ## 🤝 Contribuciones
 
-Las contribuciones son bienvenidas. Por favor:
-1. Haz fork del repositorio
-2. Crea una rama para tu feature
-3. Haz commit de tus cambios
-4. Push a la rama
-5. Abre un Pull Request
+Contributions, issues y feature requests son bienvenidos.
 
-## 📞 Soporte
+## 👨‍💻 Autor
 
-Para reportar bugs o solicitar features:
-- Abre un Issue en GitHub
-- Incluye detalles del navegador y sistema operativo
-- Proporciona pasos para reproducir el problema
+**PrismaLab**
+- GitHub: [@PrismaLab-arm64](https://github.com/PrismaLab-arm64)
 
-## 🔮 Roadmap
+## ⭐ Soporte
 
-### v1.2.0 - Themes Adicionales
-- [ ] Tema Cyberpunk (Terminal Hacker verde neón)
-- [ ] Tema Classic Terminal (Amber CRT)
-- [ ] Tema Matrix (Verde Matrix)
-- [ ] Selector de temas en la aplicación
-
-### v1.3.0 - Características Avanzadas
-- [ ] Compartir archivos P2P
-- [ ] Mensajes de voz
-- [ ] Salas con múltiples peers
-- [ ] Historial temporal (mientras está abierto)
-
-### v2.0.0 - Mejoras Mayores
-- [ ] Video chat P2P
-- [ ] Pantalla compartida
-- [ ] Cifrado adicional opcional
-- [ ] Modo offline con mensajería diferida
-
-## 📊 Changelog
-
-### v1.1.0 (2026-01-14) - MS-DOS Edition
-- ✨ Rediseño completo estilo MS-DOS/Windows 95
-- 🎨 Paleta de colores clásica MS-DOS (16 colores)
-- 🖥️ Ventanas estilo Windows 95 con bordes 3D
-- 💾 Boot screen estilo MS-DOS
-- 🔤 Fuente VT323 monoespaciada
-- 📟 ASCII art en pantalla de bienvenida
-- 🎵 Mantenimiento de sonidos 8-bit
-- ⏱️ Mantenimiento de mensajes temporales
-- 📱 PWA instalable con nuevo ícono retro
-- 🇪🇸 Interfaz 100% en español
-
-### v1.0.2 (2026-01-14) - Cyberpunk Edition
-- 🔐 Rebranding a ECHO_OFF
-- 🔊 Sistema de audio 8-bit
-- ⏱️ Mensajes temporales (3 segundos)
-- 📱 PWA instalable
-- 🇪🇸 Interfaz en español
-- 📱 Responsive 100%
-
-### v1.0.0 (2026-01-13) - Initial Release
-- 🚀 Lanzamiento inicial
-- 🔐 Chat P2P seguro
-- 💾 Protocolo Zero-Trace
-- 🎨 Estética cyberpunk
+Dale una ⭐ si este proyecto te ayudo!
 
 ---
 
-**ECHO_OFF v1.1.0 - MS-DOS Edition** | Protocolo Zero-Trace Activo | Privacidad Máxima
-
-```
-C:\> ECHO_OFF.EXE v1.1.0
-C:\> MS-DOS Compatible System
-C:\> Copyright (C) 2026 CyberSec Division
-C:\> 
-C:\> Starting P2P Communication Protocol...      [OK]
-C:\> Initializing Encryption Module...           [OK]
-C:\> Loading Zero-Trace Protocol...              [OK]
-C:\> System Ready.
-C:\> 
-C:\> Type HELP for available commands.
-C:\> _
-```
+**C:\> ECHO_OFF v1.3.0 - Command Line Edition**  
+**C:\> Maximum Privacy | Zero Trace | P2P Encrypted**

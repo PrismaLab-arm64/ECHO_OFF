@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.2.0 - Simplified Design
+   Version: 1.3.0 - Clean Command Line Style
    ============================================= */
 
 // Global Variables
@@ -31,6 +31,7 @@ const btnConnect = document.getElementById('btn-connect');
 const btnDisconnect = document.getElementById('btn-disconnect');
 const btnSend = document.getElementById('btn-send');
 const btnCopyId = document.getElementById('btn-copy-id');
+const btnRegenerateId = document.getElementById('btn-regenerate-id');
 const btnInstall = document.getElementById('btn-install');
 const btnCancelInstall = document.getElementById('btn-cancel-install');
 
@@ -111,7 +112,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.1.2] Clean Design - Sistema inicializado');
+    console.log('[ECHO_OFF v1.3.0] Clean Command Line - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -189,6 +190,7 @@ function setupEventListeners() {
     btnConnect.addEventListener('click', connectToPeer);
     btnDisconnect.addEventListener('click', disconnect);
     btnCopyId.addEventListener('click', copyRoomId);
+    btnRegenerateId.addEventListener('click', regenerateRoomId);
     
     // Messaging
     btnSend.addEventListener('click', sendMessage);
@@ -232,14 +234,23 @@ function showScreen(screen) {
 }
 
 /* =============================================
+   GENERATE UNIQUE RANDOM ID
+   ============================================= */
+function generateUniqueId() {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `ECHO_${timestamp}${random}`;
+}
+
+/* =============================================
    PEERJS CONNECTION
    ============================================= */
 function createRoom() {
     showScreen(createRoomScreen);
     playCreateRoomSound();
     
-    // Generate unique Peer ID
-    myPeerId = 'ECHO_' + Math.random().toString(36).substring(2, 12).toUpperCase();
+    // Generate unique Peer ID with timestamp
+    myPeerId = generateUniqueId();
     
     // Initialize PeerJS
     peer = new Peer(myPeerId, {
@@ -253,21 +264,21 @@ function createRoom() {
     
     peer.on('open', (id) => {
         console.log('[PEER] Sala creada:', id);
-        roomIdDisplay.textContent = id;
+        roomIdDisplay.value = id;
         isHost = true;
         updateStatus('EN ESPERA', 'warning');
         addSystemMessage('/// Sala ECHO_OFF creada');
         addSystemMessage(`/// ID: ${id}`);
-        addSystemMessage('/// Esperando conexión entrante...');
+        addSystemMessage('/// Esperando conexion entrante...');
     });
     
     peer.on('connection', (conn) => {
         // Intrusion detection - Manual approval
-        const approve = confirm(`⚠️ INTRUSIÓN DETECTADA\n\nID del intruso: ${conn.peer}\n\n¿Aprobar conexión?`);
+        const approve = confirm(`INTRUSION DETECTADA\n\nID del intruso: ${conn.peer}\n\nAprobar conexion?`);
         
         if (!approve) {
             conn.close();
-            addSystemMessage('/// Conexión rechazada');
+            addSystemMessage('/// Conexion rechazada');
             return;
         }
         
@@ -482,12 +493,26 @@ function addSystemMessage(content) {
    UTILITY FUNCTIONS
    ============================================= */
 function copyRoomId() {
-    const id = roomIdDisplay.textContent;
+    const id = roomIdDisplay.value;
     navigator.clipboard.writeText(id).then(() => {
         addSystemMessage('/// ID copiado al portapapeles');
     }).catch(err => {
         console.error('[CLIPBOARD] Error:', err);
     });
+}
+
+function regenerateRoomId() {
+    if (!peer || !isHost) return;
+    
+    addSystemMessage('/// Regenerando ID de sala...');
+    
+    // Destroy old peer
+    destroyPeer();
+    
+    // Create new room with new ID
+    setTimeout(() => {
+        createRoom();
+    }, 500);
 }
 
 function updateStatus(text, type) {

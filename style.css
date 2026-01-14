@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - MS-DOS / WINDOWS 95 THEME
-   Version: 1.2.0 - Simplified Design
+   Version: 1.3.0 - Clean Command Line Style
    ============================================= */
 
 /* Import Classic DOS Font */
@@ -380,17 +380,18 @@ body {
 }
 
 .dos-button-small {
-    padding: 8px 12px;
+    flex: 1;
+    padding: 10px 15px;
     background-color: var(--win95-gray);
     border: 2px solid;
     border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
     color: var(--dos-black);
     font-family: 'VT323', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
+    font-size: clamp(14px, 2.5vw, 18px);
     cursor: pointer;
-    margin-left: 8px;
-    min-height: 36px;
+    min-height: 44px;
     touch-action: manipulation;
+    font-weight: bold;
 }
 
 .dos-button-close {
@@ -431,19 +432,30 @@ body {
 
 .dos-id-display {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin: 10px 0;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
 }
 
-.dos-id-display .dos-input {
-    flex: 1;
-    min-width: 200px;
-    background-color: var(--dos-yellow);
-    color: var(--dos-black);
-    font-weight: bold;
+.dos-input-id {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--dos-black);
+    border: 1px solid var(--dos-green);
+    color: var(--dos-green);
+    font-family: 'VT323', monospace;
+    font-size: clamp(16px, 3vw, 20px);
+    outline: none;
+    min-height: 44px;
     text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.dos-button-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
 }
 
 /* =============================================
@@ -491,7 +503,7 @@ body {
 .message {
     margin-bottom: 12px;
     padding: 8px;
-    border-left: 3px solid;
+    border-left: 3px solid var(--dos-green);
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
@@ -501,12 +513,12 @@ body {
 }
 
 .message.received {
-    border-left-color: var(--dos-cyan);
+    border-left-color: var(--dos-green);
 }
 
 .message.system {
-    border-left-color: var(--dos-yellow);
-    color: var(--dos-yellow);
+    border-left-color: var(--dos-cyan);
+    color: var(--dos-cyan);
 }
 
 .message-header {
@@ -516,7 +528,7 @@ body {
 }
 
 .message-body {
-    color: var(--dos-white);
+    color: var(--dos-green);
     word-wrap: break-word;
 }
 
@@ -706,14 +718,17 @@ body {
         align-items: stretch;
     }
     
-    .dos-id-display .dos-input {
+    .dos-input-id {
         min-width: 100%;
     }
     
-    .dos-button-small {
+    .dos-button-row {
+        flex-direction: row;
         width: 100%;
-        margin-left: 0;
-        margin-top: 8px;
+    }
+    
+    .dos-button-small {
+        flex: 1;
     }
 }
 
