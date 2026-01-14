@@ -1,8 +1,9 @@
 {
-  "name": "Shadow-Chat PWA",
-  "short_name": "ShadowChat",
-  "description": "Secure P2P encrypted chat with cyberpunk terminal aesthetics. Zero-trace, no database, complete privacy.",
-  "version": "1.0.0",
+  "name": "ECHO_OFF - Chat Hacker Encriptado P2P",
+  "short_name": "ECHO_OFF",
+  "description": "Chat P2P seguro con estética cyberpunk terminal. Zero-trace, sin base de datos, privacidad completa.",
+  "version": "1.0.2",
+  "lang": "es",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",
@@ -10,32 +11,38 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJASURBVFiF7ZbPaxNBFMe/b2Y3m2ySbZqkNkqrBUGKCIIX8eJF8ODBk/+Af4AXDx48ePTo0YN/gAcPHrx4EEQQxIMgCK0UsW1Sq03TTZrs7s7M+JImJtlNtmlQ6AcGZt68+X7fzLyZeQv8Z/kDANLpdLTRaDwEcBtABMAVAJcBhAAAhmFYhmGYlmU5lmXZtm07juM4juO4rusqpZRSSimlFABN13VN0zRN0zRN0zRN0zRN0zRN0/Rut/sFwEcAHwB8APAewDsAbwC8BvAKwEsALwC8APAcwDMATwE8AfAYwCMADwE8APAAwH0A9wDcBXAHwG0AtwDcBHADwHUA1wBcBXAFwCUAFwFcAHAewDkAZwGcAXAawCkAJwGcAHAcwDEARwEcAXAYwCEABwEcAHAAwH4A+wDsBbAHwG4AuwDsBLADwHYA2wBsBbAFwGYAmwBsBLABwHoA6wCsBbAGwGoAqwCsBLACwHIAywAsBbAEwGIAiwAsBLAAwHwA8wDMBTAHwGwAswDMBDATwAwA0wFMAzAVwBQAkwFMAjARwAQA4wGMAzAWwBgAowGMAjASwAgAwwEMAzAUwBAAKQBJAAkAcQAxAFEAEQBhACEAQQABAH4APgBeAB4AbgAuAE4ADgB2ADYAVgAWAGYAJgBDABqALoAOgDaAFoAmgAaAOoAagCqACoAygBKAIoACgDyAHIAsgAyANIA0gBSAJIAEgDiAGIAogAiAMIAQgCCAAAA/AB8ALwAPADcAFwAnAAcAOwAbACsACwAzABOAIQAN9A8s/wX9BGW7Zth2zN+rAAAAAElFTkSuQmCC",
+      "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAJASURBVFiF7ZbPaxNBFMe/b2Y3m2ySbZqkNkqrBUGKCIIX8eJF8ODBk/+Af4AXDx48ePTo0YN/gAcPHrx4EEQQxIMgCK0UsW1Sq03TTZrs7s7M+JImJtlNtmlQ6AcGZt68+X7fzLyZeQv8Z/kDANLpdLTRaDwEcBtABMAVAJcBhAAAhmFYhmGYlmU5lmXZtm07juM4juO4rusqpZRSSimlFABN13VN0zRN0zRN0zRN0zRN0zRN0/Rut/sFwEcAHwB8APAewDsAbwC8BvAKwEsALwC8APAcwDMATwE8AfAYwCMADwE8APAAwH0A9wDcBXAHwG0AtwDcBHADwHUA1wBcBXAFwCUAFwFcAHAewDkAZwGcAXAawCkAJwGcAHAcwDEARwEcAXAYwCEABwEcAHAAwH4A+wDsBbAHwG4AuwDsBLADwHYA2wBsBbAFwGYAmwBsBLABwHoA6wCsBbAGwGoAqwCsBLACwHIAywAsBbAEwGIAiwAsBLAAwHwA8wDMBTAHwGwAswDMBDATwAwA0wFMAzAVwBQAkwFMAjARwAQA4wGMAzAWwBgAowGMAjASwAgAwwEMAzAUwBAAKQBJAAkAcQAxAFEAEQBhACEAQQABAH4APgBeAB4AbgAuAE4ADgB2ADYAVgAWAGYAJgBDABqALoAOgDaAFoAmgAaAOoAagCqACoAygBKAIoACgDyAHIAsgAyANIA0gBSAJIAEgDiAGIAogAiAMIAQgCCAAAA/AB8ALwAPADcAFwAnAAcAOwAbACsACwAzABOAIQAN9A8s/wX9BGW7Zth2zN+rAAAAAElFTkSuQmCC",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ],
-  "categories": ["communication", "social", "utilities"],
+  "categories": ["communication", "social", "utilities", "security"],
   "screenshots": [],
   "shortcuts": [
     {
-      "name": "Create New Room",
-      "short_name": "Create",
-      "description": "Start a new secure chat room",
+      "name": "Crear Nueva Sala",
+      "short_name": "Crear",
+      "description": "Iniciar una nueva sala de chat segura",
       "url": "/?action=create",
       "icons": []
     },
     {
-      "name": "Join Room",
-      "short_name": "Join",
-      "description": "Join an existing chat room",
+      "name": "Unirse a Sala",
+      "short_name": "Unirse",
+      "description": "Unirse a una sala de chat existente",
       "url": "/?action=join",
       "icons": []
     }

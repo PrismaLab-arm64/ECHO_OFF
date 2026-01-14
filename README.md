@@ -1,223 +1,217 @@
-# 🕵️ SHADOW-CHAT PWA
+# 🔐 ECHO_OFF PWA
 
-![Version](https://img.shields.io/badge/version-1.0.0-00ff00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.0.2-00ff00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00ff00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00ff00?style=for-the-badge)
 
-**Secure Peer-to-Peer Chat Application with Cyberpunk Terminal Aesthetics**
+**Sala de Chat P2P Segura con Estética Terminal Hacker/Cyberpunk**
 
-## 🎯 Features
+## 🎯 Características
 
-- **🔒 Complete Privacy**: Zero-trace protocol - no databases, no server storage
-- **🌐 P2P Communication**: Direct browser-to-browser connection using PeerJS
-- **💾 No Persistence**: All messages destroyed on page reload/close
-- **📱 Progressive Web App**: Installable on mobile and desktop
-- **🎨 Cyberpunk UI**: Terminal-style interface with scanline effects
-- **🔐 End-to-End**: Encrypted peer-to-peer data transmission
-- **👁️ Manual Authorization**: Host manually approves connection requests
+- **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento en servidor
+- **🌐 Comunicación P2P**: Conexión directa navegador-a-navegador usando PeerJS
+- **💾 Sin Persistencia**: Todos los mensajes se destruyen al recargar/cerrar página
+- **📱 Progressive Web App**: Instalable en móvil y escritorio con prompt nativo
+- **🎨 UI Cyberpunk**: Interfaz estilo terminal con efectos CRT scanlines
+- **🔐 Cifrado End-to-End**: Transmisión de datos P2P cifrada automática
+- **👁️ Autorización Manual**: El Host aprueba manualmente las solicitudes de conexión
+- **🔊 Sonidos Retro**: Efectos de audio 8-bit para enviar, recibir y desencriptar mensajes
+- **⏱️ Mensajes Temporales**: Los mensajes se muestran 3 segundos y luego desaparecen
+- **🎭 Efecto de Encriptación**: Animación tipo Matrix al recibir y desaparecer mensajes
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### Online Deployment
-Simply open `index.html` in a web browser or deploy to any static hosting service.
+### Despliegue Online
+Simplemente abre `index.html` en un navegador web o despliega en cualquier servicio de hosting estático.
 
-### Local Testing
+### Prueba Local
 ```bash
-# Using Python
+# Usando Python
 python -m http.server 8000
 
-# Using Node.js
+# Usando Node.js
 npx http-server -p 8000
-
-# Then open: http://localhost:8000
 ```
 
-## 📖 How to Use
+Luego abre `http://localhost:8000` en tu navegador.
 
-### Creating a Room (Host)
-1. Click **"CREATE NEW ROOM"**
-2. Your unique Room ID will be generated
-3. Share this ID with your peer (copy button available)
-4. Wait for connection request
-5. Accept or reject incoming connection via confirmation dialog
+## 📖 Cómo Usar
 
-### Joining a Room (Client)
-1. Click **"JOIN EXISTING ROOM"**
-2. Enter the Room ID provided by the host
-3. Wait for host approval
-4. Start chatting once connected
+### Crear Sala (Host)
+1. Haz clic en **"CREAR NUEVA SALA"**
+2. Se generará un ID único (formato: ECHO_XXXXXXXXXX)
+3. Copia el ID y compártelo solo con peers de confianza
+4. Espera la solicitud de conexión
+5. Aprueba la conexión cuando aparezca la alerta de "INTRUSIÓN DETECTADA"
 
-### Security Features
-- **Intrusion Detection**: Host receives alert when someone attempts to connect
-- **Manual Approval**: Host must explicitly accept all connections
-- **Zero-Trace**: All messages deleted when session ends
-- **No Storage**: Nothing saved to disk or cloud
+### Unirse a Sala (Peer)
+1. Haz clic en **"UNIRSE A SALA EXISTENTE"**
+2. Ingresa el ID del Host
+3. Haz clic en **"CONECTAR"**
+4. Espera la aprobación del Host
 
-## 🛠️ Technical Stack
+### Chat
+- Escribe tu mensaje en el campo de texto
+- Presiona **Enter** o haz clic en **"ENVIAR"**
+- Los mensajes se muestran con efecto de desencriptación
+- Después de 3 segundos, los mensajes desaparecen automáticamente
+- Sonidos retro indican envío, recepción y desencriptación
 
-| Component | Technology |
-|-----------|-----------|
-| Frontend | Vanilla JavaScript (ES6+) |
-| Styling | Custom CSS3 with animations |
-| P2P Library | PeerJS 1.5.2 |
-| PWA | Service Worker + Web Manifest |
-| Fonts | JetBrains Mono (Google Fonts) |
+## 🔊 Efectos de Sonido
 
-## 📁 Project Structure
+- **Enviar Mensaje**: Beep ascendente (440Hz → 554Hz)
+- **Recibir Mensaje**: Beep descendente (554Hz → 440Hz)
+- **Desencriptar**: Sweep rápido tipo sawwave (200Hz → 800Hz)
+- **Desaparecer**: Fade out triangular (660Hz → 110Hz)
+
+## 🎨 Estética Terminal
+
+- **Colores**: Negro (#000), Verde Neón (#0f0), Cyan (#0ff), Magenta (#f0f)
+- **Fuente**: JetBrains Mono (monoespaciada)
+- **Efectos**: CRT scanlines, glitch, sombras de neón
+- **Iconografía**: Símbolos de código (<>, {}, /, _)
+
+## 📱 Instalación PWA
+
+La aplicación puede instalarse como una app nativa:
+- **Android**: Chrome mostrará el banner de instalación
+- **iOS**: Safari > Compartir > Añadir a pantalla de inicio
+- **Desktop**: Chrome mostrará el ícono de instalación en la barra de direcciones
+
+## 🔒 Seguridad y Privacidad
+
+### Zero-Trace Protocol
+- **Sin bases de datos**: Ningún dato se almacena en servidores
+- **Sin cookies**: No se usan cookies de ningún tipo
+- **Sin LocalStorage**: No se guarda nada en el navegador
+- **Sin tracking**: Cero analítica o seguimiento de usuarios
+
+### Cifrado WebRTC
+- **DTLS-SRTP**: Cifrado de transporte automático
+- **Conexión P2P**: Directa entre navegadores
+- **Sin intermediarios**: No pasa por servidores (excepto STUN inicial)
+
+### Destrucción Automática
+- **Al cerrar pestaña**: Todas las conexiones se destruyen
+- **Al recargar**: Toda la conversación se borra
+- **3 segundos**: Los mensajes desaparecen automáticamente
+
+## 🛠️ Tecnologías
+
+- **HTML5**: Estructura semántica
+- **CSS3**: Animaciones y efectos visuales
+- **Vanilla JavaScript**: Lógica sin dependencias
+- **PeerJS**: Abstracción de WebRTC
+- **Web Audio API**: Generación de sonidos 8-bit
+- **Service Worker**: Funcionalidad offline y PWA
+
+## 📁 Estructura de Archivos
 
 ```
-shadow-chat-pwa/
-├── index.html          # Main HTML structure
-├── style.css           # Cyberpunk terminal styles
-├── app.js              # P2P logic and messaging
-├── manifest.json       # PWA configuration
-├── sw.js               # Service Worker for offline support
-└── README.md           # This file
+/
+├── index.html          # Estructura principal
+├── style.css           # Estilos cyberpunk
+├── app.js              # Lógica P2P y sonidos
+├── sw.js               # Service Worker
+├── manifest.json       # Configuración PWA
+├── icon.svg            # Ícono vectorial
+├── icon-192.png        # Ícono 192x192
+├── icon-512.png        # Ícono 512x512
+└── README.md           # Esta documentación
 ```
 
-## 🎨 Design Philosophy
+## 🌐 Compatibilidad de Navegadores
 
-### Visual Theme
-- **Background**: Solid black (#000000)
-- **Text**: Neon green (#00ff00)
-- **Accents**: Cyan (#00ffff)
-- **Font**: JetBrains Mono (monospaced)
-- **Effects**: CRT scanlines, neon glow, terminal aesthetics
+| Navegador | Versión Mínima | Estado |
+|-----------|----------------|--------|
+| Chrome    | 90+            | ✅ Completo |
+| Firefox   | 88+            | ✅ Completo |
+| Safari    | 14+            | ⚠️ Limitado* |
+| Edge      | 90+            | ✅ Completo |
 
-### UX Principles
-- **Minimalism**: Clean, distraction-free interface
-- **Feedback**: Visual animations for all actions
-- **Accessibility**: High contrast, readable text
-- **Responsiveness**: Works on all screen sizes
+*Safari tiene limitaciones en PWA y WebRTC en iOS.
 
-## 🔧 Configuration
+## ⚙️ Configuración Avanzada
 
-### PeerJS STUN Servers
-The app uses Google's public STUN servers by default:
+### Cambiar Servidores STUN
+Edita `app.js` y modifica la configuración de PeerJS:
+
 ```javascript
-iceServers: [
-    { urls: 'stun:stun.l.google.com:19302' },
-    { urls: 'stun:global.stun.twilio.com:3478' }
-]
+peer = new Peer(myPeerId, {
+    config: {
+        iceServers: [
+            { urls: 'stun:tu-servidor-stun.com:19302' }
+        ]
+    }
+});
 ```
 
-To use custom STUN/TURN servers, modify the configuration in `app.js`.
+### Ajustar Duración de Mensajes
+Edita `app.js` en la función `addMessage()`:
 
-## 🔐 Privacy & Security
+```javascript
+// Cambiar de 3000 (3 segundos) a tu preferencia
+setTimeout(() => {
+    disappearMessage(messageDiv, body, content);
+}, 3000); // ← Aquí
+```
 
-### What We DON'T Store
-- ❌ Messages
-- ❌ User data
-- ❌ Connection logs
-- ❌ Metadata
-- ❌ Any information whatsoever
+## 🐛 Solución de Problemas
 
-### What Happens on Exit
-When you close the tab or reload:
-1. All connections are terminated
-2. All messages are destroyed
-3. Peer IDs are regenerated
-4. Zero traces left behind
+### No se puede conectar
+- Verifica que ambos peers tengan acceso a Internet
+- Asegúrate de que los firewalls no bloqueen WebRTC
+- Intenta con otro navegador
 
-### Third-Party Dependencies
-- **PeerJS CDN**: Used for WebRTC signaling (open-source)
-- **Google Fonts**: JetBrains Mono font delivery
-- **STUN Servers**: Public servers for NAT traversal
+### La instalación PWA no aparece
+- Usa HTTPS o localhost
+- Verifica que el Service Worker esté registrado (consola del navegador)
+- Algunos navegadores requieren interacción del usuario
 
-## 📱 PWA Installation
+### No se escuchan los sonidos
+- Haz clic en cualquier parte de la página primero (política de autoplay)
+- Verifica que el volumen del navegador no esté silenciado
 
-### Android/iOS
-1. Open the app in Chrome/Safari
-2. Tap the menu (⋮) or share button
-3. Select "Add to Home Screen"
-4. App icon appears on your home screen
+## 📜 Licencia
 
-### Desktop (Chrome/Edge)
-1. Open the app
-2. Click the install icon in the address bar
-3. Or: Menu → Install Shadow-Chat
+MIT License con aviso de privacidad. Ver [LICENSE](LICENSE).
 
-## 🐛 Troubleshooting
+## 🤝 Contribuciones
 
-### Connection Issues
-- **Peer not found**: Verify the Room ID is correct
-- **Connection timeout**: Check firewall/network settings
-- **Host rejection**: Host declined the connection request
+Las contribuciones son bienvenidas. Por favor:
+1. Haz fork del repositorio
+2. Crea una rama para tu feature
+3. Haz commit de tus cambios
+4. Push a la rama
+5. Abre un Pull Request
 
-### Browser Compatibility
-Recommended browsers:
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
+## 📞 Soporte
 
-### Network Requirements
-- **WebRTC Support**: Required (modern browsers)
-- **STUN Access**: Must reach STUN servers
-- **Firewall**: May need to allow WebRTC traffic
+Para reportar bugs o solicitar features:
+- Abre un Issue en GitHub
+- Incluye detalles del navegador y sistema operativo
+- Proporciona pasos para reproducir el problema
 
-## 🔄 Version History
+## 🔮 Roadmap v1.1.0
 
-### v1.0.0 (Current)
-- Initial release
-- P2P communication via PeerJS
-- Terminal cyberpunk UI
-- PWA support with Service Worker
-- Zero-trace protocol implementation
-- Manual connection approval system
-
-## 🤝 Contributing
-
-This is a standalone privacy-focused project. For security reasons:
-- No external dependencies beyond PeerJS
-- No analytics or tracking
-- No third-party integrations
-
-## 📄 License
-
-This project is provided as-is for educational and privacy purposes.
-
-**Privacy Notice**: This application is designed for maximum privacy. No data is collected, stored, or transmitted to any servers beyond peer-to-peer communication.
-
-## ⚠️ Disclaimer
-
-- This app uses public STUN servers for NAT traversal
-- While P2P, metadata may be visible to network observers
-- For maximum security, use over VPN/Tor
-- Messages are encrypted in transit but stored in browser memory while active
-
-## 🌟 Features Roadmap
-
-Future considerations (would require user approval):
-- [ ] File transfer support
-- [ ] Voice/video chat
-- [ ] Custom TURN server support
-- [ ] Multi-user rooms
-- [ ] Optional message encryption passphrase
+- [ ] Compartir archivos P2P
+- [ ] Mensajes de voz
+- [ ] Salas con múltiples peers
+- [ ] Modo oscuro/claro
+- [ ] Temas personalizables
 
 ---
 
-<div align="center">
-
-**SHADOW-CHAT v1.0.0**
-
-*Secure. Private. Ephemeral.*
+**ECHO_OFF v1.0.2** | Protocolo Zero-Trace Activo | Privacidad Máxima
 
 ```
-   _____ __  _____    ____  ____ _       __
-  / ___// / / /   |  / __ \/ __ \ |     / /
-  \__ \/ /_/ / /| | / / / / / / / | /| / / 
- ___/ / __  / ___ |/ /_/ / /_/ /| |/ |/ /  
-/____/_/ /_/_/  |_/_____/\____/ |__/|__/   
-                                            
-  ██████╗██╗  ██╗ █████╗ ████████╗
- ██╔════╝██║  ██║██╔══██╗╚══██╔══╝
- ██║     ███████║███████║   ██║   
- ██║     ██╔══██║██╔══██║   ██║   
- ╚██████╗██║  ██║██║  ██║   ██║   
-  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+  _____ _____ _   _  ___     ___  ___________
+ | ____/ ____| | | |/ _ \   / _ \|  ___|  ___|
+ |  _|| |    | |_| | | | | | | | | |_  | |_
+ | |__| |___ |  _  | |_| | | |_| |  _| |  _|
+ |_____\____|_| |_|\___/   \___/|_|   |_|
+
+ > Conexión segura establecida
+ > Protocolo Zero-Trace: ACTIVO
+ > Cifrado E2E: OPERACIONAL
 ```
-
-*Zero-Trace Protocol Active*
-
-</div>

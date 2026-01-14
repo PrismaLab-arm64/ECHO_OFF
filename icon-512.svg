@@ -1,0 +1,50 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#000000"/>
+  
+  <!-- Outer Glow -->
+  <circle cx="256" cy="256" r="220" fill="none" stroke="#00ff00" stroke-width="2" opacity="0.3"/>
+  <circle cx="256" cy="256" r="200" fill="none" stroke="#00ff00" stroke-width="1" opacity="0.5"/>
+  
+  <!-- Skull Outline (Punk Style) -->
+  <ellipse cx="256" cy="220" rx="120" ry="140" fill="none" stroke="#00ff00" stroke-width="4"/>
+  
+  <!-- Eyes (Glowing) -->
+  <circle cx="220" cy="200" r="20" fill="#00ff00" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="292" cy="200" r="20" fill="#00ff00" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Nose -->
+  <polygon points="256,230 240,260 272,260" fill="none" stroke="#00ff00" stroke-width="3"/>
+  
+  <!-- Teeth/Jaw -->
+  <path d="M 180,280 L 180,300 L 200,300 L 200,320 L 220,320 L 220,300 L 240,300 L 240,320 L 256,320 L 256,300 L 272,300 L 272,320 L 292,320 L 292,300 L 312,300 L 312,320 L 332,320 L 332,300 L 332,280 Z" 
+        fill="none" stroke="#00ff00" stroke-width="3"/>
+  
+  <!-- Mohawk (Punk Hair) -->
+  <path d="M 200,80 L 220,40 L 240,60 L 256,20 L 272,60 L 292,40 L 312,80 L 300,100 L 280,90 L 256,100 L 232,90 L 212,100 Z" 
+        fill="#ff00ff" stroke="#00ff00" stroke-width="2"/>
+  
+  <!-- Binary Code Rain Effect -->
+  <text x="40" y="450" font-family="monospace" font-size="14" fill="#00ff00" opacity="0.6">010101</text>
+  <text x="140" y="470" font-family="monospace" font-size="14" fill="#00ff00" opacity="0.6">110011</text>
+  <text x="240" y="455" font-family="monospace" font-size="14" fill="#00ff00" opacity="0.6">101010</text>
+  <text x="340" y="475" font-family="monospace" font-size="14" fill="#00ff00" opacity="0.6">011101</text>
+  <text x="440" y="460" font-family="monospace" font-size="14" fill="#00ff00" opacity="0.6">100110</text>
+  
+  <!-- "S" Letter (Shadow-Chat) -->
+  <text x="256" y="420" font-family="monospace" font-size="80" font-weight="bold" fill="none" stroke="#00ff00" stroke-width="2" text-anchor="middle">S</text>
+  
+  <!-- Anarchy Symbol -->
+  <circle cx="420" cy="420" r="30" fill="none" stroke="#ff00ff" stroke-width="3"/>
+  <text x="420" y="435" font-family="monospace" font-size="50" font-weight="bold" fill="#ff00ff" text-anchor="middle">A</text>
+  
+  <!-- Corner Brackets -->
+  <path d="M 20,20 L 20,60 M 20,20 L 60,20" stroke="#00ff00" stroke-width="3" fill="none"/>
+  <path d="M 492,20 L 492,60 M 492,20 L 452,20" stroke="#00ff00" stroke-width="3" fill="none"/>
+  <path d="M 20,492 L 20,452 M 20,492 L 60,492" stroke="#00ff00" stroke-width="3" fill="none"/>
+  <path d="M 492,492 L 492,452 M 492,492 L 452,492" stroke="#00ff00" stroke-width="3" fill="none"/>
+</svg>

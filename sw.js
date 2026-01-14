@@ -1,16 +1,19 @@
 /* =============================================
-   SHADOW-CHAT PWA - SERVICE WORKER
-   Version: 1.0.0
+   ECHO_OFF PWA - SERVICE WORKER
+   Version: 1.0.2
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'shadow-chat-v1.0.0';
+const CACHE_NAME = 'echo-off-v1.0.2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/style.css',
     '/app.js',
-    '/manifest.json'
+    '/manifest.json',
+    '/icon.svg',
+    '/icon-192.png',
+    '/icon-512.png'
 ];
 
 /* =============================================
