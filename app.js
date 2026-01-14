@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.3.0 - Clean Command Line Style
+   Version: 1.3.1 - Better UX and Alerts
    ============================================= */
 
 // Global Variables
@@ -112,7 +112,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.3.0] Clean Command Line - Sistema inicializado');
+    console.log('[ECHO_OFF v1.3.1] Better UX - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -184,7 +184,11 @@ function setupEventListeners() {
         destroyPeer();
         showScreen(welcomeScreen);
     });
-    btnBackFromJoin.addEventListener('click', () => showScreen(welcomeScreen));
+    btnBackFromJoin.addEventListener('click', () => {
+        // Clear input field when going back
+        peerIdInput.value = '';
+        showScreen(welcomeScreen);
+    });
     
     // Connection
     btnConnect.addEventListener('click', connectToPeer);
@@ -273,12 +277,24 @@ function createRoom() {
     });
     
     peer.on('connection', (conn) => {
-        // Intrusion detection - Manual approval
-        const approve = confirm(`INTRUSION DETECTADA\n\nID del intruso: ${conn.peer}\n\nAprobar conexion?`);
+        // Connection approval with better UX
+        const approvalMessage = `═══════════════════════════════════════════════
+
+NUEVA SOLICITUD DE CONEXION
+
+Usuario desea unirse a tu sala
+ID: ${conn.peer}
+
+¿Permitir acceso a esta sala?
+
+═══════════════════════════════════════════════`;
+        
+        const approve = confirm(approvalMessage);
         
         if (!approve) {
             conn.close();
             addSystemMessage('/// Conexion rechazada');
+            addSystemMessage(`/// Usuario ${conn.peer} fue bloqueado`);
             return;
         }
         
@@ -298,20 +314,28 @@ function createRoom() {
 
 function showJoinScreen() {
     showScreen(joinRoomScreen);
+    // Clear input field when showing join screen
+    peerIdInput.value = '';
+    peerIdInput.focus();
 }
 
 function connectToPeer() {
     const targetId = peerIdInput.value.trim();
     
     if (!targetId) {
-        alert('⚠️ Por favor ingrese el ID del Host');
+        alert('Por favor ingrese el ID de la sala');
+        return;
+    }
+    
+    if (!targetId.startsWith('ECHO_')) {
+        alert('ID invalido. Debe comenzar con ECHO_');
         return;
     }
     
     playJoinRoomSound();
     
-    // Generate unique Peer ID
-    myPeerId = 'ECHO_' + Math.random().toString(36).substring(2, 12).toUpperCase();
+    // Generate unique Peer ID for client
+    myPeerId = generateUniqueId();
     
     // Initialize PeerJS
     peer = new Peer(myPeerId, {
@@ -331,7 +355,17 @@ function connectToPeer() {
     
     peer.on('error', (err) => {
         console.error('[PEER] Error:', err);
-        alert(`⚠️ ERROR: No se pudo conectar\n${err.type}`);
+        let errorMsg = 'No se pudo conectar';
+        
+        if (err.type === 'peer-unavailable') {
+            errorMsg = 'Sala no encontrada o inactiva';
+        } else if (err.type === 'network') {
+            errorMsg = 'Error de red';
+        } else if (err.type === 'server-error') {
+            errorMsg = 'Error del servidor PeerJS';
+        }
+        
+        alert(`ERROR DE CONEXION\n\n${errorMsg}\n\nVerifique el ID e intente nuevamente`);
     });
 }
 
@@ -341,8 +375,11 @@ function setupConnectionHandlers(conn) {
         showScreen(chatScreen);
         chatPeerId.textContent = conn.peer;
         updateStatus('CONECTADO', 'success');
-        addSystemMessage('/// Conexión P2P establecida');
-        addSystemMessage('/// Canal cifrado activo');
+        addSystemMessage('/// ===================================');
+        addSystemMessage('/// CONEXION P2P ESTABLECIDA');
+        addSystemMessage('/// Canal cifrado E2E activo');
+        addSystemMessage('/// Privacidad maxima garantizada');
+        addSystemMessage('/// ===================================');
     });
     
     conn.on('data', (data) => {

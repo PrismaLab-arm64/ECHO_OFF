@@ -1,6 +1,6 @@
 # 🔐 ECHO_OFF PWA - Command Line Edition
 
-![Version](https://img.shields.io/badge/version-1.3.0-00AA00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.3.1-00AA00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00AA00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00AA00?style=for-the-badge)
 ![Theme](https://img.shields.io/badge/theme-Command%20Line-00AA00?style=for-the-badge)
@@ -13,14 +13,14 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura             ║
 ║                                               ║
-║   Version: 1.3.0                              ║
+║   Version: 1.3.1                              ║
 ║   Protocolo: P2P                              ║
 ║   Encriptacion: E2E                           ║
 ║   Privacidad: MAXIMA                          ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-C:\> ECHO_OFF v1.3.0 - Command Line Style
+C:\> ECHO_OFF v1.3.1 - Command Line Style
 C:\> Type HELP for available commands
 ```
 
@@ -38,16 +38,19 @@ C:\> Type HELP for available commands
 - **🎭 Efecto Matrix**: Animacion de desencriptacion al recibir mensajes
 - **💻 Diseño Limpio**: Color verde terminal, fuente VT323
 
-## 🆕 Novedades v1.3.0 - Command Line Style
+## 🆕 Novedades v1.3.1 - Better UX & Alerts
 
-### 🎨 Diseño Estilo Terminal
-- **Sin Fondos Invasivos**: Eliminado fondo amarillo del ID
-- **Color Verde Terminal**: Todos los mensajes en color verde (#00AA00)
-- **Estilo Java/Command Line**: Diseño limpio y legible
-- **ID con Timestamp**: IDs unicos con marca de tiempo
+### ✅ Mejoras de UX
+- **Alerta Mejorada**: "NUEVA SOLICITUD DE CONEXION" en lugar de "INTRUSION DETECTADA"
+- **Mensajes Claros**: Explicacion amigable del proceso de aprobacion
+- **Limpieza de Inputs**: Input field se limpia al cambiar de pantalla
+- **Validacion de ID**: Verifica que el ID comience con "ECHO_"
 
-### 🔄 Mejoras de Funcionalidad
-- **Boton Regenerar ID**: Generar nuevo ID sin recargar
+### 🔧 Correcciones
+- **Input Cleanup**: El campo ID se limpia al volver al menu
+- **Mejor Focus**: Auto-focus en input al entrar a "Unirse a Sala"
+- **Mensajes de Error**: Errores mas descriptivos y claros
+- **Conexion Establecida**: Banner informativo al conectar
 - **IDs Unicos**: Cada sala tiene ID unico con timestamp
 - **Mejor Contraste**: Texto verde sobre fondo negro
 - **Interfaz Simplificada**: Sin elementos decorativos complejos
