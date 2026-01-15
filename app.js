@@ -36,6 +36,8 @@ let audioChunks = [];
 let isRecording = false;
 let fileTransferProgress = {};
 let sasCode = null; // Short Authentication String
+const CHUNK_SIZE = 16384; // 16KB chunks for file transfer
+let currentFileTransfer = null;
 
 // Audio Context for 8-bit sounds
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -78,15 +80,6 @@ const chatPeerId = document.getElementById('chat-peer-id');
 let securityInterval = null;
 let vpnRotationInterval = null;
 let ipRotationInterval = null;
-
-// Advanced Features State
-let mediaRecorder = null;
-let audioChunks = [];
-let isRecording = false;
-let escPressCount = 0;
-let escTimer = null;
-const CHUNK_SIZE = 16384; // 16KB chunks for file transfer
-let currentFileTransfer = null;
 
 // VPN Servers Pool (fictional)
 const VPN_SERVERS = [
