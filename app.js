@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.4.0 - Destroy on Reply
+   Version: 2.5.0 - Gray Fade & Encryption Indicator
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -11,11 +11,15 @@
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
    
+   NEW IN 2.5.0:
+   - Messages fade to gray after 3 seconds (not destroyed)
+   - Messages destroyed only when user replies
+   - Remote encryption indicator with Matrix effect
+   - Better visual feedback and UX
+   
    NEW IN 2.4.0:
-   - Text messages: Destroyed IMMEDIATELY when user replies
+   - Text messages: Destroyed when user replies
    - No timeout: Messages stay until user responds
-   - Visual hint: "[Responde para destruir]" on each message
-   - Better UX: User can read long messages completely
    
    NEW IN 2.3.0:
    - Extended countdown: 20 seconds AFTER action completes
@@ -220,6 +224,62 @@ function updateSecurityDisplay(info) {
             <span class="security-value">${info.latency}</span>
         </div>
     `;
+}
+
+/* =============================================
+   REMOTE ENCRYPTION INDICATOR
+   Matrix-style encryption visualization
+   ============================================= */
+
+let encryptionInterval = null;
+
+function startEncryptionIndicator() {
+    const indicator = document.getElementById('encryption-indicator');
+    const matrix1 = document.getElementById('encryption-matrix-1');
+    const matrix2 = document.getElementById('encryption-matrix-2');
+    
+    if (!indicator || !matrix1 || !matrix2) return;
+    
+    // Show indicator
+    indicator.classList.remove('hidden');
+    
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+    const hexChars = '0123456789ABCDEF';
+    
+    function generateMatrixLine(length = 60) {
+        let line = '';
+        for (let i = 0; i < length; i++) {
+            if (i % 3 === 0) {
+                line += hexChars[Math.floor(Math.random() * hexChars.length)];
+            } else {
+                line += chars[Math.floor(Math.random() * chars.length)];
+            }
+            if (i % 10 === 9) line += ' ';
+        }
+        return line;
+    }
+    
+    // Update matrix text every 100ms
+    encryptionInterval = setInterval(() => {
+        matrix1.textContent = generateMatrixLine(70);
+        matrix2.textContent = generateMatrixLine(70);
+    }, 100);
+    
+    console.log('[ENCRYPTION INDICATOR] Started');
+}
+
+function stopEncryptionIndicator() {
+    const indicator = document.getElementById('encryption-indicator');
+    if (indicator) {
+        indicator.classList.add('hidden');
+    }
+    
+    if (encryptionInterval) {
+        clearInterval(encryptionInterval);
+        encryptionInterval = null;
+    }
+    
+    console.log('[ENCRYPTION INDICATOR] Stopped');
 }
 
 /* =============================================
@@ -818,7 +878,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.4.0] Destroy on Reply - Sistema inicializado');
+    console.log('[ECHO_OFF v2.5.0] Gray Fade & Encryption Indicator - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -1165,6 +1225,9 @@ function setupConnectionHandlers(conn) {
         // Start security animation layer
         startSecurityAnimation();
         
+        // Start encryption indicator
+        startEncryptionIndicator();
+        
         // Generate SAS for verification (with small delay to ensure IDs are set)
         setTimeout(() => {
             generateSAS();
@@ -1285,10 +1348,23 @@ function addMessage(content, type) {
     
     // Decrypt animation for received messages
     if (type === 'received') {
-        decryptMessage(body, content);
+        decryptMessage(body, content, () => {
+            // After decryption, fade to gray after 3 seconds
+            setTimeout(() => {
+                messageDiv.style.transition = 'color 2s ease';
+                messageDiv.style.color = '#606060';
+                timerSpan.style.color = '#505050';
+            }, 3000);
+        });
     } else {
         // For sent messages, show immediately
         body.textContent = `> ${content}`;
+        // Fade to gray after 3 seconds
+        setTimeout(() => {
+            messageDiv.style.transition = 'color 2s ease';
+            messageDiv.style.color = '#606060';
+            timerSpan.style.color = '#505050';
+        }, 3000);
     }
     
     // Show "Responde para destruir" hint
@@ -1298,7 +1374,7 @@ function addMessage(content, type) {
     console.log(`[MESSAGE ADDED] Type: ${type}, Length: ${content.length} chars, ActiveMessages: ${activeMessages.length}`);
 }
 
-function decryptMessage(element, finalText) {
+function decryptMessage(element, finalText, callback) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
     const length = finalText.length;
     let iterations = 0;
@@ -1325,6 +1401,8 @@ function decryptMessage(element, finalText) {
             element.textContent = `> ${finalText}`;
             element.classList.remove('message-encrypted');
             element.classList.add('message-decrypted');
+            // Call callback if provided
+            if (callback) callback();
         }
     }, 50);
 }
@@ -1414,6 +1492,7 @@ function updateStatus(text, type) {
 function disconnect() {
     playDisconnectSound();
     stopSecurityAnimation();
+    stopEncryptionIndicator();
     if (currentConnection) {
         currentConnection.close();
         currentConnection = null;

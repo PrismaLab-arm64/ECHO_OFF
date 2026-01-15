@@ -744,6 +744,40 @@ body {
     display: inline-block;
 }
 
+/* Remote Encryption Indicator */
+.encryption-indicator {
+    margin: 10px;
+    padding: 12px 15px;
+    background-color: rgba(0, 128, 0, 0.15);
+    border: 2px solid var(--console-green);
+    border-radius: 6px;
+    font-family: 'Courier Prime', monospace;
+    box-shadow: 0 0 15px rgba(0, 204, 0, 0.3);
+}
+
+.encryption-indicator.hidden {
+    display: none;
+}
+
+.encryption-header {
+    color: var(--console-green);
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 0 0 8px rgba(0, 204, 0, 0.6);
+}
+
+.encryption-matrix {
+    font-size: 11px;
+    line-height: 1.4;
+    color: #00FF00;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 /* Advanced Features Bar */
 .advanced-features-bar {
     display: flex;

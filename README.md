@@ -1,6 +1,6 @@
 # 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-2.4.0-00CC00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.5.0-00CC00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
@@ -13,7 +13,7 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 2.4.0                              ║
+║   Version: 2.5.0                              ║
 ║   Protocolo: P2P 1:1                          ║
 ║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
@@ -21,8 +21,8 @@
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-> ECHO_OFF v2.4.0 - Destroy on Reply Edition
-> Messages destroyed when you reply | No timers for text
+> ECHO_OFF v2.5.0 - Gray Fade & Encryption Indicator
+> Messages fade to gray | Remote encryption effect | Better UX
 ```
 
 ## ⚖️ Exoneración de Responsabilidad (Disclaimer)
@@ -77,6 +77,48 @@ El uso de este código o aplicación es responsabilidad exclusiva del usuario fi
 - **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
 - **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
 - **🔒 Wake Lock API**: Mantiene pantalla activa durante chat
+
+## 🆕 Novedades v2.5.0 - Gray Fade & Encryption Indicator
+
+### 🎨 Mejoras Visuales y de UX
+1. **Fade to Gray**: Mensajes pasan a gris después de 3 segundos (NO se destruyen)
+   - Verde brillante → Gris suave (transición de 2s)
+   - Mensajes siguen visibles hasta responder
+   - Mejor distinción entre mensajes nuevos y leídos
+
+2. **Indicador de Encriptación Remota** ⚡
+   - Recuadro animado: "ENCRIPTACION ACTIVADA REMOTAMENTE:"
+   - 2 líneas de texto tipo Matrix cambiante
+   - Caracteres alfanuméricos + hexadecimales
+   - Actualización cada 100ms para efecto "vivo"
+   - Se activa al conectar, se desactiva al desconectar
+
+3. **Auditoría de Versiones**
+   - Todas las versiones actualizadas a v2.5.0
+   - app.js, index.html, manifest.json, sw.js, README.md
+   - Service Worker cache: `echo-off-v2.5.0`
+
+### 🎬 Comportamiento Visual Mejorado
+```
+1. Mensaje recibe → Verde brillante (#00CC00)
+2. Efecto Matrix de desencriptación (1s)
+3. Mensaje queda verde por 3 segundos
+4. Fade suave a gris (#606060) en 2 segundos
+5. Mensaje en gris hasta que respondas
+6. Al responder → DESTRUCCIÓN (efecto Matrix inverso)
+```
+
+### ⚡ Efecto de Encriptación
+```
+╔════════════════════════════════════════════╗
+║ ⚡ ENCRIPTACION ACTIVADA REMOTAMENTE:      ║
+║ 7A9F2B4D 8E1C5G3H 9K0L6M2N 4P8Q1R5S 7T3U... ║
+║ D5F2A8C1 B9E3G7H4 K6M1N0P2 Q8R4S5T7 U3V9... ║
+╚════════════════════════════════════════════╝
+```
+- Texto cambia constantemente (100ms)
+- Mix de letras, números y símbolos
+- Prefijos hexadecimales para efecto técnico
 
 ## 🆕 Novedades v2.4.0 - Destroy on Reply (Mejor UX para Lectura)
 
@@ -392,6 +434,12 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📊 Version History
 
+### v2.5.0 (2026-01-15) - Gray Fade & Encryption Indicator
+- **Fade to Gray**: Mensajes pasan a gris después de 3 segundos (no destrucción)
+- **Indicador de Encriptación**: Efecto Matrix con texto cambiante
+- **Mejor UX visual**: Distinción clara entre mensajes nuevos y leídos
+- **Auditoría completa**: Todas las versiones actualizadas
+
 ### v2.4.0 (2026-01-15) - Destroy on Reply
 - **Mensajes de texto**: Destrucción al responder (sin timeout automático)
 - **Mejor UX**: Lee mensajes largos sin prisas
@@ -481,7 +529,7 @@ Abre `http://localhost:8000` en tu navegador.
 v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI) 
 → v1.3.1 (UX) → v1.4.1 (Bugs) → v1.5.0 (Arch) → v1.6.0 (Security) 
 → v2.0.0 (Advanced) → v2.1.0 (Timer) → v2.2.0 (Smart) → v2.3.0 (Extended)
-→ v2.4.0 (Destroy on Reply)
+→ v2.4.0 (Destroy on Reply) → v2.5.0 (Gray Fade)
 ```
 
 ### Funcionalidades por Versión
@@ -499,7 +547,8 @@ v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI)
 | v2.2.0 | Smart Countdown | +91 |
 | v2.3.0 | Extended Countdown (20s) | +34 |
 | v2.4.0 | Destroy on Reply | +45 |
-| **TOTAL** | **13 versiones** | **~2,845+** |
+| v2.5.0 | Gray Fade & Encryption | +65 |
+| **TOTAL** | **14 versiones** | **~2,955+** |
 
 ## 📄 Licencia
 
@@ -524,5 +573,5 @@ Dale una ⭐ si este proyecto te ayudo!
 
 ---
 
-**C:\> ECHO_OFF v2.4.0 - Destroy on Reply Edition**  
-**C:\> Maximum Privacy | Zero Trace | Messages Destroyed on Reply | Smart Destruction**
+**C:\> ECHO_OFF v2.5.0 - Gray Fade & Encryption Indicator**  
+**C:\> Maximum Privacy | Visual Feedback | Encryption Matrix | Smart Destruction**
