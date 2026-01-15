@@ -1,17 +1,16 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 1.1.2 - Clean Text Design
+   Version: 1.5.0 - Enhanced UX
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v1.4.1';
+const CACHE_NAME = 'echo-off-v1.5.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/style.css',
     '/app.js',
     '/manifest.json',
-    '/icon.svg',
     '/icon-192.png',
     '/icon-512.png',
     '/icon-app.png'

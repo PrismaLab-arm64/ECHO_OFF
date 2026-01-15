@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - JAVA CONSOLE STYLE
-   Version: 1.4.0 - Pure Command Line
+   Version: 1.5.0 - Enhanced UX
    ============================================= */
 
 /* Import Monospace Font */
@@ -11,7 +11,8 @@
    ============================================= */
 :root {
     --console-black: #000000;
-    --console-green: #00FF00;
+    --console-green: #00CC00;
+    --console-green-dark: #009900;
     --console-gray: #808080;
 }
 

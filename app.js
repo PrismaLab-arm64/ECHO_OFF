@@ -1,6 +1,20 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.4.1 - Bug Fixes
+   Version: 1.5.0 - Enhanced UX
+   
+   ARQUITECTURA P2P 1:1 (Peer-to-Peer)
+   ===================================
+   Este sistema soporta comunicación 1:1 (uno-a-uno)
+   entre dos dispositivos simultáneamente.
+   
+   - Host (Sala): Acepta UNA conexión a la vez
+   - Cliente: Se conecta a UNA sala a la vez
+   - Protocolo: PeerJS con WebRTC directo
+   
+   Para múltiples usuarios simultáneos se requeriría:
+   - Arquitectura diferente (mesh/star/broadcast)
+   - Servidor de señalización personalizado
+   - Gestión de múltiples conexiones simultáneas
    ============================================= */
 
 // Global Variables
@@ -306,6 +320,17 @@ function createRoom() {
     });
     
     peer.on('connection', (conn) => {
+        // Check if already connected (P2P 1:1 limitation)
+        if (currentConnection && currentConnection.open) {
+            addSystemMessage('/// Ya existe una conexion activa');
+            addSystemMessage('/// Esta sala solo admite 1 usuario simultaneo');
+            conn.close();
+            return;
+        }
+        
+        // Store target ID for display
+        targetPeerId = conn.peer;
+        
         // Connection approval with better UX
         const approvalMessage = `═══════════════════════════════════════════════
 
@@ -403,23 +428,23 @@ function connectToPeer() {
 
 function setupConnectionHandlers(conn) {
     conn.on('open', () => {
-        console.log('[CONNECTION] Establecida');
+        console.log('[CONNECTION] Establecida con:', isHost ? conn.peer : targetPeerId);
         showScreen(chatScreen);
         
-        // Display correct peer ID
-        if (isHost) {
-            // Host shows the client's ID
-            chatPeerId.textContent = conn.peer;
-        } else {
-            // Client shows the target ID (room ID)
-            chatPeerId.textContent = targetPeerId;
-        }
+        // Display correct peer ID - ALWAYS show the other end
+        // Host: shows client ID (conn.peer)
+        // Client: shows room ID (targetPeerId)
+        const displayId = isHost ? conn.peer : targetPeerId;
+        chatPeerId.textContent = displayId;
+        
+        console.log('[DISPLAY] Mostrando ID:', displayId, '| isHost:', isHost);
         
         updateStatus('CONECTADO', 'success');
         addSystemMessage('/// ===================================');
-        addSystemMessage('/// CONEXION P2P ESTABLECIDA');
+        addSystemMessage('/// CONEXION P2P 1:1 ESTABLECIDA');
         addSystemMessage('/// Canal cifrado E2E activo');
         addSystemMessage('/// Privacidad maxima garantizada');
+        addSystemMessage('/// Arquitectura: Peer-to-Peer directo');
         addSystemMessage('/// ===================================');
     });
     

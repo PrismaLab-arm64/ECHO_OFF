@@ -1,48 +1,56 @@
-# 🔐 ECHO_OFF PWA - Command Line Edition
+# 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-1.3.1-00AA00?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-operational-00AA00?style=for-the-badge)
-![Privacy](https://img.shields.io/badge/privacy-maximum-00AA00?style=for-the-badge)
-![Theme](https://img.shields.io/badge/theme-Command%20Line-00AA00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.5.0-00CC00?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
+![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
+![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
 
-**Sala de Chat P2P Segura con Estetica Command Line / Terminal**
+**Sala de Chat P2P 1:1 Segura con Estetica Java Console**
 
 ```
 ╔═══════════════════════════════════════════════╗
 ║                                               ║
 ║   ECHO_OFF                                    ║
-║   Sistema de Comunicacion Segura             ║
+║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 1.3.1                              ║
-║   Protocolo: P2P                              ║
+║   Version: 1.5.0                              ║
+║   Protocolo: P2P 1:1                          ║
+║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
 ║   Privacidad: MAXIMA                          ║
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-C:\> ECHO_OFF v1.3.1 - Command Line Style
-C:\> Type HELP for available commands
+> ECHO_OFF v1.5.0 - Java Console Style
+> Type HELP for available commands
 ```
 
 ## 🎯 Caracteristicas
 
 - **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento
-- **🌐 Comunicacion P2P**: Conexion directa navegador-a-navegador usando PeerJS
+- **🌐 Comunicacion P2P 1:1**: Conexion directa navegador-a-navegador usando PeerJS
+- **👥 Arquitectura 1:1**: Solo 2 usuarios simultaneos (uno-a-uno)
 - **💾 Sin Persistencia**: Mensajes destruidos al recargar/cerrar pagina
 - **📱 Progressive Web App**: Instalable en movil y escritorio
-- **🎨 UI Command Line**: Interfaz estilo terminal limpia
+- **🎨 UI Java Console**: Interfaz estilo terminal Java limpia
 - **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
 - **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
 - **🔊 Sonidos Retro**: Efectos de audio 8-bit en eventos clave
 - **⏱️ Mensajes Temporales**: Mensajes visibles 5 segundos y desaparecen
 - **🎭 Efecto Matrix**: Animacion de desencriptacion al recibir mensajes
-- **💻 Diseño Limpio**: Color verde terminal, fuente VT323
+- **💻 Diseño Limpio**: Verde suave (#00CC00), fuente Courier Prime
 
-## 🆕 Novedades v1.3.1 - Better UX & Alerts
+## 🆕 Novedades v1.5.0 - Architecture & Icons
 
-### URL del servicio
-**🔒 Puerto: 8000
+### 🔗 URL del Servicio
+**🔒 Puerto: 8000**  
 https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai/
+
+### ⚙️ Arquitectura P2P 1:1 Clarificada
+- **Documentacion**: Sistema ahora documenta claramente que es 1:1 (uno-a-uno)
+- **Limitacion de Usuarios**: Solo 1 conexion activa por sala a la vez
+- **Validacion**: Sistema rechaza automaticamente conexiones multiples
+- **Mensaje Informativo**: "Esta sala solo admite 1 usuario simultaneo"
 
 ### ✅ Mejoras de UX
 - **Alerta Mejorada**: "NUEVA SOLICITUD DE CONEXION" en lugar de "INTRUSION DETECTADA"
@@ -50,14 +58,17 @@ https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai/
 - **Limpieza de Inputs**: Input field se limpia al cambiar de pantalla
 - **Validacion de ID**: Verifica que el ID comience con "ECHO_"
 
-### 🔧 Correcciones
-- **Input Cleanup**: El campo ID se limpia al volver al menu
-- **Mejor Focus**: Auto-focus en input al entrar a "Unirse a Sala"
-- **Mensajes de Error**: Errores mas descriptivos y claros
-- **Conexion Establecida**: Banner informativo al conectar
-- **IDs Unicos**: Cada sala tiene ID unico con timestamp
-- **Mejor Contraste**: Texto verde sobre fondo negro
-- **Interfaz Simplificada**: Sin elementos decorativos complejos
+### 🎨 Mejoras Visuales
+- **Color Verde Ajustado**: #00FF00 → #00CC00 (menos invasivo)
+- **Iconos Completos**: icon-192.png y icon-512.png generados desde icon-app.png
+- **PWA Icon Fix**: Todas las referencias de iconos actualizadas
+- **Display de IDs Mejorado**: IDs siempre muestran el peer correcto
+
+### 🔧 Correcciones Criticas
+- **ID Display Bug**: Host muestra ID del cliente; Cliente muestra ID de la sala
+- **Iconos PWA**: Instalacion ahora muestra el icono correcto (C:\>_)
+- **Multi-Connection**: Sistema ahora rechaza multiples conexiones automaticamente
+- **Logs Detallados**: Mejor debug para identificar issues
 
 ### 📱 Responsive Mobile-First
 - **100% Responsive**: Optimizado para moviles
