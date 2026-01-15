@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.0.0 - Advanced Features
+   Version: 2.1.0 - Auto-Destruct Timer
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -10,6 +10,11 @@
    - Host (Sala): Acepta UNA conexión a la vez
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
+   
+   NEW IN 2.1.0:
+   - Auto-destruct timer: Files and voice notes with countdown
+   - 10-second destruction window with visual countdown
+   - Revoke blob URLs before destruction
    
    NEW IN 2.0.0:
    - File Transfer: P2P chunked file transfer (50MB max)
@@ -379,8 +384,15 @@ function updateProgressBar(type, percentage) {
 function addFileDownloadMessage(filename, url) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message file-message';
+    
+    const timestamp = new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+    
     messageDiv.innerHTML = `
-        <div class="message-header">[FILE RECEIVED]</div>
+        <div class="message-header">[${timestamp}] FILE RECEIVED <span class="countdown-timer"></span></div>
         <div class="message-body">
             <div class="file-download">
                 <span class="file-icon">📎</span>
@@ -391,6 +403,12 @@ function addFileDownloadMessage(filename, url) {
     `;
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // Auto-destruct after 10 seconds with countdown
+    startCountdownTimer(messageDiv, 10, () => {
+        // Revoke blob URL before destroying
+        URL.revokeObjectURL(url);
+    });
 }
 
 /* ─────────────────────────────────────────────
@@ -475,10 +493,16 @@ function addVoiceNoteMessage(type, base64Audio) {
     const audioUrl = `data:audio/webm;base64,${base64Audio}`;
     const label = type === 'sent' ? 'TU' : 'PEER';
     
+    const timestamp = new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+    
     const messageDiv = document.createElement('div');
     messageDiv.className = `message voice-message ${type}`;
     messageDiv.innerHTML = `
-        <div class="message-header">[${label}] VOICE NOTE</div>
+        <div class="message-header">[${timestamp}] ${label} VOICE NOTE <span class="countdown-timer"></span></div>
         <div class="message-body">
             <audio controls class="voice-player">
                 <source src="${audioUrl}" type="audio/webm">
@@ -487,6 +511,61 @@ function addVoiceNoteMessage(type, base64Audio) {
     `;
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    // Auto-destruct after 10 seconds with countdown
+    startCountdownTimer(messageDiv, 10);
+}
+
+/* ─────────────────────────────────────────────
+   AUTO-DESTRUCT COUNTDOWN TIMER
+   For files and voice notes
+   ───────────────────────────────────────────── */
+
+function startCountdownTimer(messageElement, seconds, beforeDestroy = null) {
+    const timerSpan = messageElement.querySelector('.countdown-timer');
+    if (!timerSpan) return;
+    
+    let remaining = seconds;
+    
+    // Update countdown every second
+    const countdownInterval = setInterval(() => {
+        remaining--;
+        
+        if (remaining > 0) {
+            timerSpan.textContent = `[🕒 ${remaining}s]`;
+            timerSpan.style.color = remaining <= 3 ? '#CC0000' : '#808080';
+        } else {
+            clearInterval(countdownInterval);
+            
+            // Execute pre-destroy callback if provided
+            if (beforeDestroy) {
+                beforeDestroy();
+            }
+            
+            // Destroy message with fade-out animation
+            destroyMessage(messageElement);
+        }
+    }, 1000);
+    
+    // Initial display
+    timerSpan.textContent = `[🕒 ${remaining}s]`;
+    timerSpan.style.color = '#808080';
+}
+
+function destroyMessage(messageElement) {
+    // Fade out animation
+    messageElement.style.transition = 'opacity 0.5s';
+    messageElement.style.opacity = '0';
+    
+    setTimeout(() => {
+        // Remove from DOM
+        if (messageElement.parentNode) {
+            messageElement.remove();
+        }
+        
+        // Add system message about destruction
+        addSystemMessage('/// Mensaje autodestruido');
+    }, 500);
 }
 
 /* ─────────────────────────────────────────────
@@ -670,7 +749,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.0.0] Advanced Features - Sistema inicializado');
+    console.log('[ECHO_OFF v2.1.0] Auto-Destruct Timer - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();

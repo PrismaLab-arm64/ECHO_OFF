@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - JAVA CONSOLE STYLE
-   Version: 2.0.0 - Advanced Features
+   Version: 2.1.0 - Auto-Destruct Timer
    ============================================= */
 
 /* Import Monospace Font */
@@ -893,6 +893,41 @@ body {
 .voice-player::-webkit-media-controls-play-button,
 .voice-player::-webkit-media-controls-timeline {
     filter: invert(1);
+}
+
+/* Countdown Timer */
+.countdown-timer {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 8px;
+    background-color: rgba(128, 128, 128, 0.2);
+    border: 1px solid var(--console-gray);
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: 'Courier Prime', monospace;
+    color: var(--console-gray);
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.countdown-timer[style*="color: rgb(204, 0, 0)"] {
+    border-color: #CC0000;
+    animation: pulse-warning 0.5s infinite;
+}
+
+@keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Message destruction animation */
+.message.destroying {
+    animation: fade-out-destroy 0.5s forwards;
+}
+
+@keyframes fade-out-destroy {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.98); }
+    100% { opacity: 0; transform: scale(0.95); }
 }
 
 /* Mobile Adjustments */
