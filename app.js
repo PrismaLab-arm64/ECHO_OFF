@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.2.0 - Smart Countdown & SAS Fix
+   Version: 2.3.0 - Extended Countdown (20s)
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -10,6 +10,12 @@
    - Host (Sala): Acepta UNA conexión a la vez
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
+   
+   NEW IN 2.3.0:
+   - Extended countdown: 20 seconds AFTER action completes
+   - Audio: 20s countdown AFTER reproduction ends
+   - Files: 20s countdown AFTER download (3s grace period)
+   - Better status indicators for availability
    
    NEW IN 2.2.0:
    - Smart countdown: Audio starts AFTER playback ends
@@ -415,18 +421,23 @@ function addFileDownloadMessage(filename, url) {
     const downloadBtn = messageDiv.querySelector('.file-download-btn');
     const timerSpan = messageDiv.querySelector('.countdown-timer');
     
-    // Start countdown AFTER download click
+    // Start countdown AFTER download click + waiting time
     downloadBtn.addEventListener('click', () => {
-        timerSpan.textContent = '[✓ DESCARGADO]';
+        timerSpan.textContent = '[✓ DESCARGANDO...]';
         timerSpan.style.color = '#00CC00';
         
-        // Start 10-second countdown after download
+        // Wait 3 seconds for download to complete, then show "keep for 20s" message
         setTimeout(() => {
-            startCountdownTimer(messageDiv, 10, () => {
-                // Revoke blob URL before destroying
-                URL.revokeObjectURL(url);
-            });
-        }, 1000);
+            timerSpan.textContent = '[💾 DISPONIBLE]';
+            
+            // Start 20-second countdown
+            setTimeout(() => {
+                startCountdownTimer(messageDiv, 20, () => {
+                    // Revoke blob URL before destroying
+                    URL.revokeObjectURL(url);
+                });
+            }, 1000);
+        }, 3000);
         
         // Remove click listener to prevent multiple countdowns
         downloadBtn.replaceWith(downloadBtn.cloneNode(true));
@@ -540,13 +551,18 @@ function addVoiceNoteMessage(type, base64Audio) {
     
     // Start countdown AFTER audio ends
     audioElement.addEventListener('ended', () => {
-        timerSpan.textContent = '[FINALIZADO]';
+        timerSpan.textContent = '[✓ REPRODUCIDO]';
         timerSpan.style.color = '#00CC00';
         
-        // Start 10-second countdown after playback
+        // Wait 2 seconds, then show "keep for 20s" message
         setTimeout(() => {
-            startCountdownTimer(messageDiv, 10);
-        }, 1000);
+            timerSpan.textContent = '[🔊 DISPONIBLE]';
+            
+            // Start 20-second countdown after playback
+            setTimeout(() => {
+                startCountdownTimer(messageDiv, 20);
+            }, 1000);
+        }, 2000);
     });
     
     // Update timer while playing
@@ -795,7 +811,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.2.0] Smart Countdown & SAS - Sistema inicializado');
+    console.log('[ECHO_OFF v2.3.0] Extended Countdown - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
