@@ -25,6 +25,29 @@
 > Type HELP for available commands
 ```
 
+## ⚖️ Exoneración de Responsabilidad (Disclaimer)
+
+**ECHO** es un proyecto desarrollado con fines exclusivamente **educativos, creativos y de simulación conceptual**. Aunque la aplicación implementa funcionalidades operativas de comunicación, su objetivo principal es demostrar capacidades de diseño de interfaces retro y lógica de programación en JavaScript.
+
+### ⚠️ Limitaciones de Uso
+Este software se proporciona "tal cual" (AS IS), sin garantías de ningún tipo. Tenga en cuenta las siguientes consideraciones técnicas:
+
+* **Naturaleza del Sistema:** Es una simulación de sistemas de comunicación avanzados basada en **JavaScript (Client-Side)**. No es una herramienta de grado militar ni un sustituto de plataformas de mensajería certificadas (como Signal o Wire).
+* **Seguridad:** Aunque se implementan conceptos de **Encriptación End-to-End (E2E)** y comunicación **Peer-to-Peer (P2P)** vía WebRTC, el desarrollador no se hace responsable de posibles vulnerabilidades derivadas del entorno del navegador o del dispositivo del usuario.
+* **Privacidad:** El sistema no almacena logs ni bases de datos centrales (Arquitectura Serverless). La seguridad de la sesión depende de la integridad de los dispositivos finales conectados.
+
+### 🚫 Responsabilidad del Usuario
+El uso de este código o aplicación es responsabilidad exclusiva del usuario final. El desarrollador no asume ninguna responsabilidad por:
+1.  Pérdida de datos.
+2.  Uso indebido de la herramienta para actividades ilícitas.
+3.  Fallas en la comunicación crítica.
+
+---
+**Especificaciones Técnicas de la Simulación:**
+* **Protocolo:** P2P 1:1 (Peer-to-Peer Directo).
+* **Simultaneidad:** 1 a 1 (Un emisor, un receptor).
+* **Tecnología:** Vanilla JavaScript / WebRTC.
+
 ## 🎯 Caracteristicas
 
 - **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento
