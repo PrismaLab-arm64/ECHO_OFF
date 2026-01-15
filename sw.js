@@ -1,10 +1,10 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 1.5.0 - Enhanced UX
+   Version: 1.6.0 - Security Simulation Layer
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v1.5.0';
+const CACHE_NAME = 'echo-off-v1.6.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

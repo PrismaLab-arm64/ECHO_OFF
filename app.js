@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.5.0 - Enhanced UX
+   Version: 1.6.0 - Security Simulation Layer
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -57,6 +57,132 @@ const messageInput = document.getElementById('message-input');
 const messagesContainer = document.getElementById('messages-container');
 const statusIndicator = document.getElementById('status');
 const chatPeerId = document.getElementById('chat-peer-id');
+
+/* =============================================
+   SECURITY SIMULATION SYSTEM
+   Animaciones visuales de seguridad avanzada
+   ============================================= */
+
+// Security Animation State
+let securityInterval = null;
+let vpnRotationInterval = null;
+let ipRotationInterval = null;
+
+// VPN Servers Pool (fictional)
+const VPN_SERVERS = [
+    { location: 'Zurich, Switzerland', protocol: 'WireGuard' },
+    { location: 'Reykjavik, Iceland', protocol: 'OpenVPN' },
+    { location: 'Singapore', protocol: 'IKEv2' },
+    { location: 'Tokyo, Japan', protocol: 'WireGuard' },
+    { location: 'Stockholm, Sweden', protocol: 'Shadowsocks' },
+    { location: 'Amsterdam, Netherlands', protocol: 'OpenVPN' },
+    { location: 'Tallinn, Estonia', protocol: 'IKEv2' }
+];
+
+// IP Pool (fictional)
+const IP_POOL = [
+    '185.220.101.', '94.142.241.', '199.249.230.', 
+    '45.141.215.', '163.172.67.', '176.126.252.',
+    '198.98.51.', '185.100.87.', '46.232.251.'
+];
+
+// Encryption algorithms rotation
+const ENCRYPTION_ALGOS = [
+    'AES-256-GCM', 'ChaCha20-Poly1305', 'XChaCha20',
+    'AES-256-CBC', 'Salsa20', 'Twofish-256'
+];
+
+// Generate random IP
+function generateRandomIP(prefix) {
+    const suffix = Math.floor(Math.random() * 255);
+    return prefix + suffix;
+}
+
+// Generate random port
+function generateRandomPort() {
+    return Math.floor(10000 + Math.random() * 50000);
+}
+
+// Start security animation layer
+function startSecurityAnimation() {
+    const securityLayer = document.getElementById('security-layer');
+    if (!securityLayer) return;
+    
+    // Show security layer
+    securityLayer.style.display = 'block';
+    
+    let currentVPN = 0;
+    let currentEncryption = 0;
+    
+    // Update security info every 10 seconds
+    securityInterval = setInterval(() => {
+        const vpnInfo = VPN_SERVERS[currentVPN];
+        const encryption = ENCRYPTION_ALGOS[currentEncryption];
+        const currentIP = generateRandomIP(IP_POOL[Math.floor(Math.random() * IP_POOL.length)]);
+        const tunnelPort = generateRandomPort();
+        
+        // Update security display
+        updateSecurityDisplay({
+            vpn: `${vpnInfo.location} [${vpnInfo.protocol}]`,
+            ip: currentIP,
+            port: tunnelPort,
+            encryption: encryption,
+            latency: Math.floor(8 + Math.random() * 15) + 'ms'
+        });
+        
+        currentVPN = (currentVPN + 1) % VPN_SERVERS.length;
+        currentEncryption = (currentEncryption + 1) % ENCRYPTION_ALGOS.length;
+    }, 10000);
+    
+    // Initial display
+    const initialVPN = VPN_SERVERS[0];
+    updateSecurityDisplay({
+        vpn: `${initialVPN.location} [${initialVPN.protocol}]`,
+        ip: generateRandomIP(IP_POOL[0]),
+        port: generateRandomPort(),
+        encryption: ENCRYPTION_ALGOS[0],
+        latency: '12ms'
+    });
+}
+
+// Stop security animation
+function stopSecurityAnimation() {
+    if (securityInterval) {
+        clearInterval(securityInterval);
+        securityInterval = null;
+    }
+    
+    const securityLayer = document.getElementById('security-layer');
+    if (securityLayer) {
+        securityLayer.style.display = 'none';
+    }
+}
+
+// Update security display
+function updateSecurityDisplay(info) {
+    const securityLayer = document.getElementById('security-layer');
+    if (!securityLayer) return;
+    
+    // Add typing cursor effect
+    securityLayer.innerHTML = `
+        <div class="security-line">
+            <span class="security-label">VPN Tunnel:</span>
+            <span class="security-value typing">${info.vpn}</span>
+        </div>
+        <div class="security-line">
+            <span class="security-label">Exit IP:</span>
+            <span class="security-value">${info.ip}:${info.port}</span>
+        </div>
+        <div class="security-line">
+            <span class="security-label">Encryption:</span>
+            <span class="security-value">${info.encryption}</span>
+        </div>
+        <div class="security-line">
+            <span class="security-label">Latency:</span>
+            <span class="security-value">${info.latency}</span>
+        </div>
+    `;
+}
 
 /* =============================================
    8-BIT SOUND GENERATOR
@@ -128,7 +254,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.5.0] P2P 1:1 Architecture - Sistema inicializado');
+    console.log('[ECHO_OFF v1.6.0] Security Simulation Layer - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -446,6 +572,9 @@ function setupConnectionHandlers(conn) {
         addSystemMessage('/// Privacidad maxima garantizada');
         addSystemMessage('/// Arquitectura: Peer-to-Peer directo');
         addSystemMessage('/// ===================================');
+        
+        // Start security animation layer
+        startSecurityAnimation();
     });
     
     conn.on('data', (data) => {
@@ -458,6 +587,7 @@ function setupConnectionHandlers(conn) {
         console.log('[CONNECTION] Cerrada');
         updateStatus('DESCONECTADO', 'error');
         addSystemMessage('/// Conexión terminada');
+        stopSecurityAnimation();
         currentConnection = null;
     });
     
@@ -642,6 +772,7 @@ function updateStatus(text, type) {
 
 function disconnect() {
     playDisconnectSound();
+    stopSecurityAnimation();
     if (currentConnection) {
         currentConnection.close();
         currentConnection = null;

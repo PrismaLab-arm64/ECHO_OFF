@@ -1,6 +1,6 @@
 # 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-1.5.0-00CC00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.6.0-00CC00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
@@ -13,7 +13,7 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 1.5.0                              ║
+║   Version: 1.6.0                              ║
 ║   Protocolo: P2P 1:1                          ║
 ║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
@@ -21,7 +21,7 @@
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-> ECHO_OFF v1.5.0 - Java Console Style
+> ECHO_OFF v1.6.0 - Security Simulation Layer
 > Type HELP for available commands
 ```
 
@@ -39,6 +39,32 @@
 - **⏱️ Mensajes Temporales**: Mensajes visibles 5 segundos y desaparecen
 - **🎭 Efecto Matrix**: Animacion de desencriptacion al recibir mensajes
 - **💻 Diseño Limpio**: Verde suave (#00CC00), fuente Courier Prime
+- **🔒 Simulación de Seguridad**: Animación visual de VPN, IPs rotativas, cifrado en tiempo real
+
+## 🆕 Novedades v1.6.0 - Security Simulation Layer
+
+### 🔒 Capa de Simulación de Seguridad
+- **Animación VPN**: Rotación de servidores VPN cada 10 segundos
+- **IPs Dinámicas**: Simulación de IPs cambiantes y puertos túnel
+- **Algoritmos de Cifrado**: Rotación visual de algoritmos (AES-256, ChaCha20, etc.)
+- **Latencia en Tiempo Real**: Monitoreo simulado de latencia de conexión
+- **Diseño No Invasivo**: Gris claro (#808080) para no interrumpir el chat
+- **Actualización Suave**: Cambios cada 10 segundos sin distraer
+
+### 🌐 Servidores VPN Simulados
+- Zurich, Switzerland [WireGuard]
+- Reykjavik, Iceland [OpenVPN]
+- Singapore [IKEv2]
+- Tokyo, Japan [WireGuard]
+- Stockholm, Sweden [Shadowsocks]
+- Amsterdam, Netherlands [OpenVPN]
+- Tallinn, Estonia [IKEv2]
+
+### ⚡ Características Técnicas
+- **IP Pool**: 9 prefijos de IP ficticios con generación dinámica
+- **Puerto Túnel**: Rango 10000-60000 aleatorio
+- **Animación Cursor**: Efecto typing cursor en valores actualizados
+- **Responsive**: Adaptado para móvil (columna) y escritorio (fila)
 
 ## 🆕 Novedades v1.5.0 - Architecture & Icons
 
