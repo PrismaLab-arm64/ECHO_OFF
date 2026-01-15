@@ -2,7 +2,7 @@
   "name": "ECHO_OFF - Java Console Edition",
   "short_name": "ECHO_OFF",
   "description": "Chat P2P seguro estilo Java Console. Zero-trace, privacidad completa.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "lang": "es",
   "start_url": "/",
   "display": "standalone",

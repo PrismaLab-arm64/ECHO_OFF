@@ -1,14 +1,16 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.4.0 - Java Console Style
+   Version: 1.4.1 - Bug Fixes
    ============================================= */
 
 // Global Variables
 let peer = null;
 let currentConnection = null;
 let myPeerId = null;
+let targetPeerId = null; // Store target ID for display
 let isHost = false;
 let deferredPrompt = null;
+let wakeLock = null; // Keep screen awake on mobile
 
 // Audio Context for 8-bit sounds
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -112,11 +114,12 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.4.0] Java Console - Sistema inicializado');
+    console.log('[ECHO_OFF v1.4.1] Bug Fixes - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
     setupPWAInstallPrompt();
+    requestWakeLock();
     
     // Initialize audio on first user interaction
     document.addEventListener('click', initAudio, { once: true });
@@ -138,19 +141,45 @@ function setupPWAInstallPrompt() {
         // Show install prompt after splash screen
         setTimeout(() => {
             if (deferredPrompt && installPrompt) {
+                console.log('[PWA] Mostrando prompt de instalacion');
                 installPrompt.classList.remove('hidden');
             }
-        }, 4000);
+        }, 5000); // Aumentado a 5 segundos
     });
     
     window.addEventListener('appinstalled', () => {
-        console.log('[PWA] Aplicación instalada');
+        console.log('[PWA] Aplicacion instalada');
         deferredPrompt = null;
         if (installPrompt) {
             installPrompt.classList.add('hidden');
         }
     });
 }
+
+/* =============================================
+   WAKE LOCK - Keep screen awake on mobile
+   ============================================= */
+async function requestWakeLock() {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+            console.log('[WAKE LOCK] Pantalla activa');
+            
+            wakeLock.addEventListener('release', () => {
+                console.log('[WAKE LOCK] Liberado');
+            });
+        }
+    } catch (err) {
+        console.error('[WAKE LOCK] Error:', err);
+    }
+}
+
+// Re-request wake lock when visibility changes
+document.addEventListener('visibilitychange', async () => {
+    if (wakeLock !== null && document.visibilityState === 'visible') {
+        await requestWakeLock();
+    }
+});
 
 /* =============================================
    SPLASH SCREEN INITIALIZATION
@@ -332,6 +361,9 @@ function connectToPeer() {
         return;
     }
     
+    // Store target ID for display
+    targetPeerId = targetId;
+    
     playJoinRoomSound();
     
     // Generate unique Peer ID for client
@@ -373,7 +405,16 @@ function setupConnectionHandlers(conn) {
     conn.on('open', () => {
         console.log('[CONNECTION] Establecida');
         showScreen(chatScreen);
-        chatPeerId.textContent = conn.peer;
+        
+        // Display correct peer ID
+        if (isHost) {
+            // Host shows the client's ID
+            chatPeerId.textContent = conn.peer;
+        } else {
+            // Client shows the target ID (room ID)
+            chatPeerId.textContent = targetPeerId;
+        }
+        
         updateStatus('CONECTADO', 'success');
         addSystemMessage('/// ===================================');
         addSystemMessage('/// CONEXION P2P ESTABLECIDA');
@@ -410,17 +451,24 @@ function sendMessage() {
     if (!message) return;
     
     if (!currentConnection || !currentConnection.open) {
-        alert('⚠️ No hay conexión activa');
+        alert('No hay conexion activa');
         return;
     }
     
+    // Send message to peer
     currentConnection.send(message);
     console.log('[MESSAGE SENT]:', message);
-    // Sound removed - less intrusive
+    
+    // Add message to own screen immediately
     addMessage(message, 'sent');
     
+    // Clear input and refocus
     messageInput.value = '';
-    messageInput.focus();
+    
+    // Force focus back on mobile
+    setTimeout(() => {
+        messageInput.focus();
+    }, 100);
 }
 
 function addMessage(content, type) {
@@ -435,13 +483,20 @@ function addMessage(content, type) {
     
     const header = document.createElement('div');
     header.classList.add('message-header');
-    header.textContent = `[${timestamp}] ${type === 'sent' ? 'TÚ' : 'PEER'}`;
+    header.textContent = `[${timestamp}] ${type === 'sent' ? 'TU' : 'PEER'}`;
     
     const body = document.createElement('div');
     body.classList.add('message-body');
     
     messageDiv.appendChild(header);
     messageDiv.appendChild(body);
+    
+    // Ensure container exists
+    if (!messagesContainer) {
+        console.error('[ERROR] Messages container not found');
+        return;
+    }
+    
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
@@ -449,6 +504,7 @@ function addMessage(content, type) {
     if (type === 'received') {
         decryptMessage(body, content);
     } else {
+        // For sent messages, show immediately
         body.textContent = `> ${content}`;
     }
     
@@ -456,6 +512,8 @@ function addMessage(content, type) {
     setTimeout(() => {
         disappearMessage(messageDiv, body, content);
     }, 5000);
+    
+    console.log(`[MESSAGE ADDED] Type: ${type}, Content: ${content}`);
 }
 
 function decryptMessage(element, finalText) {
