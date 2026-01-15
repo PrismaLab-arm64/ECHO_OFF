@@ -541,7 +541,7 @@ function addVoiceNoteMessage(type, base64Audio) {
     // Start countdown AFTER audio ends
     audioElement.addEventListener('ended', () => {
         timerSpan.textContent = '[FINALIZADO]';
-        timerSpan.style.color = var(--console-green);
+        timerSpan.style.color = '#00CC00';
         
         // Start 10-second countdown after playback
         setTimeout(() => {
