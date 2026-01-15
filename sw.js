@@ -1,10 +1,10 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 2.5.0 - Gray Fade & Encryption Indicator
+   Version: 2.6.0 - Security Patch & Gray UI
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v2.5.0';
+const CACHE_NAME = 'echo-off-v2.6.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.5.0 - Gray Fade & Encryption Indicator
+   Version: 2.6.0 - Security Patch & Gray UI
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -10,6 +10,12 @@
    - Host (Sala): Acepta UNA conexión a la vez
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
+   
+   NEW IN 2.6.0:
+   - Security: Anti-copy protection (no select, no copy, no context menu)
+   - UI: All interface text changed to gray (#808080)
+   - Messages: New messages in green (#00CC00), fade to gray after 3s
+   - Typing cursor animation active in security layer
    
    NEW IN 2.5.0:
    - Messages fade to gray after 3 seconds (not destroyed)
@@ -775,6 +781,54 @@ function initPanicButton() {
     });
 }
 
+/* =============================================
+   SECURITY PROTECTION - ANTI COPY
+   ============================================= */
+function initSecurityProtection() {
+    // Prevent text selection
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    document.body.style.msUserSelect = 'none';
+    
+    // Prevent copy event
+    document.addEventListener('copy', (e) => {
+        e.preventDefault();
+        console.log('[SECURITY] Copy attempt blocked');
+        return false;
+    });
+    
+    // Prevent cut event
+    document.addEventListener('cut', (e) => {
+        e.preventDefault();
+        console.log('[SECURITY] Cut attempt blocked');
+        return false;
+    });
+    
+    // Prevent context menu (right click)
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        console.log('[SECURITY] Context menu blocked');
+        return false;
+    });
+    
+    // Prevent keyboard shortcuts for copy/paste
+    document.addEventListener('keydown', (e) => {
+        // Ctrl+C, Ctrl+X, Ctrl+V, Ctrl+A, Ctrl+P, Ctrl+S
+        if ((e.ctrlKey || e.metaKey) && 
+            (e.key === 'c' || e.key === 'C' || 
+             e.key === 'x' || e.key === 'X' || 
+             e.key === 'a' || e.key === 'A' ||
+             e.key === 'p' || e.key === 'P' ||
+             e.key === 's' || e.key === 'S')) {
+            e.preventDefault();
+            console.log('[SECURITY] Keyboard shortcut blocked:', e.key);
+            return false;
+        }
+    });
+    
+    console.log('[SECURITY] Anti-copy protection enabled');
+}
+
 function triggerPanicMode() {
     console.log('[PANIC] Emergency exit triggered');
     
@@ -878,13 +932,14 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.5.0] Gray Fade & Encryption Indicator - Sistema inicializado');
+    console.log('[ECHO_OFF v2.6.0] Security Patch & Gray UI - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
     setupPWAInstallPrompt();
     requestWakeLock();
     initPanicButton(); // Initialize panic button (ESC x3)
+    initSecurityProtection(); // Initialize anti-copy protection
     
     // Initialize audio on first user interaction
     document.addEventListener('click', initAudio, { once: true });

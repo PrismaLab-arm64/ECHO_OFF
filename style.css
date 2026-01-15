@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - JAVA CONSOLE STYLE
-   Version: 2.2.0 - Smart Countdown & SAS Fix
+   Version: 2.5.0 - Gray Fade & Encryption Indicator
    ============================================= */
 
 /* Import Monospace Font */
@@ -11,9 +11,10 @@
    ============================================= */
 :root {
     --console-black: #000000;
-    --console-green: #00CC00;
-    --console-green-dark: #009900;
+    --console-green: #808080; /* Gray for most UI text */
+    --console-green-dark: #606060;
     --console-gray: #808080;
+    --message-green: #00CC00; /* Green for new messages */
 }
 
 * {
@@ -21,6 +22,11 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+    /* Security: Prevent text selection and copy */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* =============================================
@@ -376,23 +382,23 @@ body {
 .message {
     margin-bottom: 15px;
     padding: 10px 0;
-    border-left: 2px solid var(--console-green);
+    border-left: 2px solid var(--console-gray); /* Gray border */
     padding-left: 10px;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
 .message.sent {
-    border-left-color: var(--console-green);
+    border-left-color: var(--console-gray);
 }
 
 .message.received {
-    border-left-color: var(--console-green);
+    border-left-color: var(--console-gray);
 }
 
 .message.system {
-    border-left-color: var(--console-green);
-    color: var(--console-green);
+    border-left-color: var(--console-gray);
+    color: var(--console-gray);
     opacity: 0.7;
 }
 
@@ -403,8 +409,12 @@ body {
 }
 
 .message-body {
-    color: var(--console-green);
+    color: var(--message-green); /* Start with green for new messages */
     word-wrap: break-word;
+}
+
+.message-body.read {
+    color: var(--console-gray); /* Gray for read messages */
 }
 
 .message-encrypted {
