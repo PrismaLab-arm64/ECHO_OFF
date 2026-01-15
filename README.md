@@ -39,6 +39,9 @@ C:\> Type HELP for available commands
 - **💻 Diseño Limpio**: Color verde terminal, fuente VT323
 
 ## 🆕 Novedades v1.3.1 - Better UX & Alerts
+
+### URL del servicio
+**🔒 Puerto: 8000
 https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai/
 
 ### ✅ Mejoras de UX
