@@ -5,6 +5,15 @@
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
 
+## 🔗 Enlaces Rápidos
+
+**🌐 USAR APP EN VIVO**: https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai  
+**💻 Repositorio GitHub**: https://github.com/PrismaLab-arm64/ECHO_OFF  
+**🔀 Pull Request**: https://github.com/PrismaLab-arm64/ECHO_OFF/pull/1  
+**🌿 Branch**: `genspark_ai_developer`
+
+---
+
 **Sala de Chat P2P 1:1 Segura con Funcionalidades Avanzadas y Estetica Java Console**
 
 ```
@@ -515,7 +524,7 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📈 Estadísticas del Proyecto
 
-### Versión Actual: v2.3.0
+### Versión Actual: v2.5.0
 - **Total de Funcionalidades**: 8 principales
 - **Líneas de Código**: ~1,530+ JavaScript + 900+ CSS
 - **Commits Totales**: 17+
