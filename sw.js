@@ -1,10 +1,10 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 2.1.0 - Auto-Destruct Timer
+   Version: 2.2.0 - Smart Countdown & SAS Fix
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v2.1.0';
+const CACHE_NAME = 'echo-off-v2.2.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - JAVA CONSOLE STYLE
-   Version: 2.1.0 - Auto-Destruct Timer
+   Version: 2.2.0 - Smart Countdown & SAS Fix
    ============================================= */
 
 /* Import Monospace Font */
@@ -730,13 +730,18 @@ body {
 .sas-display {
     display: none;
     margin-left: 15px;
-    padding: 3px 10px;
-    background-color: rgba(0, 128, 0, 0.2);
+    padding: 4px 12px;
+    background-color: rgba(0, 128, 0, 0.3);
     border: 1px solid var(--console-green);
-    border-radius: 3px;
-    font-size: 12px;
+    border-radius: 4px;
+    font-size: 13px;
     color: var(--console-green);
     font-weight: bold;
+    white-space: nowrap;
+}
+
+.sas-display.active {
+    display: inline-block;
 }
 
 /* Advanced Features Bar */

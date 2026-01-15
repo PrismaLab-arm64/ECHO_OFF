@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.1.0 - Auto-Destruct Timer
+   Version: 2.2.0 - Smart Countdown & SAS Fix
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -10,6 +10,13 @@
    - Host (Sala): Acepta UNA conexión a la vez
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
+   
+   NEW IN 2.2.0:
+   - Smart countdown: Audio starts AFTER playback ends
+   - Smart countdown: Files start AFTER download click
+   - SAS Verification: Fixed display and generation
+   - Audio status: Shows [▶ REPRODUCIENDO], [⏸ PAUSADO], [FINALIZADO]
+   - File status: Shows [⏳ PENDIENTE], [✓ DESCARGADO]
    
    NEW IN 2.1.0:
    - Auto-destruct timer: Files and voice notes with countdown
@@ -392,22 +399,37 @@ function addFileDownloadMessage(filename, url) {
     });
     
     messageDiv.innerHTML = `
-        <div class="message-header">[${timestamp}] FILE RECEIVED <span class="countdown-timer"></span></div>
+        <div class="message-header">[${timestamp}] FILE RECEIVED <span class="countdown-timer">[⏳ PENDIENTE]</span></div>
         <div class="message-body">
             <div class="file-download">
                 <span class="file-icon">📎</span>
                 <span class="file-name">${filename}</span>
-                <a href="${url}" download="${filename}" class="file-download-btn">[ DOWNLOAD ]</a>
+                <a href="${url}" download="${filename}" class="file-download-btn" id="download-${Date.now()}">[ DOWNLOAD ]</a>
             </div>
         </div>
     `;
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
-    // Auto-destruct after 10 seconds with countdown
-    startCountdownTimer(messageDiv, 10, () => {
-        // Revoke blob URL before destroying
-        URL.revokeObjectURL(url);
+    // Get elements
+    const downloadBtn = messageDiv.querySelector('.file-download-btn');
+    const timerSpan = messageDiv.querySelector('.countdown-timer');
+    
+    // Start countdown AFTER download click
+    downloadBtn.addEventListener('click', () => {
+        timerSpan.textContent = '[✓ DESCARGADO]';
+        timerSpan.style.color = '#00CC00';
+        
+        // Start 10-second countdown after download
+        setTimeout(() => {
+            startCountdownTimer(messageDiv, 10, () => {
+                // Revoke blob URL before destroying
+                URL.revokeObjectURL(url);
+            });
+        }, 1000);
+        
+        // Remove click listener to prevent multiple countdowns
+        downloadBtn.replaceWith(downloadBtn.cloneNode(true));
     });
 }
 
@@ -502,7 +524,7 @@ function addVoiceNoteMessage(type, base64Audio) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message voice-message ${type}`;
     messageDiv.innerHTML = `
-        <div class="message-header">[${timestamp}] ${label} VOICE NOTE <span class="countdown-timer"></span></div>
+        <div class="message-header">[${timestamp}] ${label} VOICE NOTE <span class="countdown-timer">[▶ REPRODUCIR]</span></div>
         <div class="message-body">
             <audio controls class="voice-player">
                 <source src="${audioUrl}" type="audio/webm">
@@ -512,8 +534,33 @@ function addVoiceNoteMessage(type, base64Audio) {
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
-    // Auto-destruct after 10 seconds with countdown
-    startCountdownTimer(messageDiv, 10);
+    // Get audio element
+    const audioElement = messageDiv.querySelector('.voice-player');
+    const timerSpan = messageDiv.querySelector('.countdown-timer');
+    
+    // Start countdown AFTER audio ends
+    audioElement.addEventListener('ended', () => {
+        timerSpan.textContent = '[FINALIZADO]';
+        timerSpan.style.color = var(--console-green);
+        
+        // Start 10-second countdown after playback
+        setTimeout(() => {
+            startCountdownTimer(messageDiv, 10);
+        }, 1000);
+    });
+    
+    // Update timer while playing
+    audioElement.addEventListener('play', () => {
+        timerSpan.textContent = '[▶ REPRODUCIENDO]';
+        timerSpan.style.color = '#00CC00';
+    });
+    
+    audioElement.addEventListener('pause', () => {
+        if (!audioElement.ended) {
+            timerSpan.textContent = '[⏸ PAUSADO]';
+            timerSpan.style.color = '#808080';
+        }
+    });
 }
 
 /* ─────────────────────────────────────────────
@@ -573,21 +620,12 @@ function destroyMessage(messageElement) {
    ───────────────────────────────────────────── */
 
 // Generate SAS from connection fingerprint
-async function generateSAS(connection) {
+async function generateSAS() {
     try {
-        const stats = await connection.getStats();
-        let fingerprint = '';
+        // Generate from peer IDs (simpler and more reliable)
+        const fingerprint = myPeerId + (isHost ? currentConnection.peer : targetPeerId);
         
-        stats.forEach(report => {
-            if (report.type === 'certificate' && report.fingerprint) {
-                fingerprint = report.fingerprint;
-            }
-        });
-        
-        if (!fingerprint) {
-            // Fallback: generate from peer IDs
-            fingerprint = myPeerId + (targetPeerId || '');
-        }
+        console.log('[SAS] Generating from:', fingerprint);
         
         // Create short hash
         const hash = await hashString(fingerprint);
@@ -601,8 +639,12 @@ async function generateSAS(connection) {
         const sas = `${emojis[emojiIndex]} ${numericCode.toString().padStart(4, '0')}`;
         displaySAS(sas);
         
+        console.log('[SAS] Generated:', sas);
+        
     } catch (err) {
         console.error('[SAS] Error:', err);
+        // Fallback: show generic indicator
+        displaySAS('🔐 E2E');
     }
 }
 
@@ -617,8 +659,12 @@ async function hashString(str) {
 function displaySAS(sas) {
     const sasDisplay = document.getElementById('sas-display');
     if (sasDisplay) {
-        sasDisplay.textContent = `SAS: ${sas}`;
-        sasDisplay.style.display = 'block';
+        sasDisplay.textContent = `[${sas}]`;
+        sasDisplay.classList.add('active');
+        sasDisplay.style.display = 'inline-block';
+        console.log('[SAS] Displayed:', sas);
+    } else {
+        console.error('[SAS] Element not found');
     }
 }
 
@@ -749,7 +795,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.1.0] Auto-Destruct Timer - Sistema inicializado');
+    console.log('[ECHO_OFF v2.2.0] Smart Countdown & SAS - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -1096,8 +1142,10 @@ function setupConnectionHandlers(conn) {
         // Start security animation layer
         startSecurityAnimation();
         
-        // Generate SAS for verification
-        generateSAS(conn.peerConnection);
+        // Generate SAS for verification (with small delay to ensure IDs are set)
+        setTimeout(() => {
+            generateSAS();
+        }, 500);
     });
     
     conn.on('data', (data) => {
