@@ -1,11 +1,11 @@
 # 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-1.6.0-00CC00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.3.0-00CC00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
 
-**Sala de Chat P2P 1:1 Segura con Estetica Java Console**
+**Sala de Chat P2P 1:1 Segura con Funcionalidades Avanzadas y Estetica Java Console**
 
 ```
 ╔═══════════════════════════════════════════════╗
@@ -13,7 +13,7 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 1.6.0                              ║
+║   Version: 2.3.0                              ║
 ║   Protocolo: P2P 1:1                          ║
 ║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
@@ -21,8 +21,8 @@
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-> ECHO_OFF v1.6.0 - Security Simulation Layer
-> Type HELP for available commands
+> ECHO_OFF v2.3.0 - Advanced Features Edition
+> File Transfer | Voice Notes | SAS Verification | Panic Button
 ```
 
 ## ⚖️ Exoneración de Responsabilidad (Disclaimer)
@@ -50,19 +50,92 @@ El uso de este código o aplicación es responsabilidad exclusiva del usuario fi
 
 ## 🎯 Caracteristicas
 
+### 💬 Funcionalidades de Comunicación
 - **🔒 Privacidad Total**: Protocolo Zero-Trace - sin bases de datos, sin almacenamiento
 - **🌐 Comunicacion P2P 1:1**: Conexion directa navegador-a-navegador usando PeerJS
 - **👥 Arquitectura 1:1**: Solo 2 usuarios simultaneos (uno-a-uno)
 - **💾 Sin Persistencia**: Mensajes destruidos al recargar/cerrar pagina
-- **📱 Progressive Web App**: Instalable en movil y escritorio
-- **🎨 UI Java Console**: Interfaz estilo terminal Java limpia
-- **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
-- **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
-- **🔊 Sonidos Retro**: Efectos de audio 8-bit en eventos clave
 - **⏱️ Mensajes Temporales**: Mensajes visibles 5 segundos y desaparecen
 - **🎭 Efecto Matrix**: Animacion de desencriptacion al recibir mensajes
+
+### 🚀 Funcionalidades Avanzadas (v2.0+)
+- **📁 File Transfer P2P**: Transferencia de archivos hasta 50 MB via RTCDataChannel
+- **🎙️ Voice Notes**: Grabación y reproducción de notas de voz con MediaRecorder
+- **🔐 SAS Verification**: Código de verificación emoji + numérico para detectar MITM
+- **⚠️ Panic Button**: Autodestruct session con ESC x3 en 2 segundos
+- **⏱️ Smart Countdown**: Auto-destrucción de archivos/audio **20 segundos** después de completar acción
+
+### 🎨 Interfaz y Diseño
+- **📱 Progressive Web App**: Instalable en movil y escritorio
+- **🎨 UI Java Console**: Interfaz estilo terminal Java limpia
 - **💻 Diseño Limpio**: Verde suave (#00CC00), fuente Courier Prime
 - **🔒 Simulación de Seguridad**: Animación visual de VPN, IPs rotativas, cifrado en tiempo real
+- **🔊 Sonidos Retro**: Efectos de audio 8-bit en eventos clave
+- **📱 Responsive Mobile-First**: 100% optimizado para móviles
+
+### 🔐 Seguridad
+- **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
+- **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
+- **🔒 Wake Lock API**: Mantiene pantalla activa durante chat
+
+## 🆕 Novedades v2.3.0 - Extended Countdown (20 segundos)
+
+### ⏱️ Countdown Extendido para Archivos y Audio
+- **Problema Resuelto**: Audio y archivos ahora tienen **20 segundos** para interactuar (antes: 10s)
+- **Smart Countdown**: Timer inicia **DESPUÉS** de completar la acción
+  - **Voice Notes**: 20s después de terminar reproducción
+  - **File Downloads**: 20s después de hacer click en descargar
+- **UX Mejorada**: Usuarios tienen tiempo suficiente para escuchar/descargar
+- **Memory Management**: URL.revokeObjectURL() automático al destruir
+
+### 🎬 Flujos de Usuario
+```
+Voice Notes:
+1. Reproduce audio → [▶ REPRODUCIENDO]
+2. Audio termina → [FINALIZADO] (1s)
+3. Countdown inicia → [🕒 20s] → [🕒 1s]
+4. Destrucción automática
+
+File Downloads:
+1. Archivo recibido → [⏳ PENDIENTE]
+2. Click download → [✓ DESCARGADO] (1s)
+3. Countdown inicia → [🕒 20s] → [🕒 1s]
+4. Destrucción automática
+```
+
+## 🆕 Novedades v2.0.0 - Advanced Features
+
+### 📁 File Transfer P2P
+- **RAM-to-RAM**: Transferencia directa sin servidores intermediarios
+- **Chunked Transfer**: Archivos divididos en chunks de 16 KB
+- **Tamaño Máximo**: Hasta 50 MB por archivo
+- **Barra de Progreso ASCII**: `ENVIANDO: [██████░░░░] 60%`
+- **Botón Upload**: `[ UPLOAD FILE ]` estilo retro
+- **Auto-Destrucción**: 20 segundos después de descargar
+
+### 🎙️ Voice Notes (Audio P2P)
+- **MediaRecorder API**: Grabación nativa del navegador
+- **Press & Hold**: Mantén `[ REC ]` para grabar
+- **Formato**: audio/webm optimizado
+- **Transmisión**: Via DataChannel como base64
+- **Player Minimalista**: Reproductor estilo terminal
+- **Auto-Destrucción**: 20 segundos después de reproducir
+
+### 🔐 SAS Verification (Security)
+- **DTLS Fingerprint**: Hash SHA-256 de certificados públicos
+- **Display Visual**: Emoji + código de 4 dígitos
+- **Ejemplo**: `[🥑 4729]` visible en ambos lados
+- **MITM Detection**: Si códigos difieren, conexión comprometida
+- **Header Display**: `CANAL SEGURO | PEER: ECHO_ABC123 [🥑 4729]`
+
+### ⚠️ Panic Button (Emergency)
+- **Trigger**: ESC x3 en 2 segundos
+- **Secuencia de Autodestruct**:
+  1. `connection.close()`
+  2. `document.body.innerHTML = ''`
+  3. Sobrescribir variables con garbage data
+  4. `window.location.href = 'https://www.google.com'`
+- **Uso**: Emergencias donde necesitas destruir sesión rápidamente
 
 ## 🆕 Novedades v1.6.0 - Security Simulation Layer
 
@@ -94,6 +167,12 @@ El uso de este código o aplicación es responsabilidad exclusiva del usuario fi
 ### 🔗 URL del Servicio
 **🔒 Puerto: 8000**  
 https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai/
+
+**🌐 GitHub Repository**  
+https://github.com/PrismaLab-arm64/ECHO_OFF
+
+**🔀 Pull Request**  
+https://github.com/PrismaLab-arm64/ECHO_OFF/pull/1
 
 ### ⚙️ Arquitectura P2P 1:1 Clarificada
 - **Documentacion**: Sistema ahora documenta claramente que es 1:1 (uno-a-uno)
@@ -154,7 +233,7 @@ Abre `http://localhost:8000` en tu navegador.
 4. Click en **"REGENERAR"** para nuevo ID (opcional)
 5. Comparte el ID con la persona con quien quieres chatear
 6. Espera la conexion entrante
-7. Acepta la alerta de "INTRUSION DETECTADA"
+7. Acepta la alerta de "NUEVA SOLICITUD DE CONEXION"
 
 ### Unirse a Sala (Cliente)
 
@@ -165,11 +244,49 @@ Abre `http://localhost:8000` en tu navegador.
 
 ### Chat Seguro
 
-- Los mensajes se muestran durante 5 segundos
+- Los mensajes de texto se muestran durante 5 segundos
 - Luego desaparecen automaticamente
 - Efecto de desencriptacion estilo Matrix
 - Todos los mensajes en color verde terminal
 - Sin persistencia - privacidad maxima
+
+### 📁 Enviar Archivos
+
+1. Click en **[ UPLOAD FILE ]**
+2. Selecciona archivo (máximo 50 MB)
+3. Barra de progreso ASCII muestra: `[██████░░░░] 60%`
+4. Receptor ve: `[⏳ PENDIENTE]`
+5. Receptor hace click en `[ DOWNLOAD ]`
+6. Archivo descarga → `[✓ DESCARGADO]`
+7. **Auto-destrucción en 20 segundos** después de descargar
+
+### 🎙️ Enviar Nota de Voz
+
+1. **Mantén presionado** el botón **[ REC ]**
+2. Habla mientras mantienes presionado
+3. Suelta para enviar
+4. Receptor ve reproductor: `[▶ REPRODUCIR]`
+5. Click para reproducir → `[▶ REPRODUCIENDO]`
+6. Al terminar → `[FINALIZADO]`
+7. **Auto-destrucción en 20 segundos** después de reproducir
+
+### 🔐 Verificar SAS (Seguridad)
+
+1. Al conectar, ambos usuarios ven el código SAS en el header
+2. Ejemplo: `CANAL SEGURO | PEER: ECHO_ABC123 [🥑 4729]`
+3. **Compara verbalmente** el emoji y código con el otro usuario
+4. Si ambos ven lo mismo → **Conexión segura** ✅
+5. Si difieren → **Posible MITM attack** ⚠️ Desconecta inmediatamente
+
+### ⚠️ Panic Button (Emergencia)
+
+1. Presiona **ESC** 3 veces en menos de 2 segundos
+2. Sesión se autodestruye:
+   - Cierra conexión
+   - Limpia DOM completo
+   - Sobrescribe variables en memoria
+   - Redirige a Google
+3. **Uso**: Situaciones de emergencia donde necesitas destruir evidencia rápidamente
 
 ## 🔒 Privacidad y Seguridad
 
@@ -241,6 +358,48 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📊 Version History
 
+### v2.3.0 (2026-01-15) - Extended Countdown
+- **20 segundos** para archivos y audio (antes: 10s)
+- Smart countdown: inicia después de completar acción
+- UX mejorada para archivos grandes y audios largos
+- Memory leak prevention optimizado
+
+### v2.2.0 (2026-01-15) - Smart Countdown & SAS Fix
+- Countdown inteligente: inicia después de acción completada
+- SAS verification mejorado y visible
+- Estados visuales claros: [PENDIENTE], [DESCARGADO], [FINALIZADO]
+
+### v2.1.0 (2026-01-15) - Auto-Destruct Timer
+- Countdown visual con timer
+- Auto-destrucción de archivos y audio
+- Animaciones de advertencia (rojo pulsante a 3s)
+
+### v2.0.0 (2026-01-15) - Advanced Features
+- File Transfer P2P (hasta 50 MB)
+- Voice Notes con MediaRecorder
+- SAS Verification (emoji + código)
+- Panic Button (ESC x3)
+
+### v1.6.0 (2026-01-15) - Security Simulation Layer
+- Capa visual de seguridad (VPN, IPs rotativas, cifrado)
+- Rotación automática cada 10 segundos
+- Diseño no invasivo (gris claro)
+
+### v1.5.0 (2026-01-15) - Architecture & Icons
+- Arquitectura P2P 1:1 documentada
+- Iconos PWA completos (192px, 512px, 1024px)
+- Color verde ajustado (#00CC00)
+- ID display corregido
+
+### v1.4.1 (2026-01-15) - Bug Fixes
+- Correcciones críticas de bugs reportados
+- Wake Lock implementado
+
+### v1.3.1 (2026-01-15) - Better UX & Alerts
+- Alerta mejorada de conexión
+- Validación de IDs
+- Limpieza de inputs
+
 ### v1.3.0 (2026-01-15) - Command Line Style
 - Eliminado fondo amarillo invasivo del ID
 - Color verde terminal para todos los mensajes
@@ -266,6 +425,40 @@ Abre `http://localhost:8000` en tu navegador.
 - Encriptacion E2E
 - Zero-trace protocol
 
+## 📈 Estadísticas del Proyecto
+
+### Versión Actual: v2.3.0
+- **Total de Funcionalidades**: 8 principales
+- **Líneas de Código**: ~1,530+ JavaScript + 900+ CSS
+- **Commits Totales**: 17+
+- **Archivos**: 13 (HTML, CSS, JS, JSON, PNG, MD)
+- **Tiempo de Desarrollo**: ~6 horas
+- **Arquitectura**: P2P 1:1 (WebRTC)
+- **Tamaño PWA**: ~2.5 MB (con iconos)
+
+### Línea de Tiempo de Releases
+```
+v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI) 
+→ v1.3.1 (UX) → v1.4.1 (Bugs) → v1.5.0 (Arch) → v1.6.0 (Security) 
+→ v2.0.0 (Advanced) → v2.1.0 (Timer) → v2.2.0 (Smart) → v2.3.0 (Extended)
+```
+
+### Funcionalidades por Versión
+| Versión | Funcionalidades Añadidas | Líneas |
+|---------|--------------------------|--------|
+| v1.0.0 | Chat P2P básico | +500 |
+| v1.1.0 | PWA + Sonidos | +200 |
+| v1.2.0 | Responsive + UX | +150 |
+| v1.3.x | IDs + Validación | +100 |
+| v1.4.1 | Bug Fixes + Wake Lock | +80 |
+| v1.5.0 | Iconos + Arch 1:1 | +83 |
+| v1.6.0 | Security Layer | +450 |
+| v2.0.0 | File + Voice + SAS + Panic | +990 |
+| v2.1.0 | Auto-Destruct Timer | +124 |
+| v2.2.0 | Smart Countdown | +91 |
+| v2.3.0 | Extended Countdown (20s) | +34 |
+| **TOTAL** | **12 versiones** | **~2,800+** |
+
 ## 📄 Licencia
 
 MIT License - Ver LICENSE para mas detalles.
@@ -289,5 +482,5 @@ Dale una ⭐ si este proyecto te ayudo!
 
 ---
 
-**C:\> ECHO_OFF v1.3.0 - Command Line Edition**  
-**C:\> Maximum Privacy | Zero Trace | P2P Encrypted**
+**C:\> ECHO_OFF v2.3.0 - Advanced Features Edition**  
+**C:\> Maximum Privacy | Zero Trace | P2P Encrypted | File Transfer | Voice Notes**
