@@ -1,10 +1,10 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 2.3.0 - Extended Countdown (20s)
+   Version: 2.4.0 - Destroy on Reply
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v2.3.0';
+const CACHE_NAME = 'echo-off-v2.4.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

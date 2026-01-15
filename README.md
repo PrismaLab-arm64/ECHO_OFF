@@ -1,6 +1,6 @@
 # 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-2.3.0-00CC00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.4.0-00CC00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
@@ -13,7 +13,7 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 2.3.0                              ║
+║   Version: 2.4.0                              ║
 ║   Protocolo: P2P 1:1                          ║
 ║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
@@ -21,8 +21,8 @@
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-> ECHO_OFF v2.3.0 - Advanced Features Edition
-> File Transfer | Voice Notes | SAS Verification | Panic Button
+> ECHO_OFF v2.4.0 - Destroy on Reply Edition
+> Messages destroyed when you reply | No timers for text
 ```
 
 ## ⚖️ Exoneración de Responsabilidad (Disclaimer)
@@ -77,6 +77,40 @@ El uso de este código o aplicación es responsabilidad exclusiva del usuario fi
 - **🔐 Cifrado E2E**: Transmision de datos P2P cifrada
 - **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
 - **🔒 Wake Lock API**: Mantiene pantalla activa durante chat
+
+## 🆕 Novedades v2.4.0 - Destroy on Reply (Mejor UX para Lectura)
+
+### 💬 Sistema de Destrucción Inteligente de Mensajes de Texto
+- **Problema Resuelto**: Mensajes largos se destruían antes de poder leerlos completamente
+- **Nueva Lógica**: Los mensajes de texto **NO tienen timeout automático**
+- **Destrucción por Respuesta**: Mensajes se destruyen **INMEDIATAMENTE al responder**
+- **Indicador Visual**: Cada mensaje muestra `[Responde para destruir]` en gris
+- **Mejor UX**: Puedes leer mensajes largos completamente, sin prisas
+
+### 📝 Flujo de Mensajes de Texto
+```
+1. Recibes mensaje (corto o largo) → Queda visible
+2. Indicador: "[Responde para destruir]" en gris
+3. Lees el mensaje completo (sin límite de tiempo)
+4. Escribes tu respuesta
+5. Al enviar respuesta → TODOS los mensajes anteriores se destruyen
+6. Tu respuesta se envía y queda visible (para que el otro lea)
+```
+
+### 🎯 Ventajas del Sistema
+- ✅ **Sin estrés**: Lee mensajes largos sin apuros
+- ✅ **Privacidad**: Conversación se limpia al responder
+- ✅ **Contexto**: Ves mensajes anteriores mientras escribes
+- ✅ **Efecto Matrix**: Destrucción animada al responder
+- ✅ **Lógica natural**: "Si respondes, ya leíste"
+
+### ⏱️ Tiempos de Destrucción por Tipo
+| Tipo de Contenido | Método de Destrucción |
+|-------------------|-----------------------|
+| **Mensajes de Texto** | Al enviar respuesta (sin timeout) |
+| **Voice Notes** | 20s después de reproducir |
+| **File Downloads** | 20s después de descargar |
+| **System Messages** | Permanentes |
 
 ## 🆕 Novedades v2.3.0 - Extended Countdown (20 segundos)
 
@@ -358,6 +392,12 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📊 Version History
 
+### v2.4.0 (2026-01-15) - Destroy on Reply
+- **Mensajes de texto**: Destrucción al responder (sin timeout automático)
+- **Mejor UX**: Lee mensajes largos sin prisas
+- **Indicador visual**: "[Responde para destruir]" en cada mensaje
+- **Lógica natural**: Si respondes, ya leíste el mensaje
+
 ### v2.3.0 (2026-01-15) - Extended Countdown
 - **20 segundos** para archivos y audio (antes: 10s)
 - Smart countdown: inicia después de completar acción
@@ -441,6 +481,7 @@ Abre `http://localhost:8000` en tu navegador.
 v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI) 
 → v1.3.1 (UX) → v1.4.1 (Bugs) → v1.5.0 (Arch) → v1.6.0 (Security) 
 → v2.0.0 (Advanced) → v2.1.0 (Timer) → v2.2.0 (Smart) → v2.3.0 (Extended)
+→ v2.4.0 (Destroy on Reply)
 ```
 
 ### Funcionalidades por Versión
@@ -457,7 +498,8 @@ v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI)
 | v2.1.0 | Auto-Destruct Timer | +124 |
 | v2.2.0 | Smart Countdown | +91 |
 | v2.3.0 | Extended Countdown (20s) | +34 |
-| **TOTAL** | **12 versiones** | **~2,800+** |
+| v2.4.0 | Destroy on Reply | +45 |
+| **TOTAL** | **13 versiones** | **~2,845+** |
 
 ## 📄 Licencia
 
@@ -482,5 +524,5 @@ Dale una ⭐ si este proyecto te ayudo!
 
 ---
 
-**C:\> ECHO_OFF v2.3.0 - Advanced Features Edition**  
-**C:\> Maximum Privacy | Zero Trace | P2P Encrypted | File Transfer | Voice Notes**
+**C:\> ECHO_OFF v2.4.0 - Destroy on Reply Edition**  
+**C:\> Maximum Privacy | Zero Trace | Messages Destroyed on Reply | Smart Destruction**

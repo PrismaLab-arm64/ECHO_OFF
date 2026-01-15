@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.3.0 - Extended Countdown (20s)
+   Version: 2.4.0 - Destroy on Reply
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -10,6 +10,12 @@
    - Host (Sala): Acepta UNA conexión a la vez
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
+   
+   NEW IN 2.4.0:
+   - Text messages: Destroyed IMMEDIATELY when user replies
+   - No timeout: Messages stay until user responds
+   - Visual hint: "[Responde para destruir]" on each message
+   - Better UX: User can read long messages completely
    
    NEW IN 2.3.0:
    - Extended countdown: 20 seconds AFTER action completes
@@ -47,6 +53,7 @@ let wakeLock = null; // Keep screen awake on mobile
 
 // Advanced Features State
 let messageHistory = []; // For panic button garbage overwrite
+let activeMessages = []; // Track active message elements for instant destroy on reply
 let escapeKeyCount = 0;
 let escapeKeyTimer = null;
 let mediaRecorder = null;
@@ -811,7 +818,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.3.0] Extended Countdown - Sistema inicializado');
+    console.log('[ECHO_OFF v2.4.0] Destroy on Reply - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -1212,6 +1219,9 @@ function sendMessage() {
         return;
     }
     
+    // DESTROY ALL PREVIOUS MESSAGES (user replied, so they read them)
+    destroyAllActiveMessages();
+    
     // Send message to peer
     currentConnection.send(message);
     console.log('[MESSAGE SENT]:', message);
@@ -1240,7 +1250,15 @@ function addMessage(content, type) {
     
     const header = document.createElement('div');
     header.classList.add('message-header');
+    
+    // Add countdown timer to header
+    const timerSpan = document.createElement('span');
+    timerSpan.className = 'message-countdown';
+    timerSpan.style.marginLeft = '10px';
+    timerSpan.style.color = '#808080';
+    
     header.textContent = `[${timestamp}] ${type === 'sent' ? 'TU' : 'PEER'}`;
+    header.appendChild(timerSpan);
     
     const body = document.createElement('div');
     body.classList.add('message-body');
@@ -1257,6 +1275,14 @@ function addMessage(content, type) {
     messagesContainer.appendChild(messageDiv);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
+    // Track this message for destruction on reply
+    activeMessages.push({
+        element: messageDiv,
+        body: body,
+        content: content,
+        timestamp: Date.now()
+    });
+    
     // Decrypt animation for received messages
     if (type === 'received') {
         decryptMessage(body, content);
@@ -1265,12 +1291,11 @@ function addMessage(content, type) {
         body.textContent = `> ${content}`;
     }
     
-    // Auto-disappear after 5 seconds
-    setTimeout(() => {
-        disappearMessage(messageDiv, body, content);
-    }, 5000);
+    // Show "Responde para destruir" hint
+    timerSpan.textContent = '[Responde para destruir]';
+    timerSpan.style.color = '#808080';
     
-    console.log(`[MESSAGE ADDED] Type: ${type}, Content: ${content}`);
+    console.log(`[MESSAGE ADDED] Type: ${type}, Length: ${content.length} chars, ActiveMessages: ${activeMessages.length}`);
 }
 
 function decryptMessage(element, finalText) {
@@ -1302,6 +1327,20 @@ function decryptMessage(element, finalText) {
             element.classList.add('message-decrypted');
         }
     }, 50);
+}
+
+function destroyAllActiveMessages() {
+    console.log(`[DESTROY ALL] Destroying ${activeMessages.length} active messages`);
+    
+    // Destroy all tracked messages
+    activeMessages.forEach(msg => {
+        if (msg.element && msg.element.parentNode) {
+            disappearMessage(msg.element, msg.body, msg.content);
+        }
+    });
+    
+    // Clear the active messages array
+    activeMessages = [];
 }
 
 function disappearMessage(messageDiv, bodyElement, originalText) {
