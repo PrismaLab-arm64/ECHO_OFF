@@ -39,6 +39,7 @@ C:\> Type HELP for available commands
 - **💻 Diseño Limpio**: Color verde terminal, fuente VT323
 
 ## 🆕 Novedades v1.3.1 - Better UX & Alerts
+https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai/
 
 ### ✅ Mejoras de UX
 - **Alerta Mejorada**: "NUEVA SOLICITUD DE CONEXION" en lugar de "INTRUSION DETECTADA"
