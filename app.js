@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.6.0 - Security Simulation Layer
+   Version: 2.0.0 - Advanced Features
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -11,10 +11,11 @@
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
    
-   Para múltiples usuarios simultáneos se requeriría:
-   - Arquitectura diferente (mesh/star/broadcast)
-   - Servidor de señalización personalizado
-   - Gestión de múltiples conexiones simultáneas
+   NEW IN 2.0.0:
+   - File Transfer: P2P chunked file transfer (50MB max)
+   - Voice Notes: Audio recording and playback
+   - SAS Verification: Short Authentication String
+   - Panic Button: ESC x3 emergency exit
    ============================================= */
 
 // Global Variables
@@ -25,6 +26,16 @@ let targetPeerId = null; // Store target ID for display
 let isHost = false;
 let deferredPrompt = null;
 let wakeLock = null; // Keep screen awake on mobile
+
+// Advanced Features State
+let messageHistory = []; // For panic button garbage overwrite
+let escapeKeyCount = 0;
+let escapeKeyTimer = null;
+let mediaRecorder = null;
+let audioChunks = [];
+let isRecording = false;
+let fileTransferProgress = {};
+let sasCode = null; // Short Authentication String
 
 // Audio Context for 8-bit sounds
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -67,6 +78,15 @@ const chatPeerId = document.getElementById('chat-peer-id');
 let securityInterval = null;
 let vpnRotationInterval = null;
 let ipRotationInterval = null;
+
+// Advanced Features State
+let mediaRecorder = null;
+let audioChunks = [];
+let isRecording = false;
+let escPressCount = 0;
+let escTimer = null;
+const CHUNK_SIZE = 16384; // 16KB chunks for file transfer
+let currentFileTransfer = null;
 
 // VPN Servers Pool (fictional)
 const VPN_SERVERS = [
@@ -185,6 +205,409 @@ function updateSecurityDisplay(info) {
 }
 
 /* =============================================
+   ADVANCED FEATURES MODULE
+   1. File Transfer (P2P Chunked Blob)
+   2. Voice Notes (Audio Blob)
+   3. SAS Verification (Security Fingerprint)
+   4. Panic Button (ESC x3 Emergency Exit)
+   ============================================= */
+
+/* ─────────────────────────────────────────────
+   1. FILE TRANSFER (P2P Chunked Blob)
+   ───────────────────────────────────────────── */
+
+// File transfer handler
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    if (!currentConnection || !currentConnection.open) {
+        addSystemMessage('/// ERROR: No hay conexion activa');
+        return;
+    }
+    
+    // Check file size (limit to 50MB for safety)
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) {
+        addSystemMessage('/// ERROR: Archivo muy grande (max 50MB)');
+        return;
+    }
+    
+    sendFile(file);
+}
+
+function sendFile(file) {
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+        const arrayBuffer = e.target.result;
+        const totalChunks = Math.ceil(arrayBuffer.byteLength / CHUNK_SIZE);
+        
+        // Send file metadata first
+        const metadata = {
+            type: 'FILE_META',
+            name: file.name,
+            size: file.size,
+            mimeType: file.type,
+            totalChunks: totalChunks
+        };
+        
+        currentConnection.send(JSON.stringify(metadata));
+        
+        // Show progress bar
+        const progressDiv = document.createElement('div');
+        progressDiv.className = 'file-progress';
+        progressDiv.innerHTML = `
+            <div class="progress-label">ENVIANDO: ${file.name}</div>
+            <div class="progress-bar-container">
+                <div id="upload-progress-bar" class="progress-bar-fill"></div>
+            </div>
+            <div class="progress-text" id="upload-progress-text">[░░░░░░░░░░] 0%</div>
+        `;
+        messagesContainer.appendChild(progressDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // Send chunks
+        let chunkIndex = 0;
+        const sendNextChunk = () => {
+            if (chunkIndex < totalChunks) {
+                const start = chunkIndex * CHUNK_SIZE;
+                const end = Math.min(start + CHUNK_SIZE, arrayBuffer.byteLength);
+                const chunk = arrayBuffer.slice(start, end);
+                
+                const chunkData = {
+                    type: 'FILE_CHUNK',
+                    index: chunkIndex,
+                    data: Array.from(new Uint8Array(chunk))
+                };
+                
+                currentConnection.send(JSON.stringify(chunkData));
+                
+                chunkIndex++;
+                const progress = Math.floor((chunkIndex / totalChunks) * 100);
+                updateProgressBar('upload', progress);
+                
+                // Continue sending
+                setTimeout(sendNextChunk, 10);
+            } else {
+                // Transfer complete
+                const endSignal = { type: 'FILE_END' };
+                currentConnection.send(JSON.stringify(endSignal));
+                
+                setTimeout(() => {
+                    progressDiv.remove();
+                    addSystemMessage(`/// Archivo enviado: ${file.name}`);
+                }, 1000);
+            }
+        };
+        
+        sendNextChunk();
+    };
+    
+    reader.readAsArrayBuffer(file);
+}
+
+// Receive file handler
+let incomingFile = {
+    metadata: null,
+    chunks: [],
+    receivedChunks: 0
+};
+
+function handleIncomingFileData(data) {
+    if (data.type === 'FILE_META') {
+        // Initialize file reception
+        incomingFile = {
+            metadata: data,
+            chunks: new Array(data.totalChunks),
+            receivedChunks: 0
+        };
+        
+        // Show progress bar
+        const progressDiv = document.createElement('div');
+        progressDiv.className = 'file-progress';
+        progressDiv.id = 'download-progress';
+        progressDiv.innerHTML = `
+            <div class="progress-label">RECIBIENDO: ${data.name}</div>
+            <div class="progress-bar-container">
+                <div id="download-progress-bar" class="progress-bar-fill"></div>
+            </div>
+            <div class="progress-text" id="download-progress-text">[░░░░░░░░░░] 0%</div>
+        `;
+        messagesContainer.appendChild(progressDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+    } else if (data.type === 'FILE_CHUNK') {
+        // Store chunk
+        incomingFile.chunks[data.index] = new Uint8Array(data.data);
+        incomingFile.receivedChunks++;
+        
+        const progress = Math.floor((incomingFile.receivedChunks / incomingFile.metadata.totalChunks) * 100);
+        updateProgressBar('download', progress);
+        
+    } else if (data.type === 'FILE_END') {
+        // Reconstruct file
+        const blob = new Blob(incomingFile.chunks, { type: incomingFile.metadata.mimeType });
+        const url = URL.createObjectURL(blob);
+        
+        // Remove progress bar
+        const progressDiv = document.getElementById('download-progress');
+        if (progressDiv) progressDiv.remove();
+        
+        // Add download link
+        addFileDownloadMessage(incomingFile.metadata.name, url);
+        
+        // Reset
+        incomingFile = { metadata: null, chunks: [], receivedChunks: 0 };
+    }
+}
+
+// Update progress bar (ASCII style)
+function updateProgressBar(type, percentage) {
+    const barId = type === 'upload' ? 'upload-progress-bar' : 'download-progress-bar';
+    const textId = type === 'upload' ? 'upload-progress-text' : 'download-progress-text';
+    
+    const barElement = document.getElementById(barId);
+    const textElement = document.getElementById(textId);
+    
+    if (barElement) {
+        barElement.style.width = percentage + '%';
+    }
+    
+    if (textElement) {
+        const filled = Math.floor(percentage / 10);
+        const empty = 10 - filled;
+        const bar = '█'.repeat(filled) + '░'.repeat(empty);
+        textElement.textContent = `[${bar}] ${percentage}%`;
+    }
+}
+
+// Add file download message
+function addFileDownloadMessage(filename, url) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message file-message';
+    messageDiv.innerHTML = `
+        <div class="message-header">[FILE RECEIVED]</div>
+        <div class="message-body">
+            <div class="file-download">
+                <span class="file-icon">📎</span>
+                <span class="file-name">${filename}</span>
+                <a href="${url}" download="${filename}" class="file-download-btn">[ DOWNLOAD ]</a>
+            </div>
+        </div>
+    `;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+/* ─────────────────────────────────────────────
+   2. VOICE NOTES (Audio Blob)
+   ───────────────────────────────────────────── */
+
+async function startVoiceRecording() {
+    if (isRecording) return;
+    
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = (event) => {
+            audioChunks.push(event.data);
+        };
+        
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            sendVoiceNote(audioBlob);
+            stream.getTracks().forEach(track => track.stop());
+        };
+        
+        mediaRecorder.start();
+        isRecording = true;
+        
+        // Update button visual
+        const recBtn = document.getElementById('btn-record');
+        if (recBtn) {
+            recBtn.classList.add('recording');
+            recBtn.textContent = '● REC';
+        }
+        
+    } catch (err) {
+        console.error('[VOICE] Error:', err);
+        addSystemMessage('/// ERROR: No se pudo acceder al microfono');
+    }
+}
+
+function stopVoiceRecording() {
+    if (!isRecording || !mediaRecorder) return;
+    
+    mediaRecorder.stop();
+    isRecording = false;
+    
+    // Update button visual
+    const recBtn = document.getElementById('btn-record');
+    if (recBtn) {
+        recBtn.classList.remove('recording');
+        recBtn.textContent = '[ REC ]';
+    }
+}
+
+function sendVoiceNote(audioBlob) {
+    if (!currentConnection || !currentConnection.open) {
+        addSystemMessage('/// ERROR: No hay conexion activa');
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = () => {
+        const base64Audio = reader.result.split(',')[1];
+        const voiceData = {
+            type: 'VOICE_NOTE',
+            audio: base64Audio,
+            timestamp: Date.now()
+        };
+        
+        currentConnection.send(JSON.stringify(voiceData));
+        addVoiceNoteMessage('sent', base64Audio);
+    };
+    
+    reader.readAsDataURL(audioBlob);
+}
+
+function handleIncomingVoiceNote(data) {
+    addVoiceNoteMessage('received', data.audio);
+}
+
+function addVoiceNoteMessage(type, base64Audio) {
+    const audioUrl = `data:audio/webm;base64,${base64Audio}`;
+    const label = type === 'sent' ? 'TU' : 'PEER';
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message voice-message ${type}`;
+    messageDiv.innerHTML = `
+        <div class="message-header">[${label}] VOICE NOTE</div>
+        <div class="message-body">
+            <audio controls class="voice-player">
+                <source src="${audioUrl}" type="audio/webm">
+            </audio>
+        </div>
+    `;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+/* ─────────────────────────────────────────────
+   3. SAS VERIFICATION (Security Fingerprint)
+   ───────────────────────────────────────────── */
+
+// Generate SAS from connection fingerprint
+async function generateSAS(connection) {
+    try {
+        const stats = await connection.getStats();
+        let fingerprint = '';
+        
+        stats.forEach(report => {
+            if (report.type === 'certificate' && report.fingerprint) {
+                fingerprint = report.fingerprint;
+            }
+        });
+        
+        if (!fingerprint) {
+            // Fallback: generate from peer IDs
+            fingerprint = myPeerId + (targetPeerId || '');
+        }
+        
+        // Create short hash
+        const hash = await hashString(fingerprint);
+        const shortHash = hash.substring(0, 8);
+        
+        // Convert to emoji + numeric code
+        const emojis = ['🥑', '🍕', '🎯', '🔑', '🌟', '🎨', '🔥', '💎', '🎭', '🚀'];
+        const emojiIndex = parseInt(shortHash.substring(0, 2), 16) % emojis.length;
+        const numericCode = parseInt(shortHash.substring(2, 6), 16) % 10000;
+        
+        const sas = `${emojis[emojiIndex]} ${numericCode.toString().padStart(4, '0')}`;
+        displaySAS(sas);
+        
+    } catch (err) {
+        console.error('[SAS] Error:', err);
+    }
+}
+
+async function hashString(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function displaySAS(sas) {
+    const sasDisplay = document.getElementById('sas-display');
+    if (sasDisplay) {
+        sasDisplay.textContent = `SAS: ${sas}`;
+        sasDisplay.style.display = 'block';
+    }
+}
+
+/* ─────────────────────────────────────────────
+   4. PANIC BUTTON (ESC x3 Emergency Exit)
+   ───────────────────────────────────────────── */
+
+function initPanicButton() {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            escPressCount++;
+            
+            if (escPressCount === 1) {
+                // Start timer - reset if 2 seconds pass
+                escTimer = setTimeout(() => {
+                    escPressCount = 0;
+                }, 2000);
+            }
+            
+            if (escPressCount === 3) {
+                // PANIC TRIGGER
+                triggerPanicMode();
+            }
+        }
+    });
+}
+
+function triggerPanicMode() {
+    console.log('[PANIC] Emergency exit triggered');
+    
+    // 1. Close WebRTC connection
+    if (currentConnection) {
+        currentConnection.close();
+        currentConnection = null;
+    }
+    
+    if (peer) {
+        peer.destroy();
+        peer = null;
+    }
+    
+    // 2. Clear DOM
+    document.body.innerHTML = '';
+    
+    // 3. Overwrite sensitive data in memory with garbage
+    const garbage = Array(1000).fill(0).map(() => Math.random().toString(36));
+    myPeerId = garbage[0];
+    targetPeerId = garbage[1];
+    
+    // Overwrite message container
+    if (messagesContainer) {
+        messagesContainer.innerHTML = garbage.join('');
+    }
+    
+    // 4. Redirect to innocent site
+    setTimeout(() => {
+        window.location.href = 'https://www.google.com';
+    }, 100);
+}
+
+/* =============================================
    8-BIT SOUND GENERATOR
    ============================================= */
 function initAudio() {
@@ -254,12 +677,13 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.6.0] Security Simulation Layer - Sistema inicializado');
+    console.log('[ECHO_OFF v2.0.0] Advanced Features - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
     setupPWAInstallPrompt();
     requestWakeLock();
+    initPanicButton(); // Initialize panic button (ESC x3)
     
     // Initialize audio on first user interaction
     document.addEventListener('click', initAudio, { once: true });
@@ -392,6 +816,30 @@ function setupEventListeners() {
     if (btnCancelInstall) {
         btnCancelInstall.addEventListener('click', () => {
             installPrompt.classList.add('hidden');
+        });
+    }
+    
+    // Advanced Features
+    // File upload
+    const btnUploadFile = document.getElementById('btn-upload-file');
+    const fileInput = document.getElementById('file-input');
+    if (btnUploadFile && fileInput) {
+        btnUploadFile.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileUpload);
+    }
+    
+    // Voice recording
+    const btnRecord = document.getElementById('btn-record');
+    if (btnRecord) {
+        btnRecord.addEventListener('mousedown', startVoiceRecording);
+        btnRecord.addEventListener('mouseup', stopVoiceRecording);
+        btnRecord.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startVoiceRecording();
+        });
+        btnRecord.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            stopVoiceRecording();
         });
     }
 }
@@ -575,12 +1023,30 @@ function setupConnectionHandlers(conn) {
         
         // Start security animation layer
         startSecurityAnimation();
+        
+        // Generate SAS for verification
+        generateSAS(conn.peerConnection);
     });
     
     conn.on('data', (data) => {
         console.log('[MESSAGE RECEIVED]:', data);
-        // Sound removed - less intrusive
-        addMessage(data, 'received');
+        
+        // Try to parse as JSON (for advanced features)
+        try {
+            const parsed = JSON.parse(data);
+            
+            if (parsed.type === 'FILE_META' || parsed.type === 'FILE_CHUNK' || parsed.type === 'FILE_END') {
+                handleIncomingFileData(parsed);
+            } else if (parsed.type === 'VOICE_NOTE') {
+                handleIncomingVoiceNote(parsed);
+            } else {
+                // Regular text message
+                addMessage(data, 'received');
+            }
+        } catch (e) {
+            // Not JSON, regular text message
+            addMessage(data, 'received');
+        }
     });
     
     conn.on('close', () => {
