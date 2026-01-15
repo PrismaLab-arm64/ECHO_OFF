@@ -4,7 +4,7 @@
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v1.3.1';
+const CACHE_NAME = 'echo-off-v1.4.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

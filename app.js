@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 1.3.1 - Better UX and Alerts
+   Version: 1.4.0 - Java Console Style
    ============================================= */
 
 // Global Variables
@@ -112,7 +112,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.3.1] Better UX - Sistema inicializado');
+    console.log('[ECHO_OFF v1.4.0] Java Console - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
