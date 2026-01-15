@@ -128,7 +128,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v1.4.1] Bug Fixes - Sistema inicializado');
+    console.log('[ECHO_OFF v1.5.0] P2P 1:1 Architecture - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
