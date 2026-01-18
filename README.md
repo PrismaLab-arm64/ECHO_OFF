@@ -1,6 +1,6 @@
 # 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-2.6.0-00CC00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.7.0-00CC00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
@@ -22,7 +22,7 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 2.6.0                              ║
+║   Version: 2.7.0                              ║
 ║   Protocolo: P2P 1:1                          ║
 ║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
@@ -30,8 +30,8 @@
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-> ECHO_OFF v2.6.0 - Security Patch & Gray UI
-> Anti-copy protection | All UI text in gray | Typing cursor active
+> ECHO_OFF v2.7.0 - UX Improvements & Animations
+> Fixed copy button | Improved ID generation | Minimal UI | Typing animations
 ```
 
 ## ⚖️ Exoneración de Responsabilidad (Disclaimer)
@@ -87,17 +87,22 @@ El uso de este código o aplicación es responsabilidad exclusiva del usuario fi
 - **👁️ Autorizacion Manual**: El Host aprueba conexiones manualmente
 - **🔒 Wake Lock API**: Mantiene pantalla activa durante chat
 
-## 🆕 Novedades v2.6.0 - Security Patch & Gray UI
+## 🆕 Novedades v2.7.0 - UX Improvements & Animations
 
-### 🔒 Parche de Seguridad: Anti-Copy Protection
-- **Protección total contra copiar**: Texto no seleccionable en toda la app
-- **Bloqueados**: Copy (Ctrl+C), Cut (Ctrl+X), Select All (Ctrl+A)
-- **Context menu desactivado**: No click derecho
-- **Atajos bloqueados**: Print (Ctrl+P), Save (Ctrl+S)
-- **Máxima privacidad**: Contenido no puede ser capturado fácilmente
+### 🐛 Correcciones Críticas
+- **✅ Botón copiar arreglado**: Ahora funciona correctamente (bypass de protección)
+- **✅ Generación de IDs mejorada**: Usa crypto.getRandomValues() para evitar colisiones
+- **✅ Menos intentos de conexión**: Códigos más únicos y confiables
 
-### 🎨 Mejora Visual: UI Completa en Gris
-- **Todo el texto de la UI**: Color gris (#808080)
+### 🎨 Mejoras de Interfaz
+- **UI menos invasiva**: Security layers con opacidad 40-50%
+- **Fondos transparentes**: Información visible pero no distrae
+- **Fuentes más pequeñas**: Indicadores discretos
+
+### ✨ Animaciones Nuevas
+- **Typing effect**: El ID de sala aparece con efecto de escritura
+- **Progreso de conexión**: Mensajes paso a paso al conectar
+- **Utilidades agregadas**: Progress bar, glitch text effect
 - **Botones y labels**: Gris para reducir distracción
 - **Mensajes nuevos**: Verde brillante (#00CC00) por 3 segundos
 - **Mensajes leídos**: Fade a gris (#606060) después de 3s
@@ -475,11 +480,13 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📊 Version History
 
-### v2.6.0 (2026-01-15) - Security Patch & Gray UI
-- **Anti-copy protection**: No select, no copy, no context menu
-- **Gray UI**: All interface text in gray for minimal distraction
-- **Typing cursor**: Active animation in security layer
-- **Enhanced privacy**: Content protection maximized
+### v2.7.0 (2026-01-18) - UX Improvements & Animations
+- **Fixed copy button**: Now works correctly (bypass security protection)
+- **Improved ID generation**: crypto.getRandomValues() for less collisions
+- **Minimal UI**: Security layers with 40-50% opacity, non-intrusive
+- **Typing animation**: Room ID appears with typewriter effect
+- **Connection progress**: Step-by-step connection messages
+- **Animation utilities**: Progress bar, glitch text effect added
 
 ### v2.5.0 (2026-01-15) - Gray Fade & Encryption Indicator
 - **Fade to Gray**: Mensajes pasan a gris después de 3 segundos (no destrucción)
@@ -562,7 +569,7 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📈 Estadísticas del Proyecto
 
-### Versión Actual: v2.6.0
+### Versión Actual: v2.7.0
 - **Total de Funcionalidades**: 8 principales
 - **Líneas de Código**: ~1,530+ JavaScript + 900+ CSS
 - **Commits Totales**: 17+
@@ -576,7 +583,7 @@ Abre `http://localhost:8000` en tu navegador.
 v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI) 
 → v1.3.1 (UX) → v1.4.1 (Bugs) → v1.5.0 (Arch) → v1.6.0 (Security) 
 → v2.0.0 (Advanced) → v2.1.0 (Timer) → v2.2.0 (Smart) → v2.3.0 (Extended)
-→ v2.4.0 (Destroy on Reply) → v2.5.0 (Gray Fade) → v2.6.0 (Security)
+→ v2.4.0 (Destroy on Reply) → v2.5.0 (Gray Fade) → v2.7.0 (Security)
 ```
 
 ### Funcionalidades por Versión
@@ -595,7 +602,7 @@ v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI)
 | v2.3.0 | Extended Countdown (20s) | +34 |
 | v2.4.0 | Destroy on Reply | +45 |
 | v2.5.0 | Gray Fade & Encryption | +65 |
-| v2.6.0 | Security & Gray UI | +50 |
+| v2.7.0 | Security & Gray UI | +50 |
 | **TOTAL** | **15 versiones** | **~3,070+** |
 
 ## 📄 Licencia
@@ -621,5 +628,5 @@ Dale una ⭐ si este proyecto te ayudo!
 
 ---
 
-**C:\> ECHO_OFF v2.6.0 - Security Patch & Gray UI**  
-**C:\> Maximum Privacy | Anti-Copy Protection | Gray Interface | Secure Chat**
+**C:\> ECHO_OFF v2.7.0 - UX Improvements & Animations**  
+**C:\> Fixed Copy | Better IDs | Minimal UI | Smooth Animations | Secure Chat**

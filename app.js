@@ -928,7 +928,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.6.0] Security Patch & Gray UI - Sistema inicializado');
+    console.log('[ECHO_OFF v2.7.0] UX Improvements & Animations - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
