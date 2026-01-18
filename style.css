@@ -658,15 +658,16 @@ body {
    ============================================= */
 .security-layer {
     display: none;
-    background-color: rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--console-gray);
-    border-radius: 4px;
-    padding: 8px 12px;
-    margin: 10px 0;
-    font-size: clamp(11px, 2vw, 13px);
-    color: var(--console-gray);
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 4px 8px;
+    margin: 5px 0;
+    font-size: clamp(9px, 1.8vw, 11px);
+    color: #404040;
     font-family: 'Courier Prime', monospace;
-    line-height: 1.5;
+    line-height: 1.3;
+    opacity: 0.5;
 }
 
 .security-line {
@@ -756,13 +757,14 @@ body {
 
 /* Remote Encryption Indicator */
 .encryption-indicator {
-    margin: 10px;
-    padding: 12px 15px;
-    background-color: rgba(0, 128, 0, 0.15);
-    border: 2px solid var(--console-green);
-    border-radius: 6px;
+    margin: 5px 0;
+    padding: 4px 8px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
     font-family: 'Courier Prime', monospace;
-    box-shadow: 0 0 15px rgba(0, 204, 0, 0.3);
+    box-shadow: none;
+    opacity: 0.4;
 }
 
 .encryption-indicator.hidden {
@@ -770,17 +772,17 @@ body {
 }
 
 .encryption-header {
-    color: var(--console-green);
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    text-shadow: 0 0 8px rgba(0, 204, 0, 0.6);
+    color: #404040;
+    font-size: clamp(9px, 1.8vw, 11px);
+    font-weight: normal;
+    margin-bottom: 3px;
+    text-shadow: none;
 }
 
 .encryption-matrix {
-    font-size: 11px;
-    line-height: 1.4;
-    color: #00FF00;
+    font-size: clamp(8px, 1.6vw, 10px);
+    line-height: 1.2;
+    color: #303030;
     font-family: 'Courier New', monospace;
     letter-spacing: 1px;
     overflow: hidden;
@@ -1010,4 +1012,63 @@ body {
         font-size: 10px;
         padding: 4px 10px;
     }
+}
+
+/* =============================================
+   PROGRESS BAR ANIMATIONS
+   ============================================= */
+.progress-bar-container {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid var(--console-gray);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background-color: rgba(128, 128, 128, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: var(--console-green);
+    width: 0%;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 10px var(--console-green);
+}
+
+.progress-text {
+    color: var(--console-gray);
+    font-size: clamp(11px, 2vw, 13px);
+    text-align: center;
+    font-family: 'Courier Prime', monospace;
+}
+
+/* Typing cursor animation */
+@keyframes typing-cursor {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.typing-cursor::after {
+    content: '_';
+    animation: typing-cursor 1s infinite;
+}
+
+/* Glitch animation */
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+.glitch-effect {
+    animation: glitch 0.3s infinite;
 }

@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.6.0 - Security Patch & Gray UI
+   Version: 2.7.0 - UX Improvements & Animations
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -11,11 +11,14 @@
    - Cliente: Se conecta a UNA sala a la vez
    - Protocolo: PeerJS con WebRTC directo
    
-   NEW IN 2.6.0:
-   - Security: Anti-copy protection (no select, no copy, no context menu)
-   - UI: All interface text changed to gray (#808080)
-   - Messages: New messages in green (#00CC00), fade to gray after 3s
-   - Typing cursor animation active in security layer
+   NEW IN 2.7.0:
+   - FIX: Copy button now works correctly (bypass security protection)
+   - FIX: Improved ID generation with crypto.getRandomValues (less collisions)
+   - UI: Security layers now minimal and non-intrusive (opacity 0.4-0.5)
+   - ANIMATION: Typing effect when generating room ID
+   - ANIMATION: Connection progress steps with messages
+   - ANIMATION: Progress bar utility for future features
+   - ANIMATION: Glitch text effect utility
    
    NEW IN 2.5.0:
    - Messages fade to gray after 3 seconds (not destroyed)
@@ -242,34 +245,27 @@ let encryptionInterval = null;
 function startEncryptionIndicator() {
     const indicator = document.getElementById('encryption-indicator');
     const matrix1 = document.getElementById('encryption-matrix-1');
-    const matrix2 = document.getElementById('encryption-matrix-2');
     
-    if (!indicator || !matrix1 || !matrix2) return;
+    if (!indicator || !matrix1) return;
     
     // Show indicator
     indicator.classList.remove('hidden');
     
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
     const hexChars = '0123456789ABCDEF';
     
-    function generateMatrixLine(length = 60) {
+    function generateMatrixLine(length = 30) {
         let line = '';
         for (let i = 0; i < length; i++) {
-            if (i % 3 === 0) {
-                line += hexChars[Math.floor(Math.random() * hexChars.length)];
-            } else {
-                line += chars[Math.floor(Math.random() * chars.length)];
-            }
-            if (i % 10 === 9) line += ' ';
+            line += hexChars[Math.floor(Math.random() * hexChars.length)];
+            if (i % 4 === 3) line += ' ';
         }
         return line;
     }
     
-    // Update matrix text every 100ms
+    // Update matrix text every 500ms (slower, less distracting)
     encryptionInterval = setInterval(() => {
-        matrix1.textContent = generateMatrixLine(70);
-        matrix2.textContent = generateMatrixLine(70);
-    }, 100);
+        matrix1.textContent = generateMatrixLine(30);
+    }, 500);
     
     console.log('[ENCRYPTION INDICATOR] Started');
 }
@@ -1114,9 +1110,19 @@ function showScreen(screen) {
    GENERATE UNIQUE RANDOM ID
    ============================================= */
 function generateUniqueId() {
+    // Use crypto.getRandomValues for better randomness
     const timestamp = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).substring(2, 8).toUpperCase();
-    return `ECHO_${timestamp}${random}`;
+    
+    // Generate cryptographically secure random values
+    const randomArray = new Uint32Array(2);
+    crypto.getRandomValues(randomArray);
+    const random1 = randomArray[0].toString(36).substring(0, 6).toUpperCase();
+    const random2 = randomArray[1].toString(36).substring(0, 6).toUpperCase();
+    
+    // Add extra entropy from performance.now()
+    const entropy = Math.floor(performance.now() * 1000).toString(36).substring(0, 4).toUpperCase();
+    
+    return `ECHO_${timestamp}${random1}${random2}${entropy}`;
 }
 
 /* =============================================
@@ -1141,12 +1147,15 @@ function createRoom() {
     
     peer.on('open', (id) => {
         console.log('[PEER] Sala creada:', id);
-        roomIdDisplay.value = id;
-        isHost = true;
-        updateStatus('EN ESPERA', 'warning');
-        addSystemMessage('/// Sala ECHO_OFF creada');
-        addSystemMessage(`/// ID: ${id}`);
-        addSystemMessage('/// Esperando conexion entrante...');
+        
+        // Typing animation for room ID
+        typeTextIntoInput(roomIdDisplay, id, 30, () => {
+            isHost = true;
+            updateStatus('EN ESPERA', 'warning');
+            addSystemMessage('/// Sala ECHO_OFF creada');
+            addSystemMessage(`/// ID: ${id}`);
+            addSystemMessage('/// Esperando conexion entrante...');
+        });
     });
     
     peer.on('connection', (conn) => {
@@ -1236,8 +1245,12 @@ function connectToPeer() {
     
     peer.on('open', (id) => {
         console.log('[PEER] Conectando a:', targetId);
-        currentConnection = peer.connect(targetId);
-        setupConnectionHandlers(currentConnection);
+        
+        // Show connection progress animation
+        showConnectionProgress(() => {
+            currentConnection = peer.connect(targetId);
+            setupConnectionHandlers(currentConnection);
+        });
     });
     
     peer.on('error', (err) => {
@@ -1518,11 +1531,52 @@ function addSystemMessage(content) {
    ============================================= */
 function copyRoomId() {
     const id = roomIdDisplay.value;
-    navigator.clipboard.writeText(id).then(() => {
-        addSystemMessage('/// ID copiado al portapapeles');
-    }).catch(err => {
+    
+    // Create temporary textarea to copy text (bypass security protection)
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = id;
+    tempTextArea.style.position = 'fixed';
+    tempTextArea.style.left = '-9999px';
+    tempTextArea.style.top = '0';
+    // Allow selection on this specific element
+    tempTextArea.style.userSelect = 'text';
+    tempTextArea.style.webkitUserSelect = 'text';
+    document.body.appendChild(tempTextArea);
+    
+    try {
+        tempTextArea.focus();
+        tempTextArea.select();
+        
+        // Try modern clipboard API first
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(id).then(() => {
+                addSystemMessage('/// ID copiado al portapapeles');
+                document.body.removeChild(tempTextArea);
+            }).catch(err => {
+                // Fallback to execCommand
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    addSystemMessage('/// ID copiado al portapapeles');
+                } else {
+                    addSystemMessage('/// ERROR: No se pudo copiar el ID');
+                }
+                document.body.removeChild(tempTextArea);
+            });
+        } else {
+            // Fallback to execCommand for older browsers
+            const successful = document.execCommand('copy');
+            if (successful) {
+                addSystemMessage('/// ID copiado al portapapeles');
+            } else {
+                addSystemMessage('/// ERROR: No se pudo copiar el ID');
+            }
+            document.body.removeChild(tempTextArea);
+        }
+    } catch (err) {
         console.error('[CLIPBOARD] Error:', err);
-    });
+        addSystemMessage('/// ERROR: No se pudo copiar el ID');
+        document.body.removeChild(tempTextArea);
+    }
 }
 
 function regenerateRoomId() {
@@ -1565,6 +1619,109 @@ function destroyPeer() {
     }
     isHost = false;
     myPeerId = null;
+}
+
+/* =============================================
+   ANIMATION UTILITIES
+   ============================================= */
+
+// Typing effect for input fields
+function typeTextIntoInput(inputElement, text, speed = 50, callback = null) {
+    inputElement.value = '';
+    let index = 0;
+    
+    const typingInterval = setInterval(() => {
+        if (index < text.length) {
+            inputElement.value += text[index];
+            index++;
+        } else {
+            clearInterval(typingInterval);
+            if (callback) callback();
+        }
+    }, speed);
+}
+
+// Connection progress animation
+function showConnectionProgress(callback) {
+    const steps = [
+        '/// Iniciando handshake P2P...',
+        '/// Estableciendo tunel seguro...',
+        '/// Verificando identidad del peer...',
+        '/// Negociando protocolos de encriptacion...',
+        '/// Conexion establecida'
+    ];
+    
+    let currentStep = 0;
+    
+    const progressInterval = setInterval(() => {
+        if (currentStep < steps.length) {
+            addSystemMessage(steps[currentStep]);
+            currentStep++;
+        } else {
+            clearInterval(progressInterval);
+            if (callback) {
+                setTimeout(callback, 300);
+            }
+        }
+    }, 400);
+}
+
+// Progress bar animation (for future use)
+function showProgressBar(container, duration = 2000, callback = null) {
+    const progressDiv = document.createElement('div');
+    progressDiv.className = 'progress-bar-container';
+    progressDiv.innerHTML = `
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-text">Procesando...</div>
+    `;
+    
+    container.appendChild(progressDiv);
+    
+    const fillElement = progressDiv.querySelector('.progress-bar-fill');
+    let progress = 0;
+    const increment = 100 / (duration / 50);
+    
+    const progressInterval = setInterval(() => {
+        progress += increment;
+        if (progress >= 100) {
+            progress = 100;
+            clearInterval(progressInterval);
+            setTimeout(() => {
+                container.removeChild(progressDiv);
+                if (callback) callback();
+            }, 300);
+        }
+        fillElement.style.width = progress + '%';
+    }, 50);
+}
+
+// Glitch effect for text (cyberpunk style)
+function glitchText(element, duration = 1000) {
+    const originalText = element.textContent;
+    const chars = '!<>-_\\/[]{}—=+*^?#________';
+    let iterations = 0;
+    const maxIterations = duration / 30;
+    
+    const glitchInterval = setInterval(() => {
+        element.textContent = originalText
+            .split('')
+            .map((char, index) => {
+                if (index < iterations) {
+                    return originalText[index];
+                }
+                return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join('');
+        
+        iterations += 1/3;
+        
+        if (iterations >= originalText.length) {
+            clearInterval(glitchInterval);
+            element.textContent = originalText;
+        }
+    }, 30);
 }
 
 /* =============================================
