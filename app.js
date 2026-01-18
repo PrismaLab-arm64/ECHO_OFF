@@ -1008,12 +1008,77 @@ function initSplashScreen() {
 }
 
 /* =============================================
+   SERVICE WORKER FORCE UPDATE
+   ============================================= */
+function forceServiceWorkerUpdate() {
+    console.log('[PWA] Forzando actualización del Service Worker...');
+    
+    if ('serviceWorker' in navigator) {
+        // Unregister all service workers
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            console.log('[PWA] Desregistrando', registrations.length, 'service workers');
+            
+            Promise.all(registrations.map(reg => reg.unregister()))
+                .then(() => {
+                    console.log('[PWA] Todos los service workers desregistrados');
+                    
+                    // Clear all caches
+                    return caches.keys();
+                })
+                .then(cacheNames => {
+                    console.log('[PWA] Limpiando', cacheNames.length, 'caches');
+                    return Promise.all(
+                        cacheNames.map(cacheName => caches.delete(cacheName))
+                    );
+                })
+                .then(() => {
+                    console.log('[PWA] Caches limpiados. Recargando...');
+                    alert('Actualización forzada completada. La página se recargará.');
+                    
+                    // Force hard reload
+                    window.location.reload(true);
+                })
+                .catch(err => {
+                    console.error('[PWA] Error al forzar actualización:', err);
+                    alert('Error al actualizar. Intenta cerrar todas las pestañas y volver a abrir.');
+                });
+        });
+    } else {
+        alert('Service Workers no soportados en este navegador');
+    }
+}
+
+/* =============================================
    SERVICE WORKER REGISTRATION (PWA)
    ============================================= */
 function checkServiceWorkerSupport() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('[PWA] Service Worker registrado:', reg.scope))
+        // Force update on every page load
+        navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+            .then(reg => {
+                console.log('[PWA] Service Worker registrado:', reg.scope);
+                
+                // Force immediate update check
+                reg.update().then(() => {
+                    console.log('[PWA] Verificación de actualización forzada');
+                });
+                
+                // Listen for updates
+                reg.addEventListener('updatefound', () => {
+                    const newWorker = reg.installing;
+                    console.log('[PWA] Nueva versión detectada, instalando...');
+                    
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            console.log('[PWA] Nueva versión lista. Recargando...');
+                            // Auto-reload to activate new version
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+                        }
+                    });
+                });
+            })
             .catch(err => console.error('[PWA] Fallo al registrar Service Worker:', err));
     }
 }
@@ -1069,6 +1134,12 @@ function setupEventListeners() {
         btnCancelInstall.addEventListener('click', () => {
             installPrompt.classList.add('hidden');
         });
+    }
+    
+    // Force Update Button
+    const btnForceUpdate = document.getElementById('btn-force-update');
+    if (btnForceUpdate) {
+        btnForceUpdate.addEventListener('click', forceServiceWorkerUpdate);
     }
     
     // Advanced Features
