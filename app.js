@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.7.0 - UX Improvements & Animations
+   Version: 2.8.0 - Matrix Animations & Clean UI
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -282,6 +282,124 @@ function stopEncryptionIndicator() {
     }
     
     console.log('[ENCRYPTION INDICATOR] Stopped');
+}
+
+/* =============================================
+   CANAL SEGURO MATRIX ANIMATION
+   ============================================= */
+let canalSeguroInterval = null;
+
+function startCanalSeguroAnimation() {
+    const canalText = document.getElementById('canal-seguro-text');
+    if (!canalText) return;
+    
+    const originalText = 'CANAL SEGURO';
+    const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*';
+    
+    canalSeguroInterval = setInterval(() => {
+        let newText = '';
+        for (let i = 0; i < originalText.length; i++) {
+            if (originalText[i] === ' ') {
+                newText += ' ';
+            } else {
+                // 70% chance to show original char, 30% random
+                if (Math.random() > 0.3) {
+                    newText += originalText[i];
+                } else {
+                    newText += matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                }
+            }
+        }
+        canalText.textContent = newText;
+    }, 1000); // Every 1 second
+    
+    console.log('[CANAL SEGURO] Animation started');
+}
+
+function stopCanalSeguroAnimation() {
+    if (canalSeguroInterval) {
+        clearInterval(canalSeguroInterval);
+        canalSeguroInterval = null;
+    }
+    const canalText = document.getElementById('canal-seguro-text');
+    if (canalText) {
+        canalText.textContent = 'CANAL SEGURO';
+    }
+}
+
+/* =============================================
+   VPN ANIMATION (Countries + Hash + Countdown)
+   ============================================= */
+let vpnInterval = null;
+
+function startVPNAnimation() {
+    const vpnLocation = document.getElementById('vpn-location');
+    const vpnHash = document.getElementById('vpn-hash');
+    const vpnCountdown = document.getElementById('vpn-countdown');
+    
+    if (!vpnLocation || !vpnHash || !vpnCountdown) return;
+    
+    const locations = [
+        'VPN: Tokyo, JP | 103.5.140.142',
+        'VPN: London, UK | 185.93.3.123',
+        'VPN: New York, US | 192.241.135.67',
+        'VPN: Berlin, DE | 46.4.119.88',
+        'VPN: Singapore, SG | 139.180.141.205',
+        'VPN: Sydney, AU | 45.248.77.142',
+        'VPN: Paris, FR | 51.159.23.45',
+        'VPN: Toronto, CA | 192.99.45.78',
+        'VPN: Mumbai, IN | 103.253.145.29',
+        'VPN: Seoul, KR | 211.249.45.123'
+    ];
+    
+    const hexChars = '0123456789ABCDEF';
+    let countdown = 2;
+    
+    function generateHash(length = 16) {
+        let hash = '';
+        for (let i = 0; i < length; i++) {
+            hash += hexChars[Math.floor(Math.random() * hexChars.length)];
+        }
+        return hash;
+    }
+    
+    function updateVPN() {
+        // Random location
+        const location = locations[Math.floor(Math.random() * locations.length)];
+        vpnLocation.textContent = location;
+        
+        // Matrix hash animation
+        const hash = generateHash(16);
+        vpnHash.textContent = `[${hash}]`;
+        
+        // Reset countdown
+        countdown = 2;
+    }
+    
+    // Initial update
+    updateVPN();
+    
+    // Update location and hash every 2 seconds
+    vpnInterval = setInterval(() => {
+        updateVPN();
+    }, 2000);
+    
+    // Update countdown every 100ms
+    setInterval(() => {
+        if (countdown > 0) {
+            vpnCountdown.textContent = `[${countdown.toFixed(1)}s]`;
+            countdown -= 0.1;
+        }
+    }, 100);
+    
+    console.log('[VPN ANIMATION] Started');
+}
+
+function stopVPNAnimation() {
+    if (vpnInterval) {
+        clearInterval(vpnInterval);
+        vpnInterval = null;
+    }
 }
 
 /* =============================================
@@ -928,7 +1046,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.7.0] UX Improvements & Animations - Sistema inicializado');
+    console.log('[ECHO_OFF v2.8.0] Matrix Animations & Clean UI - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -1296,6 +1414,12 @@ function setupConnectionHandlers(conn) {
         // Start encryption indicator
         startEncryptionIndicator();
         
+        // Start canal seguro matrix animation
+        startCanalSeguroAnimation();
+        
+        // Start VPN animation
+        startVPNAnimation();
+        
         // Generate SAS for verification (with small delay to ensure IDs are set)
         setTimeout(() => {
             generateSAS();
@@ -1602,6 +1726,8 @@ function disconnect() {
     playDisconnectSound();
     stopSecurityAnimation();
     stopEncryptionIndicator();
+    stopCanalSeguroAnimation();
+    stopVPNAnimation();
     if (currentConnection) {
         currentConnection.close();
         currentConnection = null;
