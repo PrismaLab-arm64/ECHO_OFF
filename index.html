@@ -7,7 +7,7 @@
     <meta name="description" content="ECHO_OFF - Comunicacion P2P cifrada estilo Java Console">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>ECHO_OFF v2.7.0</title>
+    <title>ECHO_OFF v2.8.0</title>
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon-app.png">
@@ -79,7 +79,7 @@
     <div id="splash-screen" class="boot-screen active">
         <div class="boot-content">
             <pre class="boot-text">
-ECHO_OFF Secure Communications System v2.7.0
+ECHO_OFF Secure Communications System v2.8.0
 Copyright (C) 2026 CyberSec Division
 
 Initializing P2P Protocol...      [OK]
@@ -102,7 +102,7 @@ Starting PeerJS Service...        [OK]
             </div>
             
             <div class="welcome-info">
-                <p>Version: 2.7.0</p>
+                <p>Version: 2.8.0</p>
                 <p>Protocolo: Peer-to-Peer (P2P 1:1)</p>
                 <p>Usuarios: 1 a 1 simultaneo</p>
                 <p>Encriptacion: End-to-End</p>
@@ -190,7 +190,7 @@ Starting PeerJS Service...        [OK]
             <div class="dos-chat-header">
                 <div class="chat-header-info">
                     <p class="chat-title">
-                        CANAL SEGURO | PEER: <span id="chat-peer-id" class="peer-id"></span>
+                        <span id="canal-seguro-text">CANAL SEGURO</span> | PEER: <span id="chat-peer-id" class="peer-id"></span>
                         <span id="sas-display" class="sas-display"></span>
                     </p>
                 </div>
@@ -198,7 +198,13 @@ Starting PeerJS Service...        [OK]
             </div>
             
             <!-- Security Simulation Layer -->
-            <div id="security-layer" class="security-layer"></div>
+            <div id="security-layer" class="security-layer">
+                <div id="vpn-animation" class="vpn-animation">
+                    <span id="vpn-location" class="vpn-location"></span>
+                    <span id="vpn-hash" class="vpn-hash"></span>
+                    <span id="vpn-countdown" class="vpn-countdown"></span>
+                </div>
+            </div>
             
             <!-- Remote Encryption Indicator -->
             <div id="encryption-indicator" class="encryption-indicator hidden">
