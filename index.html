@@ -12,6 +12,49 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="icon-app.png">
     <link rel="apple-touch-icon" href="icon-app.png">
+    
+    <!-- CRITICAL: Clean old Service Worker BEFORE loading anything -->
+    <script>
+    (function() {
+        console.log('[CLEANUP] Iniciando limpieza de Service Worker antiguo...');
+        
+        if ('serviceWorker' in navigator) {
+            // Unregister ALL service workers immediately
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                if (registrations.length > 0) {
+                    console.log('[CLEANUP] Encontrados', registrations.length, 'service workers. Eliminando...');
+                    
+                    registrations.forEach(function(registration) {
+                        registration.unregister().then(function(success) {
+                            if (success) {
+                                console.log('[CLEANUP] Service Worker eliminado:', registration.scope);
+                            }
+                        });
+                    });
+                }
+            });
+            
+            // Clear ALL caches
+            if ('caches' in window) {
+                caches.keys().then(function(cacheNames) {
+                    if (cacheNames.length > 0) {
+                        console.log('[CLEANUP] Encontrados', cacheNames.length, 'caches. Eliminando...');
+                        
+                        cacheNames.forEach(function(cacheName) {
+                            caches.delete(cacheName).then(function(success) {
+                                if (success) {
+                                    console.log('[CLEANUP] Cache eliminado:', cacheName);
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+        }
+        
+        console.log('[CLEANUP] Limpieza completada. Cargando v2.7.0...');
+    })();
+    </script>
 </head>
 <body>
     <!-- PWA Install Prompt -->

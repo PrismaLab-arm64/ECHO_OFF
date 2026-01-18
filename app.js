@@ -1054,7 +1054,7 @@ function forceServiceWorkerUpdate() {
 function checkServiceWorkerSupport() {
     if ('serviceWorker' in navigator) {
         // Force update on every page load
-        navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+        navigator.serviceWorker.register('sw-v2.7.0.js', { updateViaCache: 'none' })
             .then(reg => {
                 console.log('[PWA] Service Worker registrado:', reg.scope);
                 
