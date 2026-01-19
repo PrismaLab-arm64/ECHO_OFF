@@ -1,6 +1,6 @@
 /* =============================================
    ECHO_OFF PWA - P2P COMMUNICATION LOGIC
-   Version: 2.8.0 - Matrix Animations & Clean UI
+   Version: 2.9.0 - Security & Simplicity
    
    ARQUITECTURA P2P 1:1 (Peer-to-Peer)
    ===================================
@@ -431,7 +431,65 @@ function handleFileUpload(event) {
         return;
     }
     
-    sendFile(file);
+    // Check if it's an image
+    if (file.type.startsWith('image/')) {
+        showImageSendOptions(file);
+    } else {
+        sendFile(file);
+    }
+}
+
+// Show options for sending image
+function showImageSendOptions(file) {
+    const modal = document.createElement('div');
+    modal.className = 'image-modal';
+    modal.innerHTML = `
+        <div class="modal-content">
+            <p class="modal-title">ENVIAR IMAGEN</p>
+            <p class="modal-text">¿Cómo desea enviar esta imagen?</p>
+            <div class="modal-buttons">
+                <button id="btn-send-view-once" class="dos-button primary">Ver Una Vez</button>
+                <button id="btn-send-saveable" class="dos-button">Permitir Guardar</button>
+                <button id="btn-cancel-send" class="dos-button">Cancelar</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    document.getElementById('btn-send-view-once').onclick = () => {
+        modal.remove();
+        sendImageWithMode(file, 'view_once');
+    };
+    
+    document.getElementById('btn-send-saveable').onclick = () => {
+        modal.remove();
+        sendImageWithMode(file, 'saveable');
+    };
+    
+    document.getElementById('btn-cancel-send').onclick = () => {
+        modal.remove();
+    };
+}
+
+function sendImageWithMode(file, mode) {
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+        const base64Data = e.target.result;
+        
+        const imageOffer = {
+            type: 'IMAGE_OFFER',
+            name: file.name,
+            data: base64Data,
+            mode: mode,
+            timestamp: Date.now()
+        };
+        
+        currentConnection.send(JSON.stringify(imageOffer));
+        addSystemMessage(`/// Imagen enviada (${mode === 'view_once' ? 'Ver una vez' : 'Guardar permitido'})`);
+    };
+    
+    reader.readAsDataURL(file);
 }
 
 function sendFile(file) {
@@ -503,6 +561,66 @@ function sendFile(file) {
     };
     
     reader.readAsArrayBuffer(file);
+}
+
+// Handle incoming image offer
+function handleIncomingImageOffer(data) {
+    const modal = document.createElement('div');
+    modal.className = 'image-modal';
+    
+    const modeText = data.mode === 'view_once' ? 'VER UNA VEZ' : 'GUARDAR PERMITIDO';
+    
+    modal.innerHTML = `
+        <div class="modal-content">
+            <p class="modal-title">IMAGEN RECIBIDA</p>
+            <p class="modal-text">Modo: ${modeText}</p>
+            <img src="${data.data}" class="modal-image" />
+            <div class="modal-buttons">
+                ${data.mode === 'saveable' ? '<button id="btn-save-image" class="dos-button primary">Guardar</button>' : ''}
+                <button id="btn-view-image" class="dos-button">Ver${data.mode === 'view_once' ? ' (Se destruirá)' : ''}</button>
+                <button id="btn-close-image" class="dos-button">Cerrar</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    if (data.mode === 'saveable') {
+        document.getElementById('btn-save-image').onclick = () => {
+            // Download image
+            const link = document.createElement('a');
+            link.href = data.data;
+            link.download = data.name || 'image.png';
+            link.click();
+            addSystemMessage('/// Imagen guardada');
+            modal.remove();
+        };
+    }
+    
+    document.getElementById('btn-view-image').onclick = () => {
+        // Show image in full screen
+        const viewer = document.createElement('div');
+        viewer.className = 'image-viewer';
+        viewer.innerHTML = `
+            <img src="${data.data}" class="viewer-image" />
+            <button class="viewer-close">X</button>
+        `;
+        document.body.appendChild(viewer);
+        
+        viewer.querySelector('.viewer-close').onclick = () => {
+            viewer.remove();
+            modal.remove();
+            if (data.mode === 'view_once') {
+                addSystemMessage('/// Imagen destruida (vista una vez)');
+            }
+        };
+    };
+    
+    document.getElementById('btn-close-image').onclick = () => {
+        modal.remove();
+        if (data.mode === 'view_once') {
+            addSystemMessage('/// Imagen rechazada (no vista)');
+        }
+    };
 }
 
 // Receive file handler
@@ -904,6 +1022,24 @@ function initSecurityProtection() {
     document.body.style.webkitUserSelect = 'none';
     document.body.style.msUserSelect = 'none';
     
+    // Detect focus loss (possible screenshot/recording)
+    let focusLostCount = 0;
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && currentConnection) {
+            focusLostCount++;
+            console.log('[SECURITY] App hidden - possible capture attempt');
+            
+            if (focusLostCount >= 3) {
+                addSystemMessage('⚠ ADVERTENCIA: Actividad sospechosa detectada');
+                addSystemMessage('⚠ Posible intento de captura de pantalla');
+                focusLostCount = 0;
+            }
+        }
+    });
+    
+    // Add watermark to messages
+    addWatermarkToMessages();
+    
     // Prevent copy event
     document.addEventListener('copy', (e) => {
         e.preventDefault();
@@ -941,6 +1077,30 @@ function initSecurityProtection() {
     });
     
     console.log('[SECURITY] Anti-copy protection enabled');
+}
+
+function addWatermarkToMessages() {
+    // Add invisible watermark to chat container
+    const watermark = document.createElement('div');
+    watermark.className = 'security-watermark';
+    watermark.textContent = `ECHO_OFF | ${Date.now()} | CONFIDENCIAL`;
+    watermark.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 48px;
+        color: rgba(0, 255, 0, 0.05);
+        pointer-events: none;
+        user-select: none;
+        z-index: 1;
+    `;
+    
+    const chatScreen = document.getElementById('chat-screen');
+    if (chatScreen) {
+        chatScreen.style.position = 'relative';
+        chatScreen.appendChild(watermark);
+    }
 }
 
 function triggerPanicMode() {
@@ -1046,7 +1206,7 @@ function playDisconnectSound() {
    INITIALIZATION
    ============================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('[ECHO_OFF v2.8.0] Matrix Animations & Clean UI - Sistema inicializado');
+    console.log('[ECHO_OFF v2.9.0] Security & Simplicity - Sistema inicializado');
     setupEventListeners();
     checkServiceWorkerSupport();
     initSplashScreen();
@@ -1078,8 +1238,18 @@ function setupPWAInstallPrompt() {
                 console.log('[PWA] Mostrando prompt de instalacion');
                 installPrompt.classList.remove('hidden');
             }
-        }, 5000); // Aumentado a 5 segundos
+        }, 3000); // 3 segundos
     });
+    
+    // For iOS/Safari - show manual instructions
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    
+    if (isIOS && !isStandalone) {
+        setTimeout(() => {
+            addSystemMessage('ℹ iOS: Toque el botón Compartir y luego "Añadir a pantalla de inicio"');
+        }, 3000);
+    }
     
     window.addEventListener('appinstalled', () => {
         console.log('[PWA] Aplicacion instalada');
@@ -1113,7 +1283,47 @@ document.addEventListener('visibilitychange', async () => {
     if (wakeLock !== null && document.visibilityState === 'visible') {
         await requestWakeLock();
     }
+    
+    // Handle connection when app becomes visible again
+    if (document.visibilityState === 'visible' && currentConnection) {
+        console.log('[VISIBILITY] App visible, checking connection...');
+        // Connection is still active, no need to reconnect
+    }
 });
+
+// Prevent connection loss on page hide
+document.addEventListener('pagehide', (event) => {
+    console.log('[PAGE] Page hiding, maintaining connection...');
+    // Don't close connection, just log
+});
+
+// Keep connection alive with heartbeat
+let heartbeatInterval = null;
+
+function startHeartbeat() {
+    if (heartbeatInterval) clearInterval(heartbeatInterval);
+    
+    heartbeatInterval = setInterval(() => {
+        if (currentConnection && currentConnection.open) {
+            try {
+                // Send silent heartbeat
+                currentConnection.send(JSON.stringify({ type: 'heartbeat', timestamp: Date.now() }));
+            } catch (err) {
+                console.error('[HEARTBEAT] Error:', err);
+            }
+        }
+    }, 10000); // Every 10 seconds
+    
+    console.log('[HEARTBEAT] Started');
+}
+
+function stopHeartbeat() {
+    if (heartbeatInterval) {
+        clearInterval(heartbeatInterval);
+        heartbeatInterval = null;
+        console.log('[HEARTBEAT] Stopped');
+    }
+}
 
 /* =============================================
    SPLASH SCREEN INITIALIZATION
@@ -1491,6 +1701,9 @@ function setupConnectionHandlers(conn) {
         // Start VPN animation
         startVPNAnimation();
         
+        // Start heartbeat to keep connection alive
+        startHeartbeat();
+        
         // Generate SAS for verification (with small delay to ensure IDs are set)
         setTimeout(() => {
             generateSAS();
@@ -1504,10 +1717,18 @@ function setupConnectionHandlers(conn) {
         try {
             const parsed = JSON.parse(data);
             
+            // Ignore heartbeat messages
+            if (parsed.type === 'heartbeat') {
+                console.log('[HEARTBEAT] Received');
+                return;
+            }
+            
             if (parsed.type === 'FILE_META' || parsed.type === 'FILE_CHUNK' || parsed.type === 'FILE_END') {
                 handleIncomingFileData(parsed);
             } else if (parsed.type === 'VOICE_NOTE') {
                 handleIncomingVoiceNote(parsed);
+            } else if (parsed.type === 'IMAGE_OFFER') {
+                handleIncomingImageOffer(parsed);
             } else {
                 // Regular text message
                 addMessage(data, 'received');
@@ -1799,6 +2020,7 @@ function disconnect() {
     stopEncryptionIndicator();
     stopCanalSeguroAnimation();
     stopVPNAnimation();
+    stopHeartbeat();
     if (currentConnection) {
         currentConnection.close();
         currentConnection = null;

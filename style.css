@@ -1097,3 +1097,116 @@ body {
 .glitch-effect {
     animation: glitch 0.3s infinite;
 }
+
+/* =============================================
+   IMAGE MODALS & VIEWER
+   ============================================= */
+.image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.modal-content {
+    background-color: var(--console-black);
+    border: 2px solid var(--console-green);
+    padding: 20px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    font-family: 'Courier Prime', monospace;
+}
+
+.modal-title {
+    color: var(--console-green);
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-text {
+    color: var(--console-green);
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.modal-image {
+    max-width: 100%;
+    max-height: 400px;
+    display: block;
+    margin: 15px auto;
+    border: 1px solid var(--console-green);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.image-viewer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+.viewer-image {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+}
+
+.viewer-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Courier Prime', monospace;
+}
+
+.viewer-close:hover {
+    background-color: #CC0000;
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 15px;
+        max-width: 95%;
+    }
+    
+    .modal-image {
+        max-height: 300px;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-buttons .dos-button {
+        width: 100%;
+    }
+}

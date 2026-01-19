@@ -1,10 +1,10 @@
 /* =============================================
    ECHO_OFF PWA - SERVICE WORKER
-   Version: 2.8.0 - Matrix Animations & Clean UI
+   Version: 2.9.0 - Security & Simplicity
    Purpose: Enable offline functionality and PWA installation
    ============================================= */
 
-const CACHE_NAME = 'echo-off-v2.8.0';
+const CACHE_NAME = 'echo-off-v2.9.0';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',

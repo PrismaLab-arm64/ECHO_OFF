@@ -102,22 +102,18 @@ Starting PeerJS Service...        [OK]
             </div>
             
             <div class="welcome-info">
-                <p>Version: 2.8.0</p>
-                <p>Protocolo: Peer-to-Peer (P2P 1:1)</p>
-                <p>Usuarios: 1 a 1 simultaneo</p>
-                <p>Encriptacion: End-to-End</p>
-                <p>Almacenamiento: NINGUNO</p>
-                <p>Privacidad: MAXIMA</p>
+                <p>Version: 2.9.0</p>
+                <p>Encriptacion End-to-End | Sin Almacenamiento</p>
             </div>
 
             <p class="prompt-text">> Seleccione una opcion:</p>
             
             <div class="dos-button-container">
                 <button id="btn-create-room" class="dos-button primary">
-                    > Crear nueva sala
+                    > Crear Sala
                 </button>
                 <button id="btn-join-room" class="dos-button primary">
-                    > Unirse a sala existente
+                    > Unirse
                 </button>
             </div>
             
@@ -148,14 +144,12 @@ Starting PeerJS Service...        [OK]
             </div>
 
             <p></p>
-            <p class="warning-text">ADVERTENCIA: Comparta este ID solo con usuarios de confianza.</p>
-            <p class="warning-text">Esta sala admite SOLO 1 usuario simultaneo (P2P 1:1).</p>
-            <p></p>
-            <p>> Estado: Esperando conexiones...</p>
+            <p class="warning-text">⚠ Comparta solo con usuarios de confianza</p>
+            <p>> Esperando conexion...</p>
             <p></p>
             
             <button id="btn-back-from-create" class="dos-button">
-                > Volver al menu
+                > Volver
             </button>
         </div>
 
@@ -165,22 +159,18 @@ Starting PeerJS Service...        [OK]
                 <p class="screen-title">Unirse a Sala</p>
             </div>
 
-            <p>> Ingrese el ID de la sala:</p>
-            <p></p>
-            <p>ID DEL PEER:</p>
+            <p>> Ingrese el ID:</p>
             
             <div class="dos-input-group">
                 <input type="text" id="peer-id-input" placeholder="ECHO_XXXXXXXXXX" class="dos-input" />
             </div>
 
-            <p>> Presione ENTER para conectar</p>
-            
             <div class="dos-button-group">
                 <button id="btn-connect" class="dos-button primary">
                     > Conectar
                 </button>
                 <button id="btn-back-from-join" class="dos-button">
-                    > Cancelar
+                    > Volver
                 </button>
             </div>
         </div>
