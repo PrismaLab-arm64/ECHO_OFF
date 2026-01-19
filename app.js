@@ -267,7 +267,6 @@ function startEncryptionIndicator() {
         matrix1.textContent = generateMatrixLine(30);
     }, 500);
     
-    console.log('[ENCRYPTION INDICATOR] Started');
 }
 
 function stopEncryptionIndicator() {
@@ -281,7 +280,6 @@ function stopEncryptionIndicator() {
         encryptionInterval = null;
     }
     
-    console.log('[ENCRYPTION INDICATOR] Stopped');
 }
 
 /* =============================================
@@ -313,7 +311,6 @@ function startCanalSeguroAnimation() {
         canalText.textContent = newText;
     }, 1000); // Every 1 second
     
-    console.log('[CANAL SEGURO] Animation started');
 }
 
 function stopCanalSeguroAnimation() {
@@ -392,7 +389,6 @@ function startVPNAnimation() {
         }
     }, 100);
     
-    console.log('[VPN ANIMATION] Started');
 }
 
 function stopVPNAnimation() {
@@ -409,10 +405,6 @@ function stopVPNAnimation() {
    3. SAS Verification (Security Fingerprint)
    4. Panic Button (ESC x3 Emergency Exit)
    ============================================= */
-
-/* ─────────────────────────────────────────────
-   1. FILE TRANSFER (P2P Chunked Blob)
-   ───────────────────────────────────────────── */
 
 // File transfer handler
 function handleFileUpload(event) {
@@ -749,10 +741,6 @@ function addFileDownloadMessage(filename, url) {
     });
 }
 
-/* ─────────────────────────────────────────────
-   2. VOICE NOTES (Audio Blob)
-   ───────────────────────────────────────────── */
-
 async function startVoiceRecording() {
     if (isRecording) return;
     
@@ -884,11 +872,6 @@ function addVoiceNoteMessage(type, base64Audio) {
     });
 }
 
-/* ─────────────────────────────────────────────
-   AUTO-DESTRUCT COUNTDOWN TIMER
-   For files and voice notes
-   ───────────────────────────────────────────── */
-
 function startCountdownTimer(messageElement, seconds, beforeDestroy = null) {
     const timerSpan = messageElement.querySelector('.countdown-timer');
     if (!timerSpan) return;
@@ -936,17 +919,12 @@ function destroyMessage(messageElement) {
     }, 500);
 }
 
-/* ─────────────────────────────────────────────
-   3. SAS VERIFICATION (Security Fingerprint)
-   ───────────────────────────────────────────── */
-
 // Generate SAS from connection fingerprint
 async function generateSAS() {
     try {
         // Generate from peer IDs (simpler and more reliable)
         const fingerprint = myPeerId + (isHost ? currentConnection.peer : targetPeerId);
         
-        console.log('[SAS] Generating from:', fingerprint);
         
         // Create short hash
         const hash = await hashString(fingerprint);
@@ -960,7 +938,6 @@ async function generateSAS() {
         const sas = `${emojis[emojiIndex]} ${numericCode.toString().padStart(4, '0')}`;
         displaySAS(sas);
         
-        console.log('[SAS] Generated:', sas);
         
     } catch (err) {
         console.error('[SAS] Error:', err);
@@ -983,15 +960,10 @@ function displaySAS(sas) {
         sasDisplay.textContent = `[${sas}]`;
         sasDisplay.classList.add('active');
         sasDisplay.style.display = 'inline-block';
-        console.log('[SAS] Displayed:', sas);
     } else {
         console.error('[SAS] Element not found');
     }
 }
-
-/* ─────────────────────────────────────────────
-   4. PANIC BUTTON (ESC x3 Emergency Exit)
-   ───────────────────────────────────────────── */
 
 function initPanicButton() {
     document.addEventListener('keydown', (e) => {
@@ -1027,7 +999,6 @@ function initSecurityProtection() {
     document.addEventListener('visibilitychange', () => {
         if (document.hidden && currentConnection) {
             focusLostCount++;
-            console.log('[SECURITY] App hidden - possible capture attempt');
             
             if (focusLostCount >= 3) {
                 addSystemMessage('⚠ ADVERTENCIA: Actividad sospechosa detectada');
@@ -1043,21 +1014,18 @@ function initSecurityProtection() {
     // Prevent copy event
     document.addEventListener('copy', (e) => {
         e.preventDefault();
-        console.log('[SECURITY] Copy attempt blocked');
         return false;
     });
     
     // Prevent cut event
     document.addEventListener('cut', (e) => {
         e.preventDefault();
-        console.log('[SECURITY] Cut attempt blocked');
         return false;
     });
     
     // Prevent context menu (right click)
     document.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-        console.log('[SECURITY] Context menu blocked');
         return false;
     });
     
@@ -1071,12 +1039,10 @@ function initSecurityProtection() {
              e.key === 'p' || e.key === 'P' ||
              e.key === 's' || e.key === 'S')) {
             e.preventDefault();
-            console.log('[SECURITY] Keyboard shortcut blocked:', e.key);
             return false;
         }
     });
     
-    console.log('[SECURITY] Anti-copy protection enabled');
 }
 
 function addWatermarkToMessages() {
@@ -1104,7 +1070,6 @@ function addWatermarkToMessages() {
 }
 
 function triggerPanicMode() {
-    console.log('[PANIC] Emergency exit triggered');
     
     // 1. Close WebRTC connection
     if (currentConnection) {
@@ -1235,7 +1200,6 @@ function setupPWAInstallPrompt() {
         // Show install prompt after splash screen
         setTimeout(() => {
             if (deferredPrompt && installPrompt) {
-                console.log('[PWA] Mostrando prompt de instalacion');
                 installPrompt.classList.remove('hidden');
             }
         }, 3000); // 3 segundos
@@ -1252,7 +1216,6 @@ function setupPWAInstallPrompt() {
     }
     
     window.addEventListener('appinstalled', () => {
-        console.log('[PWA] Aplicacion instalada');
         deferredPrompt = null;
         if (installPrompt) {
             installPrompt.classList.add('hidden');
@@ -1267,10 +1230,8 @@ async function requestWakeLock() {
     try {
         if ('wakeLock' in navigator) {
             wakeLock = await navigator.wakeLock.request('screen');
-            console.log('[WAKE LOCK] Pantalla activa');
             
             wakeLock.addEventListener('release', () => {
-                console.log('[WAKE LOCK] Liberado');
             });
         }
     } catch (err) {
@@ -1286,14 +1247,12 @@ document.addEventListener('visibilitychange', async () => {
     
     // Handle connection when app becomes visible again
     if (document.visibilityState === 'visible' && currentConnection) {
-        console.log('[VISIBILITY] App visible, checking connection...');
         // Connection is still active, no need to reconnect
     }
 });
 
 // Prevent connection loss on page hide
 document.addEventListener('pagehide', (event) => {
-    console.log('[PAGE] Page hiding, maintaining connection...');
     // Don't close connection, just log
 });
 
@@ -1314,14 +1273,12 @@ function startHeartbeat() {
         }
     }, 10000); // Every 10 seconds
     
-    console.log('[HEARTBEAT] Started');
 }
 
 function stopHeartbeat() {
     if (heartbeatInterval) {
         clearInterval(heartbeatInterval);
         heartbeatInterval = null;
-        console.log('[HEARTBEAT] Stopped');
     }
 }
 
@@ -1670,7 +1627,6 @@ function connectToPeer() {
 
 function setupConnectionHandlers(conn) {
     conn.on('open', () => {
-        console.log('[CONNECTION] Establecida con:', isHost ? conn.peer : targetPeerId);
         showScreen(chatScreen);
         
         // Display correct peer ID - ALWAYS show the other end
@@ -1711,7 +1667,6 @@ function setupConnectionHandlers(conn) {
     });
     
     conn.on('data', (data) => {
-        console.log('[MESSAGE RECEIVED]:', data);
         
         // Try to parse as JSON (for advanced features)
         try {
@@ -1719,7 +1674,6 @@ function setupConnectionHandlers(conn) {
             
             // Ignore heartbeat messages
             if (parsed.type === 'heartbeat') {
-                console.log('[HEARTBEAT] Received');
                 return;
             }
             
@@ -1740,7 +1694,6 @@ function setupConnectionHandlers(conn) {
     });
     
     conn.on('close', () => {
-        console.log('[CONNECTION] Cerrada');
         updateStatus('DESCONECTADO', 'error');
         addSystemMessage('/// Conexión terminada');
         stopSecurityAnimation();

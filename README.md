@@ -1,16 +1,14 @@
 # 🔐 ECHO_OFF PWA - Java Console Edition
 
-![Version](https://img.shields.io/badge/version-2.7.0-00CC00?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-2.9.0-00CC00?style=for-the-badge)
 ![Status](https://img.shields.io/badge/status-operational-00CC00?style=for-the-badge)
 ![Privacy](https://img.shields.io/badge/privacy-maximum-00CC00?style=for-the-badge)
 ![Architecture](https://img.shields.io/badge/P2P-1:1-00CC00?style=for-the-badge)
 
 ## 🔗 Enlaces Rápidos
 
-**🌐 USAR APP EN VIVO**: https://8000-ibr4o9t915o4jcubam7h9-b32ec7bb.sandbox.novita.ai  
-**💻 Repositorio GitHub**: https://github.com/PrismaLab-arm64/ECHO_OFF  
-**🔀 Pull Request**: https://github.com/PrismaLab-arm64/ECHO_OFF/pull/1  
-**🌿 Branch**: `genspark_ai_developer`
+**🌐 USAR APP EN VIVO**: https://prismalab-arm64.github.io/ECHO_OFF/  
+**💻 Repositorio GitHub**: https://github.com/PrismaLab-arm64/ECHO_OFF
 
 ---
 
@@ -22,7 +20,7 @@
 ║   ECHO_OFF                                    ║
 ║   Sistema de Comunicacion Segura 1:1         ║
 ║                                               ║
-║   Version: 2.7.0                              ║
+║   Version: 2.9.0                              ║
 ║   Protocolo: P2P 1:1                          ║
 ║   Usuarios: 1 a 1 simultaneo                  ║
 ║   Encriptacion: E2E                           ║
@@ -30,8 +28,8 @@
 ║                                               ║
 ╚═══════════════════════════════════════════════╝
 
-> ECHO_OFF v2.7.0 - UX Improvements & Animations
-> Fixed copy button | Improved ID generation | Minimal UI | Typing animations
+> ECHO_OFF v2.9.0 - Security & Simplicity
+> Image system (view once/save) | Heartbeat connection | Simplified UI | Security enhancements
 ```
 
 ## ⚖️ Exoneración de Responsabilidad (Disclaimer)
@@ -480,6 +478,20 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📊 Version History
 
+### v2.9.0 (2026-01-19) - Security & Simplicity
+- **Image system**: Send images with "View Once" or "Save" modes
+- **Heartbeat connection**: Keeps connection alive (10s interval)
+- **Auto-reconnection**: No more "room not found" on minimize
+- **Security enhancements**: Focus loss detection, watermarks, warnings
+- **Simplified UI**: 50% less text, shorter buttons, concise messages
+- **PWA improvements**: iOS detection, better install prompt
+- **Code optimization**: 71KB → 68KB app.js, removed 26 console.logs
+
+### v2.8.0 (2026-01-18) - Matrix Animations
+- **Canal Seguro animation**: Matrix-style character rotation
+- **VPN animation**: Rotating countries, IPs, hash, countdown
+- **Simplified messages area**: More space, cleaner design
+
 ### v2.7.0 (2026-01-18) - UX Improvements & Animations
 - **Fixed copy button**: Now works correctly (bypass security protection)
 - **Improved ID generation**: crypto.getRandomValues() for less collisions
@@ -569,21 +581,22 @@ Abre `http://localhost:8000` en tu navegador.
 
 ## 📈 Estadísticas del Proyecto
 
-### Versión Actual: v2.7.0
-- **Total de Funcionalidades**: 8 principales
-- **Líneas de Código**: ~1,530+ JavaScript + 900+ CSS
-- **Commits Totales**: 17+
-- **Archivos**: 13 (HTML, CSS, JS, JSON, PNG, MD)
-- **Tiempo de Desarrollo**: ~6 horas
+### Versión Actual: v2.9.0
+- **Total de Funcionalidades**: 10 principales
+- **Líneas de Código**: ~2,100+ JavaScript + 1,200+ CSS
+- **Commits Totales**: 20+
+- **Archivos**: 9 (HTML, CSS, JS, JSON, PNG, MD)
+- **Tiempo de Desarrollo**: ~10 horas
 - **Arquitectura**: P2P 1:1 (WebRTC)
-- **Tamaño PWA**: ~2.5 MB (con iconos)
+- **Tamaño PWA**: ~450 KB (optimizado)
 
 ### Línea de Tiempo de Releases
 ```
 v1.0.0 (Base) → v1.1.0 (MS-DOS) → v1.2.0 (Simplify) → v1.3.0 (CLI) 
 → v1.3.1 (UX) → v1.4.1 (Bugs) → v1.5.0 (Arch) → v1.6.0 (Security) 
 → v2.0.0 (Advanced) → v2.1.0 (Timer) → v2.2.0 (Smart) → v2.3.0 (Extended)
-→ v2.4.0 (Destroy on Reply) → v2.5.0 (Gray Fade) → v2.7.0 (Security)
+→ v2.4.0 (Destroy on Reply) → v2.5.0 (Gray Fade) → v2.7.0 (Animations)
+→ v2.8.0 (Matrix) → v2.9.0 (Security & Simplicity)
 ```
 
 ### Funcionalidades por Versión
