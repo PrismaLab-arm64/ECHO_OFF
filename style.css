@@ -1,1212 +1,200 @@
-/* =============================================
-   ECHO_OFF PWA - JAVA CONSOLE STYLE
-   Version: 2.5.0 - Gray Fade & Encryption Indicator
-   ============================================= */
+/* =========================================================
+   ECHO_OFF — THEME OVERRIDES (ULTIMATE, SAFE)
+   Objetivo:
+   - Ganarle a style.css aunque tenga !important agresivo
+   - No tocar estructura ni lógica (solo visual)
+   - Estilo limpio tipo WA/LINE sobre tu fondo gris con patrón
+   ========================================================= */
 
-/* Import Monospace Font */
-@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&family=VT323&display=swap');
+:root{
+  --bg: #e9e9e9;
+  --pattern-opacity: 0.22;
+
+  --text: #141414;
+  --muted: rgba(0,0,0,0.52);
 
-/* =============================================
-   ROOT VARIABLES - Java Console Colors
-   ============================================= */
-:root {
-    --console-black: #000000;
-    --console-green: #808080; /* Gray for most UI text */
-    --console-green-dark: #606060;
-    --console-gray: #808080;
-    --message-green: #00CC00; /* Green for new messages */
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    /* Security: Prevent text selection and copy */
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* =============================================
-   BODY & MAIN LAYOUT
-   ============================================= */
-body {
-    font-family: 'Courier Prime', 'Courier New', monospace;
-    background-color: var(--console-black);
-    color: var(--console-green);
-    min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    position: relative;
-    font-size: clamp(14px, 2.5vw, 16px);
-    line-height: 1.6;
-    overflow-x: hidden;
-    padding: 20px;
-}
-
-/* =============================================
-   BOOT SCREEN
-   ============================================= */
-.boot-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--console-black);
-    color: var(--console-green);
-    display: none;
-    align-items: flex-start;
-    justify-content: flex-start;
-    z-index: 9999;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.boot-screen.active {
-    display: flex;
-}
-
-.boot-content {
-    width: 100%;
-    max-width: 100%;
-}
-
-.boot-text {
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    line-height: 1.6;
-    color: var(--console-green);
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    animation: fadeIn 2s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.cursor-blink {
-    font-size: clamp(14px, 2.5vw, 16px);
-    animation: blink 0.7s infinite;
-}
-
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
-
-/* =============================================
-   TERMINAL CONTAINER
-   ============================================= */
-.dos-terminal {
-    width: 100%;
-    max-width: 100%;
-    background-color: var(--console-black);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.dos-terminal.hidden {
-    display: none;
-}
-
-/* Remove all Windows 95 styling */
-.dos-title-bar,
-.dos-menu-bar,
-.dos-controls {
-    display: none;
-}
-
-/* =============================================
-   SCREEN CONTENT AREA
-   ============================================= */
-.screen {
-    display: none;
-    background-color: var(--console-black);
-    color: var(--console-green);
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    line-height: 1.6;
-    -webkit-overflow-scrolling: touch;
-}
-
-.screen.active {
-    display: block;
-}
-
-/* =============================================
-   WELCOME SCREEN
-   ============================================= */
-.welcome-header {
-    margin-bottom: 30px;
-}
-
-.title-main {
-    color: var(--console-green);
-    font-size: clamp(24px, 5vw, 32px);
-    font-weight: normal;
-    margin: 20px 0;
-    letter-spacing: 2px;
-}
-
-.title-subtitle {
-    color: var(--console-green);
-    font-size: clamp(14px, 2.5vw, 16px);
-    margin: 10px 0;
-}
-
-.welcome-info {
-    color: var(--console-green);
-    margin: 20px 0;
-    line-height: 1.8;
-}
-
-.welcome-info p {
-    margin: 8px 0;
-    font-size: clamp(14px, 2.5vw, 16px);
-}
-
-.prompt-text {
-    color: var(--console-green);
-    font-size: clamp(14px, 2.5vw, 16px);
-    margin: 30px 0 15px 0;
-}
-
-/* =============================================
-   SCREEN HEADERS
-   ============================================= */
-.screen-header {
-    margin-bottom: 20px;
-}
-
-.screen-title {
-    color: var(--console-green);
-    font-size: clamp(18px, 4vw, 22px);
-    font-weight: normal;
-    margin: 0 0 20px 0;
-    text-transform: uppercase;
-}
-
-.warning-text {
-    color: var(--console-green);
-    font-size: clamp(13px, 2.5vw, 15px);
-    margin: 5px 0;
-    opacity: 0.8;
-}
-
-/* =============================================
-   BUTTONS - Simple brackets style
-   ============================================= */
-.dos-button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
-    width: 100%;
-}
-
-.dos-button {
-    width: 100%;
-    min-height: 48px;
-    padding: 12px 20px;
-    background-color: transparent;
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s;
-    touch-action: manipulation;
-}
-
-.dos-button:hover {
-    background-color: var(--console-green);
-    color: var(--console-black);
-}
-
-.dos-button:active {
-    opacity: 0.7;
-}
-
-.dos-button.primary {
-    background-color: transparent;
-    border: 1px solid var(--console-green);
-}
-
-.dos-button-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-}
-
-.dos-button-small {
-    flex: 1;
-    padding: 12px 20px;
-    background-color: transparent;
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    cursor: pointer;
-    min-height: 48px;
-    touch-action: manipulation;
-    transition: all 0.2s;
-}
-
-.dos-button-small:hover {
-    background-color: var(--console-green);
-    color: var(--console-black);
-}
-
-.dos-button-close {
-    background-color: transparent;
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    padding: 12px 20px;
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    cursor: pointer;
-    min-height: 48px;
-    touch-action: manipulation;
-    transition: all 0.2s;
-    margin-bottom: 15px;
-}
-
-.dos-button-close:hover {
-    background-color: var(--console-green);
-    color: var(--console-black);
-}
-
-/* =============================================
-   INPUTS - Simple green border
-   ============================================= */
-.dos-input-group {
-    margin: 15px 0;
-    width: 100%;
-}
-
-.dos-input {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--console-black);
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    outline: none;
-    min-height: 48px;
-}
-
-.dos-input:focus {
-    border-color: var(--console-green);
-    box-shadow: 0 0 5px var(--console-green);
-}
-
-.dos-id-display {
-    display: flex;
-    flex-direction: column;
-    margin: 15px 0;
-    gap: 10px;
-}
-
-.dos-input-id {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--console-black);
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    outline: none;
-    min-height: 48px;
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
-
-.dos-button-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-
-/* =============================================
-   CHAT AREA
-   ============================================= */
-.dos-chat-header {
-    margin-bottom: 20px;
-}
-
-.chat-header-info {
-    margin-bottom: 15px;
-}
-
-.chat-title {
-    color: var(--console-green);
-    font-size: clamp(14px, 2.5vw, 16px);
-    margin: 0 0 15px 0;
-}
-
-.peer-id {
-    color: var(--console-green);
-    font-weight: bold;
-}
-
-.dos-messages {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background-color: var(--console-black);
-    border: none; /* Removed border for cleaner look */
-    padding: 20px; /* More padding */
-    min-height: 350px; /* More space */
-    max-height: 55vh; /* More vertical space */
-    margin-bottom: 15px;
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    line-height: 1.8; /* More line spacing */
-    -webkit-overflow-scrolling: touch;
-}
-
-.message {
-    margin-bottom: 20px; /* More space between messages */
-    padding: 12px 0;
-    border-left: none; /* Removed border for cleaner look */
-    padding-left: 5px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-.message.sent {
-    border-left-color: var(--console-gray);
-}
-
-.message.received {
-    border-left-color: var(--console-gray);
-}
-
-.message.system {
-    border-left-color: var(--console-gray);
-    color: var(--console-gray);
-    opacity: 0.7;
-}
-
-.message-header {
-    color: var(--console-gray);
-    font-size: clamp(12px, 2vw, 14px);
-    margin-bottom: 5px;
-}
-
-.message-body {
-    color: var(--message-green); /* Start with green for new messages */
-    word-wrap: break-word;
-}
-
-.message-body.read {
-    color: var(--console-gray); /* Gray for read messages */
-}
-
-.message-encrypted {
-    animation: decrypt-glitch 0.1s infinite;
-}
-
-@keyframes decrypt-glitch {
-    0% { opacity: 1; }
-    50% { opacity: 0.8; }
-    100% { opacity: 1; }
-}
-
-/* =============================================
-   INPUT BAR
-   ============================================= */
-.dos-input-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background-color: var(--console-black);
-    padding: 10px 0;
-    border: 1px solid var(--console-green);
-    padding: 10px;
-    flex-wrap: wrap;
-}
-
-.prompt {
-    color: var(--console-green);
-    font-weight: bold;
-    font-size: clamp(14px, 2.5vw, 16px);
-    flex-shrink: 0;
-}
-
-.dos-message-input {
-    flex: 1;
-    min-width: 200px;
-    padding: 10px;
-    background-color: var(--console-black);
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    outline: none;
-    min-height: 44px;
-}
-
-.dos-message-input:focus {
-    box-shadow: 0 0 5px var(--console-green);
-}
-
-.dos-send-button {
-    padding: 10px 20px;
-    background-color: transparent;
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    cursor: pointer;
-    min-height: 44px;
-    touch-action: manipulation;
-    transition: all 0.2s;
-}
-
-.dos-send-button:hover {
-    background-color: var(--console-green);
-    color: var(--console-black);
-}
-
-/* =============================================
-   PWA INSTALL PROMPT - Simplified
-   ============================================= */
-.install-prompt {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-    padding: 20px;
-}
-
-.install-prompt.hidden {
-    display: none;
-}
-
-.dos-window {
-    background-color: var(--console-black);
-    border: 2px solid var(--console-green);
-    padding: 20px;
-    width: 100%;
-    max-width: 500px;
-}
+  --bubble-in: #ffffff;
+  --bubble-out: #c9f7a8;
+
+  --radius: 16px;
+  --shadow: 0 6px 18px rgba(0,0,0,0.08);
 
-.dos-window .dos-title-bar {
-    display: block;
-    background: transparent;
-    color: var(--console-green);
-    padding: 0 0 15px 0;
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    border-bottom: 1px solid var(--console-green);
-    margin-bottom: 15px;
-}
-
-.dos-close {
-    float: right;
-    background: transparent;
-    border: 1px solid var(--console-green);
-    color: var(--console-green);
-    padding: 5px 10px;
-    cursor: pointer;
-    font-family: 'Courier Prime', monospace;
-}
-
-.dos-content {
-    padding: 0;
-    background-color: transparent;
-    color: var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: clamp(14px, 2.5vw, 16px);
-    line-height: 1.6;
-}
-
-.dos-content p {
-    margin: 10px 0;
-    color: var(--console-green);
-}
-
-.dos-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-start;
-    margin-top: 20px;
-}
-
-.dos-buttons .dos-button {
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 100px;
-}
-
-/* =============================================
-   MOBILE OPTIMIZATIONS
-   ============================================= */
-@media (max-width: 768px) {
-    body {
-        font-size: 14px;
-        padding: 15px;
-    }
-    
-    .dos-terminal {
-        width: 100%;
-        max-width: 100%;
-    }
-    
-    .dos-messages {
-        max-height: 40vh;
-        min-height: 200px;
-    }
-    
-    .dos-button {
-        font-size: 16px;
-        min-height: 48px;
-    }
-    
-    .dos-input-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-    
-    .dos-message-input {
-        width: 100%;
-        min-width: 100%;
-    }
-    
-    .dos-send-button {
-        width: 100%;
-    }
-    
-    .dos-button-row {
-        flex-direction: row;
-    }
-}
-
-@media (max-width: 480px) {
-    .dos-button-container {
-        gap: 12px;
-    }
-    
-    .dos-button-close {
-        width: 100%;
-    }
-}
-
-/* =============================================
-   SCROLLBAR - Minimal green
-   ============================================= */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: var(--console-black);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--console-green);
-    border: 1px solid var(--console-black);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--console-green);
-}
-
-/* =============================================
-   UTILITY CLASSES
-   ============================================= */
-.hidden {
-    display: none !important;
-}
-
-.blink {
-    animation: blink 1s infinite;
-}
-
-/* Remove all decorative lines */
-.title-line,
-.screen-line,
-.chat-line {
-    display: none;
-}
-
-/* =============================================
-   SECURITY SIMULATION LAYER
-   ============================================= */
-.security-layer {
-    display: none;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    padding: 8px 12px;
-    margin: 8px 0;
-    font-size: clamp(10px, 2vw, 12px);
-    color: #00CC00;
-    font-family: 'Courier Prime', monospace;
-    line-height: 1.5;
-    opacity: 0.7;
-}
-
-.vpn-animation {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.vpn-location {
-    color: #00CC00;
-    font-weight: bold;
-    font-size: clamp(11px, 2.2vw, 13px);
-}
-
-.vpn-hash {
-    color: #808080;
-    font-size: clamp(9px, 1.8vw, 11px);
-    font-family: 'Courier New', monospace;
-    letter-spacing: 1px;
-}
-
-.vpn-countdown {
-    color: #FF6B6B;
-    font-size: clamp(10px, 2vw, 12px);
-    font-weight: bold;
-}
-
-.security-line {
-    display: flex;
-    justify-content: space-between;
-    margin: 3px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.security-label {
-    color: var(--console-gray);
-    margin-right: 8px;
-    flex-shrink: 0;
-}
-
-.security-value {
-    color: var(--console-green);
-    font-weight: normal;
-    text-align: right;
-    flex-shrink: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Typing cursor effect */
-.security-value.typing::after {
-    content: '▌';
-    animation: blink-cursor 1s infinite;
-    color: var(--console-green);
-    margin-left: 2px;
-}
-
-@keyframes blink-cursor {
-    0%, 49% { opacity: 1; }
-    50%, 100% { opacity: 0; }
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-    .security-layer {
-        font-size: 10px;
-        padding: 6px 10px;
-    }
-    
-    .security-line {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .security-value {
-        text-align: left;
-        margin-left: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .security-layer {
-        font-size: 9px;
-        padding: 5px 8px;
-        margin: 8px 0;
-    }
-}
-
-/* =============================================
-   ADVANCED FEATURES
-   ============================================= */
-
-/* SAS Display */
-.sas-display {
-    display: none;
-    margin-left: 15px;
-    padding: 4px 12px;
-    background-color: rgba(0, 128, 0, 0.3);
-    border: 1px solid var(--console-green);
-    border-radius: 4px;
-    font-size: 13px;
-    color: var(--console-green);
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.sas-display.active {
-    display: inline-block;
-}
-
-/* Remote Encryption Indicator */
-.encryption-indicator {
-    margin: 5px 0;
-    padding: 4px 8px;
-    background-color: transparent;
-    border: none;
-    border-radius: 0;
-    font-family: 'Courier Prime', monospace;
-    box-shadow: none;
-    opacity: 0.4;
-}
-
-.encryption-indicator.hidden {
-    display: none;
-}
+  --panel: rgba(255,255,255,0.85);
+  --panel-border: rgba(0,0,0,0.06);
+  --bubble-border: rgba(0,0,0,0.06);
 
-.encryption-header {
-    color: #404040;
-    font-size: clamp(9px, 1.8vw, 11px);
-    font-weight: normal;
-    margin-bottom: 3px;
-    text-shadow: none;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* 1) “Matar” estilo terminal/verde/neón que suele venir con !important */
+html, body{
+  color: var(--text) !important;
+  background: var(--bg) !important;
+  font-family: var(--font) !important;
+  text-shadow: none !important;
+}
+
+*{
+  text-shadow: none !important;
+  box-shadow: none; /* ojo: luego damos sombra solo a lo que queremos */
 }
 
-.encryption-matrix {
-    font-size: clamp(8px, 1.6vw, 10px);
-    line-height: 1.2;
-    color: #303030;
-    font-family: 'Courier New', monospace;
-    letter-spacing: 1px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+/* 2) Fondo patrón (si el body::before del theme no ganó, lo forzamos aquí) */
+body{
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+body::before{
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background-image: url("bg-pattern.jpg") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  opacity: var(--pattern-opacity) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* 3) Asegurar que tu app quede encima del patrón */
+#app, .app, .container, .wrap, .terminal, .console, .chat-app,
+main, header, footer, section, nav, aside{
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* 4) Topbar/barras (si existen) */
+header, .header, .topbar, .titlebar{
+  background: rgba(255,255,255,0.78) !important;
+  border-bottom: 1px solid var(--panel-border) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
-/* Advanced Features Bar */
-.advanced-features-bar {
-    display: flex;
-    gap: 8px;
-    padding: 8px 10px;
-    border-top: 1px solid var(--console-gray);
-    background-color: rgba(0, 0, 0, 0.3);
+/* 5) Área de mensajes: padding consistente + scroll */
+#chat, #messages, #messageList, #consoleOutput, .messages, .chat, .chat-area, .log{
+  padding: 14px 12px 18px 12px !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
-.feature-btn {
-    flex: 1;
-    padding: 8px 12px;
-    background-color: var(--console-black);
-    color: var(--console-green);
-    border: 1px solid var(--console-green);
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+/* 6) Filas de mensaje (compat) */
+.message, .msg, .line, .entry, .chat-line{
+  display: flex !important;
+  align-items: flex-end !important;
+  margin: 6px 0 !important;
 }
 
-.feature-btn:hover {
-    background-color: var(--console-green);
-    color: var(--console-black);
-}
-
-.feature-btn:active {
-    transform: scale(0.95);
-}
-
-.feature-btn .btn-icon {
-    font-size: 14px;
-}
-
-/* Recording button animation */
-.record-btn.recording {
-    background-color: #CC0000;
-    border-color: #CC0000;
-    color: white;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-}
-
-/* File Progress Bar */
-.file-progress {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--console-gray);
-    border-radius: 4px;
-}
-
-.progress-label {
-    color: var(--console-green);
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-
-.progress-bar-container {
-    width: 100%;
-    height: 8px;
-    background-color: var(--console-black);
-    border: 1px solid var(--console-green);
-    margin: 5px 0;
-    overflow: hidden;
-}
-
-.progress-bar-fill {
-    height: 100%;
-    background-color: var(--console-green);
-    width: 0%;
-    transition: width 0.3s;
-}
-
-.progress-text {
-    color: var(--console-gray);
-    font-size: 11px;
-    font-family: 'Courier Prime', monospace;
-    margin-top: 3px;
-}
-
-/* File Download Message */
-.file-message {
-    background-color: rgba(0, 128, 0, 0.1);
-    border: 1px solid var(--console-green);
-}
-
-.file-download {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 0;
-}
-
-.file-icon {
-    font-size: 20px;
-}
-
-.file-name {
-    flex: 1;
-    color: var(--console-green);
-    font-size: 13px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.file-download-btn {
-    padding: 5px 15px;
-    background-color: var(--console-black);
-    color: var(--console-green);
-    border: 1px solid var(--console-green);
-    text-decoration: none;
-    font-size: 11px;
-    font-family: 'Courier Prime', monospace;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.file-download-btn:hover {
-    background-color: var(--console-green);
-    color: var(--console-black);
-}
+/* Alineaciones comunes */
+.me, .out, .sent, .right{ justify-content: flex-end !important; }
+.peer, .in, .recv, .left{ justify-content: flex-start !important; }
 
-/* Voice Message */
-.voice-message {
-    background-color: rgba(0, 128, 128, 0.1);
-    border: 1px solid var(--console-green);
+/* 7) Burbuja (compat) — forzada con !important para ganarle a style.css */
+.bubble, .payload, .text, .messageBubble, .msgBubble, .bubbleText,
+.message > div, .message > span, .message > p{
+  max-width: 78% !important;
+  border-radius: var(--radius) !important;
+  padding: 10px 12px !important;
+  line-height: 1.25 !important;
+  font-size: 15px !important;
+  border: 1px solid var(--bubble-border) !important;
+  background: var(--bubble-in) !important;
+  color: var(--text) !important;
+  word-wrap: break-word !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02) !important;
 }
 
-.voice-player {
-    width: 100%;
-    max-width: 300px;
-    height: 32px;
-    background-color: var(--console-black);
-    border: 1px solid var(--console-green);
-    border-radius: 4px;
+/* Salientes (verde suave) */
+.me .bubble, .out .bubble, .sent .bubble, .right .bubble,
+.me .payload, .out .payload, .sent .payload, .right .payload,
+.me .messageBubble, .out .messageBubble, .sent .messageBubble, .right .messageBubble{
+  background: var(--bubble-out) !important;
 }
 
-.voice-player::-webkit-media-controls-panel {
-    background-color: var(--console-black);
+/* 8) Meta: hora / checks */
+.meta, .time, .stamp, .status, .read, .ticks, .check, .info{
+  font-size: 11px !important;
+  color: var(--muted) !important;
+  user-select: none !important;
 }
 
-.voice-player::-webkit-media-controls-play-button,
-.voice-player::-webkit-media-controls-timeline {
-    filter: invert(1);
+/* 9) Reply preview / quoted */
+.reply, .quoted, .quote, .replyPreview, .reply-box{
+  border-left: 3px solid rgba(0,0,0,0.18) !important;
+  padding-left: 10px !important;
+  margin-bottom: 8px !important;
+  color: rgba(0,0,0,0.68) !important;
+  font-size: 13px !important;
 }
 
-/* Countdown Timer */
-.countdown-timer {
-    display: inline-block;
-    margin-left: 10px;
-    padding: 2px 8px;
-    background-color: rgba(128, 128, 128, 0.2);
-    border: 1px solid var(--console-gray);
-    border-radius: 3px;
-    font-size: 11px;
-    font-family: 'Courier Prime', monospace;
-    color: var(--console-gray);
-    transition: color 0.3s, border-color 0.3s;
+/* 10) Barra inferior (input) */
+footer, .footer, .bottombar, .inputbar, .composer, .controls{
+  background: rgba(255,255,255,0.85) !important;
+  border-top: 1px solid var(--panel-border) !important;
+  backdrop-filter: blur(12px) !important;
+  padding: 10px !important;
+  z-index: 2 !important;
 }
 
-.countdown-timer[style*="color: rgb(204, 0, 0)"] {
-    border-color: #CC0000;
-    animation: pulse-warning 0.5s infinite;
+/* Inputs */
+input[type="text"], input[type="number"], textarea{
+  width: 100% !important;
+  border: 1px solid rgba(0,0,0,0.10) !important;
+  border-radius: 999px !important;
+  padding: 12px 14px !important;
+  outline: none !important;
+  font-size: 15px !important;
+  background: rgba(255,255,255,0.95) !important;
+  color: var(--text) !important;
 }
 
-@keyframes pulse-warning {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+textarea{
+  border-radius: 14px !important;
+  resize: none !important;
 }
 
-/* Message destruction animation */
-.message.destroying {
-    animation: fade-out-destroy 0.5s forwards;
+/* Botones */
+button{
+  border: none !important;
+  border-radius: 999px !important;
+  padding: 10px 14px !important;
+  cursor: pointer !important;
+  background: rgba(0,0,0,0.08) !important;
+  color: var(--text) !important;
 }
 
-@keyframes fade-out-destroy {
-    0% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.98); }
-    100% { opacity: 0; transform: scale(0.95); }
+button:hover{
+  background: rgba(0,0,0,0.12) !important;
 }
 
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .advanced-features-bar {
-        flex-direction: column;
-    }
-    
-    .feature-btn {
-        width: 100%;
-    }
-    
-    .sas-display {
-        display: block;
-        margin: 5px 0 0 0;
-        font-size: 10px;
-    }
+/* Botón enviar (compat) */
+.btn-send, .send, .sendBtn, #sendBtn{
+  background: rgba(20,160,70,0.18) !important;
 }
-
-@media (max-width: 480px) {
-    .feature-btn {
-        font-size: 10px;
-        padding: 6px 10px;
-    }
-    
-    .file-name {
-        font-size: 11px;
-    }
-    
-    .file-download-btn {
-        font-size: 10px;
-        padding: 4px 10px;
-    }
-}
-
-/* =============================================
-   PROGRESS BAR ANIMATIONS
-   ============================================= */
-.progress-bar-container {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid var(--console-gray);
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.progress-bar {
-    width: 100%;
-    height: 4px;
-    background-color: rgba(128, 128, 128, 0.3);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 5px;
-}
-
-.progress-bar-fill {
-    height: 100%;
-    background-color: var(--console-green);
-    width: 0%;
-    transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--console-green);
-}
-
-.progress-text {
-    color: var(--console-gray);
-    font-size: clamp(11px, 2vw, 13px);
-    text-align: center;
-    font-family: 'Courier Prime', monospace;
-}
-
-/* Typing cursor animation */
-@keyframes typing-cursor {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
-
-.typing-cursor::after {
-    content: '_';
-    animation: typing-cursor 1s infinite;
-}
-
-/* Glitch animation */
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-}
-
-.glitch-effect {
-    animation: glitch 0.3s infinite;
-}
-
-/* =============================================
-   IMAGE MODALS & VIEWER
-   ============================================= */
-.image-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-}
-
-.modal-content {
-    background-color: var(--console-black);
-    border: 2px solid var(--console-green);
-    padding: 20px;
-    max-width: 90%;
-    max-height: 90%;
-    overflow-y: auto;
-    font-family: 'Courier Prime', monospace;
-}
-
-.modal-title {
-    color: var(--console-green);
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.modal-text {
-    color: var(--console-green);
-    font-size: 14px;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.modal-image {
-    max-width: 100%;
-    max-height: 400px;
-    display: block;
-    margin: 15px auto;
-    border: 1px solid var(--console-green);
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 15px;
-}
-
-.image-viewer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10001;
+.btn-send:hover, .send:hover, .sendBtn:hover, #sendBtn:hover{
+  background: rgba(20,160,70,0.28) !important;
 }
 
-.viewer-image {
-    max-width: 95%;
-    max-height: 95%;
-    object-fit: contain;
+/* 11) Dar sombras “bonitas” solo donde conviene */
+.modal, .dialog, .panel, .card{
+  box-shadow: var(--shadow) !important;
+  border: 1px solid var(--panel-border) !important;
+  border-radius: 18px !important;
+  background: var(--panel) !important;
 }
 
-.viewer-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #FF0000;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    font-family: 'Courier Prime', monospace;
+/* 12) Scrollbar (opcional) */
+#chat::-webkit-scrollbar, #messages::-webkit-scrollbar, .messages::-webkit-scrollbar, .chat::-webkit-scrollbar, .log::-webkit-scrollbar{
+  width: 10px !important;
 }
-
-.viewer-close:hover {
-    background-color: #CC0000;
+#chat::-webkit-scrollbar-thumb, #messages::-webkit-scrollbar-thumb, .messages::-webkit-scrollbar-thumb, .chat::-webkit-scrollbar-thumb, .log::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.14) !important;
+  border-radius: 999px !important;
 }
 
-@media (max-width: 768px) {
-    .modal-content {
-        padding: 15px;
-        max-width: 95%;
-    }
-    
-    .modal-image {
-        max-height: 300px;
-    }
-    
-    .modal-buttons {
-        flex-direction: column;
-    }
-    
-    .modal-buttons .dos-button {
-        width: 100%;
-    }
+/* 13) Safe-area */
+@supports(padding: env(safe-area-inset-bottom)){
+  footer, .footer, .bottombar, .inputbar, .composer, .controls{
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+  }
 }
