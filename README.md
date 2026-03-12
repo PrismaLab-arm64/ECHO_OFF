@@ -1,7 +1,7 @@
 <div align="center">
   <img src="icon-192.png" alt="ECHO_OFF Black Ops" width="160" style="border-radius: 30px; border: 3px solid #0084ff; box-shadow: 0 0 40px rgba(0, 132, 255, 0.6);">
 
-  # 🦅 **ECHO_OFF v4.0: EL PROTOCOLO "VIGÍA NEGRO"** 🦅
+  # 🦅 **ECHO_OFF v5.1: EL PROTOCOLO "FUERZA DELTA"** 🦅
   ### *Nivel de Acceso: CLASIFICADO - Sin Rastro Terrenal*
 
   [![Seguridad: NIVEL AGENCIA](https://img.shields.io/badge/Seguridad-NIVEL_AGENCIA-000000.svg?style=for-the-badge&logo=cia&logoColor=white)](https://prismalab-arm64.github.io/ECHO_OFF/)
@@ -19,42 +19,42 @@
 
 ## 🛰️ PROTOCOLO DE EXTRACCIÓN DE DATOS (NIVEL NASA)
 
-**ECHO_OFF v4.0** ha sido rediseñado para operar en las sombras del metaverso. Hemos clausurado los puntos ciegos que permitían la fuga de inteligencia mediante hardware comercial. 
+**ECHO_OFF v5.1** es la culminación de la guerra contra la persistencia de datos. Hemos implementado el motor **Delta v5**, cerrando el 0.001% de las fugas que quedaban.
 
-### 🛡️ BLINDAJE MULTIMEDIA REFORZADO
-*   **Audio "Black Box":** Los reproductores nativos con menús de descarga han sido incinerados. Hemos inyectado un motor de audio propietario que bloquea la API de guardado de Chrome/Safari. Si se escucha, es solo para tus oídos, una sola vez.
-*   **Óptica Blindada:** Las imágenes ahora se materializan en burbujas de vidrio aisladas. Se han anulado los vectores de "Arrastrar y Soltar" y los menús contextuales de guardado de imagen. La luz informativa brilla y se apaga.
-*   **Cero Persistencia en Disco:** Nada toca el SSD/Flash. Todo vive en la memoria RAM volátil, lista para ser purgada.
+### 🛡️ BLINDAJE MULTIMEDIA REFORZADO (CANVAS RENDERING)
+*   **Aniquilación de Etiquetas Nativas:** Hemos erradicado las etiquetas `<img>`, `<audio>` y `<video>`. El navegador ya no detecta "archivos" que se puedan descargar.
+*   **Motor de Renderizado Delta:** Todo el contenido (imágenes y videos) se materializa directamente en un **Canvas de HTML5**. Es un dibujo de píxeles volátiles en memoria RAM, sin enlace físico a disco.
+*   **Audio "Black Box" v5:** Sonido procesado mediante búfer de audio directo. Sin interfaces de descarga, sin menús contextuales.
 
 ---
 
-## 💥 SECUENCIA DE DESINTEGRACIÓN "GLITCH"
+## 💥 SECUENCIA DE DESINTEGRACIÓN "OBSIDIAN"
 
-No más borrados simples. Hemos implementado el **Efecto de Desintegración por Glitch**.
-Al emitir una respuesta, la información anterior no solo desaparece; sufre un colapso de fase visual: la burbuja se fractura, se desenfoca y se disuelve en el éter digital para evitar la lectura residual por parte de terceros cercanos.
+*   **Tema Obsidian Ops:** Interfaz en **Negro Absoluto (#000)** forzado para evitar la fatiga visual y la exposición de luz en dispositivos móviles.
+*   **Colapso de Fase Delta:** Al responder, los mensajes anteriores sufren una fractura visual y se disuelven en el éter digital.
 
 ---
 
 ## 🕵️‍♂️ PUNTO DE VISTA DE INTELIGENCIA (SEGURIDAD)
 
-> *"En la guerra de la información, el rastro es una sentencia de muerte. ECHO_OFF no es un chat; es un apretón de manos en el vacío."*
+> *"ECHO_OFF v5.1 no es comunicación; es una sombra digital que desaparece al ser observada."*
 
 ### CARACTERÍSTICAS DE GRADO MILITAR:
-1.  **Descifrado dinámico Matrix:** Cada paquete entrante se somete a una secuencia de computación visual antes de materializarse.
-2.  **Autorización Tácita Inmóvil:** Sin diálogos de confirmación que los navegadores puedan bloquear. La llave es el destino.
-3.  **Triple Escudo de Salida:** `ESC` tres veces limpia la terminal, borra la identidad P2P y te teletransporta a un sitio señuelo (Google).
-4.  **Anti-Forense:** Bloqueo de selección de texto y guardado forzado a nivel kernel-web.
+1.  **Arranque de Emergencia Alpha:** Bypass de caché y cargador dinámico con firma de tiempo para asegurar la versión más reciente.
+2.  **Video Autoplay Blindado:** Videos en Canvas con overlay de audio táctico para saltar bloqueos de navegador.
+3.  **Triple Escudo de Salida:** `ESC` tres veces limpia la memoria P2P y redirige a un sitio señuelo.
+4.  **Anti-Forense:** Bloqueo total de selección, inspección y guardado a nivel núcleo.
 
 ---
 
 ## ⚡ ¿CÓMO OPERAR? (GUIÁ RÁPIDA)
 
-1. **Host:** Genera Token, entrega por canal seguro.
+1. **Host:** Genera Token Delta, entrega por canal seguro.
 2. **Guest:** Inserta Token, pulsa Conectar.
-3. **Misión:** Transmitir. Al responder, la historia previa colapsa.
-4. **Abortar:** Triple `ESC` para limpieza total de memoria.
+3. **Misión:** Transmitir. Al responder, la historia colapsa.
+4. **Abortar:** Triple `ESC` para limpieza total de memoria RAM.
 
 ---
 <div align="center">
-  *Propiedad Clasificada de PrismaLab-arm64. Cualquier rastro de este software es un error del usuario.*
+  *Propiedad Clasificada de PrismaLab-arm64. El 0.001% ha sido liquidado.*
 </div>
