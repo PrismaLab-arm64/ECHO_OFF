@@ -138,6 +138,9 @@ function createRoom() {
   myPeerId = generateUniqueId();
   if(UI.roomIdInput) UI.roomIdInput.value = "Generando...";
   
+  // Destruir peer anterior si existe para evitar conflictos
+  if(peer) peer.destroy();
+
   peer = new Peer(myPeerId, initPeerOptions());
   
   peer.on('open', (id) => {
