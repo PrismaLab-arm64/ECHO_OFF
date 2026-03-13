@@ -25,8 +25,8 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=5.2').then(reg => {
-          console.log('SW Operativo v5.2');
+        navigator.serviceWorker.register('./sw.js?v=5.3').then(reg => {
+          console.log('KRONX SW Operativo v5.3');
           reg.onupdatefound = () => {
             const installingWorker = reg.installing;
             installingWorker.onstatechange = () => {

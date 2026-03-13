@@ -10,7 +10,7 @@
 'use strict';
 
 // 🔁 CAMBIA ESTO cada vez que subas cambios importantes de UI
-const SW_VERSION = 'kronx_sw_2026-03-13_vDELTA_FORCE_V5.3_KRONX';
+const SW_VERSION = 'kronx_sw_2026-03-13_vDELTA_FORCE_V5.3.1_KRONX';
 
 // Nombres de caché versionados
 const CACHE_STATIC = `${SW_VERSION}::static`;

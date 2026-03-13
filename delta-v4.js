@@ -1,5 +1,5 @@
 /* =============================================
-   ECHO CHAT - PROTOCOLO DELTA v4.0
+   KRONX - PROTOCOLO DELTA v4.0
    NIVEL: CLASIFICADO (FUERZA DELTA)
    ============================================= */
 
